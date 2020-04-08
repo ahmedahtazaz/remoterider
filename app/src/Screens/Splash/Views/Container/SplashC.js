@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import SplashP from '../Presentational/SplashP'
 import { connect } from 'react-redux';
 import auth from '@react-native-firebase/auth';
-import { signInUserAction, moveToWelcome1Action, signInSuccessAction, signInFailureAction } from '../../Actions/SignInA';
+import { signInUserAction, moveToWelcome1Action, signInSuccessAction, signInFailureAction, checkUserTypeAction, moveToMSAction } from '../../Actions/SignInA';
 
 class SplashC extends Component {
 
@@ -25,6 +25,7 @@ class SplashC extends Component {
   {
     if (user) 
     {
+      this.props.checkUserType();
       this.signInSuccess();
     } 
     else 
@@ -52,7 +53,10 @@ class SplashC extends Component {
 
     if(this.props.authenticated && this.props.signInAttempted)
     {
-      this.props.moveToWelcome1(this.props.navigation);
+      if(this.props.isStudent)
+      {
+        this.props.moveToMS(this.props.navigation);
+      }
     }
     else if(!this.props.authenticated && this.props.signInAttempted)
     {
@@ -70,6 +74,8 @@ const mapDispatchToProps = (dispatch) => {
       signInSuccess: () => dispatch(signInSuccessAction()),
       signInFailure: () => dispatch(signInFailureAction()),
       moveToWelcome1: (navigation) => moveToWelcome1Action(navigation),
+      checkUserType: () => dispatch(checkUserTypeAction()),
+      moveToMS: (navigation) => moveToMSAction(navigation),
   };
 };
 
@@ -77,6 +83,8 @@ const mapStateToProps = (state) => {
   return {
     authenticated: state.signInReducer.authenticated,
     signInAttempted: state.signInReducer.signInAttempted,
+    isStudent: state.signInReducer.isStudent,
+    isInstructor: state.signInReducer.isInstructor,
   };
 };
 

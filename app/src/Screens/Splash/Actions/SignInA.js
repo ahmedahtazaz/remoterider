@@ -1,4 +1,4 @@
-import { SIGN_IN_USER, SIGN_IN_SUCCESS, SIGN_IN_FAILURE } from "../../../Commons/Constants";
+import { SIGN_IN_USER, SIGN_IN_SUCCESS, SIGN_IN_FAILURE, CHECK_USER_TYPE } from "../../../Commons/Constants";
 
 export const signInUserAction = (email, password) => {
     return {
@@ -22,4 +22,14 @@ export const signInUserAction = (email, password) => {
     return {
       type:`${SIGN_IN_FAILURE}`
     }
+  };
+
+  export const checkUserTypeAction = () => {
+    return {
+      type:`${CHECK_USER_TYPE}`,
+    }
+  };
+
+  export const moveToMSAction = (navigation) => {
+    return navigation.navigate('Main Student Screen'); 
   };

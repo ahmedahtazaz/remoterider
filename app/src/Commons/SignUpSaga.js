@@ -29,24 +29,28 @@ function* signUpInner(action)
 
     if(success) 
     {
+        var currentUser = auth().currentUser;
+
         if(action.user.isInstructor)
         {
-            yield firestore().collection('Users').add({
+            yield firestore().collection('Users').doc(currentUser.uid).set({
                 name: action.user.name,
                 profile: action.user.profile,
                 isInstructor: true,
+                uuid: currentUser.uid,
                 }).then(success = true).catch((err) => {success = false, error = err.message});
         }
         else{
-            yield firestore().collection('Users').add({
+            yield firestore().collection('Users').doc(currentUser.uid).set({
                 name: action.user.name,
                 isInstructor: false,
+                uuid: currentUser.uid,
                 }).then(success = true).catch((err) => {success = false, error = err.message});
         }
 
         if(success)
         {
-            yield storage().ref(action.user.name+'.png').putFile(action.user.image.path).then(success = true).catch((err) => {success = false, error = err.message});
+            yield storage().ref(currentUser.uid+'.png').putFile(action.user.image.path).then(success = true).catch((err) => {success = false, error = err.message});
         }
     }   
 

@@ -11,6 +11,7 @@ import Welcome1 from './app/src/Screens/Welcome1/Views/Container/Welcome1C';
 import Welcome2 from './app/src/Screens/Welcome2/Views/Container/Welcome2C';
 import SAStudent from './app/src/Screens/SignUpStudent/Views/Container/SASC';
 import SAInstructor from './app/src/Screens/SignUpTeacher/Views/Container/SAIC';
+import MSC from './app/src/Screens/MainStudent/Views/Container/MSC';
 
 const sagaMiddleware = createSagaMiddleware();
 const store = createStore(createRootReducer(), compose(applyMiddleware(sagaMiddleware),),);
@@ -30,6 +31,7 @@ export default class App extends Component {
               <Stack.Screen name="Sign Up" component={Welcome2} options={{ headerShown: true, headerStyle: {backgroundColor: '#5a9c79' }}}/>
               <Stack.Screen name="Student Sign Up" component={SAStudent} options={{ headerShown: true, headerStyle: {backgroundColor: '#5a9c79'}}}/>
               <Stack.Screen name="Instructor Sign Up" component={SAInstructor} options={{ headerShown: true, headerStyle: {backgroundColor: '#5a9c79'}}}/>
+              <Stack.Screen name="Main Student Screen" component={MSC} options={{ headerShown: false}}/>
             </Stack.Navigator>
           </NavigationContainer>    
       </Provider>

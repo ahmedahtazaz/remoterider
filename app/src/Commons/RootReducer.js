@@ -5,6 +5,7 @@ import checkboxReducer from '../Commons/CheckBox/checkBoxReducer';
 import dialogueReducer from '../Commons/Dialogue/DialogueReducer';
 import photoReducer from './PhotoReducer';
 import signUpReducer from './SignUpReducer';
+import mscReducer from '../Screens/MainStudent/Reducer/MSR';
 
 const createRootReducer  = () => combineReducers({
     signInReducer: signInReducer(),
@@ -13,6 +14,7 @@ const createRootReducer  = () => combineReducers({
     dialogueReducer: dialogueReducer(),
     photoReducer: photoReducer(),
     signUpReducer: signUpReducer(),
+    mscreducer: mscReducer(),
 });
 
 export default createRootReducer ;
