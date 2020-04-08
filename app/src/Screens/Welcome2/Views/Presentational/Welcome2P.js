@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
         width: wp(95.8),
         color: '#ffffff',
         fontFamily: getBoldFont(),
-        fontSize: hp(4),
+        fontSize: hp(3),
         fontWeight: '700',
         textAlign: 'center'
     },
@@ -70,10 +70,11 @@ const styles = StyleSheet.create({
         width: wp(95.8),
         color: '#ffffff',
         fontFamily: getBoldFont(),
-        fontSize: hp(3),
-        fontWeight: '700',
+        fontSize: hp(2.5),
+        fontWeight: '500',
         textAlign: 'center',
-        marginTop: hp(2)
+        marginTop: hp(2),
+        alignSelf: 'center'
     },
     studentButton: {
         justifyContent: "center",

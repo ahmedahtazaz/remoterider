@@ -6,7 +6,6 @@ import Hyperlink from 'react-native-hyperlink';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import CheckBox from '../../../../Commons/CheckBox/CheckBox';
 import Dialogue from '../../../../Commons/Dialogue/Dialogue';
-import FitImage from 'react-native-fit-image';
 import { getBoldFont, getRegularFont } from '../../../../Commons/Fonts';
 
 export default class App extends Component {
@@ -31,7 +30,7 @@ export default class App extends Component {
                 {'Sign Up As a Student'}
         </Text>  
         <View style={styles.fieldMaincontainerStyle}> 
-            <FitImage source={nameImage} style={styles.nameImage}/>
+            <Image source={nameImage} style={styles.nameImage}/>
             <View style={styles.fieldInnercontainerStyle}> 
                 <TextInput onChangeText={this.props.userNameHandler} style={styles.inputStyle} autoCorrect={false} placeholder={'Name'} placeholderTextColor = "#598a6f" />
             </View>
@@ -49,7 +48,7 @@ export default class App extends Component {
             </View>
         </View>
         <View style={styles.fieldMaincontainerStyle}> 
-            <FitImage source={plusImage} style={styles.plusImage}/>
+            <Image source={plusImage} style={styles.plusImage}/>
             <TouchableOpacity style={styles.photoButton} onPress={this.props.photoHandler}>
                 <Text 
                     numberOfLines={1} style={styles.photoButtonText}>
@@ -59,7 +58,7 @@ export default class App extends Component {
         </View>
         <View style={styles.tcStyle}>
             <CheckBox onPress={this.props.onTCPress}/>
-            <Hyperlink linkStyle={{ color: '#00b4ac', fontSize: 12 }} linkText={url => url === 'https://tc.com' ? 'Terms & Conditions' : url}>
+            <Hyperlink linkStyle={{ color: 'white', fontSize: hp(2) }} linkText={url => url === 'https://tc.com' ? 'Terms & Conditions' : url}>
                 <Text 
                     numberOfLines={1} style={styles.tcText}>
                         {'I have accepted the https://tc.com'}
@@ -89,10 +88,11 @@ const styles = StyleSheet.create({
         width: wp(95.8),
         color: '#ffffff',
         fontFamily: getBoldFont(),
-        fontSize: hp(4),
+        fontSize: hp(3),
         fontWeight: '700',
         textAlign: 'center',
-        marginBottom: hp(3)
+        marginBottom: hp(1.5),
+        alignSelf: 'center'
     },
     buttonText: {
         fontSize: hp(2.5),
@@ -134,8 +134,9 @@ const styles = StyleSheet.create({
         marginTop: hp(2)
     },
     nameImage: {
-        height: hp(3.2),
-        width: wp(6)
+        height: hp(4),
+        width: wp(6),
+        resizeMode: 'contain'
     },
     emailImage: {
         height: hp(4),
@@ -148,8 +149,9 @@ const styles = StyleSheet.create({
         resizeMode: 'contain'
     },
     plusImage: {
-        height: hp(3.2),
-        width: wp(6)
+        height: hp(4),
+        width: wp(6),
+        resizeMode: 'contain'
     },
     fieldInnercontainerStyle:{
         flex: 9,
@@ -167,19 +169,18 @@ const styles = StyleSheet.create({
     tcStyle:{
         height: hp(4),
         flexDirection: 'row',
-        width: wp(67.6),
         alignSelf: 'center',
         marginBottom: hp(3),
-        paddingLeft: wp(4),
-        marginTop: hp(3)
+        paddingLeft: wp(8),
+        marginTop: hp(2)
     },
     tcText: {
-        fontSize: hp(1.6),
+        fontSize: hp(1.7),
         fontWeight: '400',
-        opacity: 0.4,
         textAlign: 'center',
-        color: '#ffffff',
+        color: '#59836c',
         fontFamily: getRegularFont(),
-        marginTop: hp(1)
+        marginTop: hp(1),
+        paddingLeft: wp(.5)
       },
 })
