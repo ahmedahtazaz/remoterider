@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import {TouchableOpacity, Text, Image, View, StyleSheet} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
-import FitImage from 'react-native-fit-image';
 
 export default class App extends Component {
 
@@ -39,7 +38,7 @@ export default class App extends Component {
             </View>   
             <View style={styles.midSectionContainer}>
                 <Text 
-                    numberOfLines={1} style={styles.midSectionText1}>
+                    style={styles.midSectionText1}>
                         {'Taking online riding lessons is as easy as 1, 2, 3'}
                 </Text>  
                 <Text 
@@ -56,11 +55,11 @@ export default class App extends Component {
                 </Text> 
                 <Image source={midSectionImage} style={styles.midSectionImage}/>
                 <Text 
-                    numberOfLines={5} style={styles.lMSectionText1}>
+                    style={styles.lMSectionText1}>
                         {'To use Remote rider you need a Apple or Android phone or tablet, a bluetooth earpiece with microphone that is connected to your phone and a buddy who will act as your camera operator.'}
                 </Text>  
                 <Text 
-                    numberOfLines={2} style={styles.lMSectionText2}>
+                    style={styles.lMSectionText2}>
                         {'For full instructions and tips for how to use remote rider visit us at www.remoterider.app'}
                 </Text> 
                 <TouchableOpacity style={styles.signInButton} onPress={this.props.signInHandler}>
@@ -97,7 +96,7 @@ const styles = StyleSheet.create({
   },
   containerImages1: {
     width: wp('100%'),
-    height: hp(20),
+    height: hp(13),
     flexDirection:'row',
     alignItems: 'center',
     paddingLeft: wp(4.5),
@@ -116,6 +115,7 @@ const styles = StyleSheet.create({
     fontFamily: 'corbel_b.ttf',
     fontSize: hp(2),
     fontWeight: '700',
+    textAlign: 'center',
   },
   midSectionText2: {
     color: '#ffffff',
@@ -163,7 +163,7 @@ const styles = StyleSheet.create({
   lMSectionText2: {
     color: '#ffffff',
     width: wp(77.5),
-    height: hp(5),
+    height: hp(9),
     fontFamily: 'corbel_r.ttf',
     fontSize: hp(2),
     fontWeight: '400',
