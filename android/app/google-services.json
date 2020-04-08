@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1080230214603",
+    "firebase_url": "https://remoteriderxabi.firebaseio.com",
+    "project_id": "remoteriderxabi",
+    "storage_bucket": "remoteriderxabi.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1080230214603:android:bed18411209d4c9b47544e",
+        "android_client_info": {
+          "package_name": "com.remoterider"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1080230214603-dum1fhgg7tiguv3hoco65fr9t6bv28pb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBEdAk85DdLo3aW7TqntriE5IJvml9I4Bs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1080230214603-dum1fhgg7tiguv3hoco65fr9t6bv28pb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
