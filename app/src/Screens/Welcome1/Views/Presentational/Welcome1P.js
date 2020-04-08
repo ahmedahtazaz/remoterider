@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {TouchableOpacity, Text, Image, View, StyleSheet} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import { getBoldFont, getRegularFont } from '../../../../Commons/Fonts';
 
 export default class App extends Component {
 
@@ -112,7 +113,7 @@ const styles = StyleSheet.create({
   },
   midSectionText1: {
     color: '#ffffff',
-    fontFamily: 'corbel_b.ttf',
+    fontFamily: getBoldFont(),
     fontSize: hp(2),
     fontWeight: '700',
     textAlign: 'center',
@@ -120,7 +121,7 @@ const styles = StyleSheet.create({
   midSectionText2: {
     color: '#ffffff',
     width: wp(75.6),
-    fontFamily: 'corbel_r.ttf',
+    fontFamily: getRegularFont(),
     fontSize: hp(2),
     fontWeight: '400',
     textAlign: 'center',
@@ -129,7 +130,7 @@ const styles = StyleSheet.create({
   midSectionText3: {
     color: '#ffffff',
     width: wp(75),
-    fontFamily: 'corbel_r.ttf',
+    fontFamily: getRegularFont(),
     fontSize: hp(2),
     fontWeight: '400',
     textAlign: 'center'
@@ -137,7 +138,7 @@ const styles = StyleSheet.create({
   midSectionText4: {
     color: '#ffffff',
     width: wp(75),
-    fontFamily: 'corbel_r.ttf',
+    fontFamily: getRegularFont(),
     fontSize: hp(2),
     fontWeight: '400',
     textAlign: 'center'
@@ -151,7 +152,7 @@ const styles = StyleSheet.create({
   lMSectionText1: {
     color: '#ffffff',
     width: wp(77.5),
-    fontFamily: 'corbel_r.ttf',
+    fontFamily: getRegularFont(),
     fontSize: hp(2),
     height: hp(14),
     fontWeight: '400',
@@ -164,7 +165,7 @@ const styles = StyleSheet.create({
     color: '#ffffff',
     width: wp(77.5),
     height: hp(9),
-    fontFamily: 'corbel_r.ttf',
+    fontFamily: getRegularFont(),
     fontSize: hp(2),
     fontWeight: '400',
     textAlign: 'center',
@@ -182,13 +183,13 @@ const styles = StyleSheet.create({
   },
   riderText: {
     color: '#ffffff',
-    fontFamily: 'corbel_b.ttf',
+    fontFamily: getBoldFont(),
     fontSize: hp(4),
     fontWeight: '700'
   },
   text1: {
     color: '#ffffff',
-    fontFamily: 'corbel_r.ttf',
+    fontFamily: getRegularFont(),
     fontSize: hp(2),
     fontWeight: '400',
     textAlign: 'center'
@@ -205,7 +206,7 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     textAlign: 'center',
     color: '#ffffff',
-    fontFamily: 'corbel_b.ttf'
+    fontFamily: getBoldFont()
   },
   signUpButton: {
     justifyContent: "center",

@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import Dialog, { DialogContent, DialogFooter, DialogButton} from 'react-native-popup-dialog';
 import {Text} from 'react-native';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import {getRegularFont} from '../Fonts'
 
 class Dialogue extends React.PureComponent {
 
@@ -29,7 +30,7 @@ class Dialogue extends React.PureComponent {
                 <Text 
                     style={{fontSize: hp(2.5),
                         color: 'black',
-                        fontFamily: 'corbel_r.ttf',
+                        fontFamily: getRegularFont(),
                         fontWeight: '200',}}>
                         {this.props.message}
                 </Text> 

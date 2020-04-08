@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {TouchableOpacity, Text, Image, View, StyleSheet} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import { getBoldFont, getRegularFont } from '../../../../Commons/Fonts';
 
 export default class App extends Component {
 
@@ -52,7 +53,7 @@ const styles = StyleSheet.create({
     text1: {
         width: wp(95.8),
         color: '#ffffff',
-        fontFamily: 'corbel_b.ttf',
+        fontFamily: getBoldFont(),
         fontSize: hp(4),
         fontWeight: '700',
         textAlign: 'center'
@@ -60,7 +61,7 @@ const styles = StyleSheet.create({
     text2: {
         width: wp(95.8),
         color: '#ffffff',
-        fontFamily: 'corbel_r.ttf',
+        fontFamily: getRegularFont(),
         fontSize: hp(2),
         fontWeight: '400',
         textAlign: 'center'
@@ -68,7 +69,7 @@ const styles = StyleSheet.create({
     text3: {
         width: wp(95.8),
         color: '#ffffff',
-        fontFamily: 'corbel_b.ttf',
+        fontFamily: getBoldFont(),
         fontSize: hp(3),
         fontWeight: '700',
         textAlign: 'center',
@@ -88,7 +89,7 @@ const styles = StyleSheet.create({
       fontWeight: '700',
       textAlign: 'center',
       color: '#ffffff',
-      fontFamily: 'corbel_b.ttf'
+      fontFamily: getBoldFont()
     },
     teacherButton: {
         justifyContent: "center",

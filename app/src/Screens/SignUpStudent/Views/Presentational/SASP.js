@@ -7,6 +7,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import CheckBox from '../../../../Commons/CheckBox/CheckBox';
 import Dialogue from '../../../../Commons/Dialogue/Dialogue';
 import FitImage from 'react-native-fit-image';
+import { getBoldFont, getRegularFont } from '../../../../Commons/Fonts';
 
 export default class App extends Component {
 
@@ -87,7 +88,7 @@ const styles = StyleSheet.create({
     text1: {
         width: wp(95.8),
         color: '#ffffff',
-        fontFamily: 'corbel_b.ttf',
+        fontFamily: getBoldFont(),
         fontSize: hp(4),
         fontWeight: '700',
         textAlign: 'center',
@@ -98,7 +99,7 @@ const styles = StyleSheet.create({
         fontWeight: '700',
         textAlign: 'center',
         color: '#ffffff',
-        fontFamily: 'corbel_b.ttf'
+        fontFamily: getBoldFont()
     },
     signInButton: {
         justifyContent: "center",
@@ -120,7 +121,7 @@ const styles = StyleSheet.create({
       photoButtonText: {
         fontSize: hp(2.5),
         color: '#598a6f',
-        fontFamily: 'corbel_r.ttf',
+        fontFamily: getRegularFont(),
         fontWeight: '200',
         marginLeft: wp(3),
         marginBottom: hp(0.1)
@@ -157,7 +158,7 @@ const styles = StyleSheet.create({
     inputStyle: {
         fontSize: hp(2.5),
         color: 'white',
-        fontFamily: 'corbel_r.ttf',
+        fontFamily: getRegularFont(),
         fontWeight: '200',
         marginLeft: wp(3),
         borderBottomWidth: hp(.1),
@@ -178,7 +179,7 @@ const styles = StyleSheet.create({
         opacity: 0.4,
         textAlign: 'center',
         color: '#ffffff',
-        fontFamily: 'corbel_r.ttf',
+        fontFamily: getRegularFont(),
         marginTop: hp(1)
       },
 })

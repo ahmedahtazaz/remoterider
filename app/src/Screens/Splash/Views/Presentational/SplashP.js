@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {Text, Image, View, StyleSheet} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import { getBoldFont } from '../../../../Commons/Fonts';
 
 export default class App extends Component {
 
@@ -44,7 +45,7 @@ const styles = StyleSheet.create({
   },
   riderText: {
     color: '#ffffff',
-    fontFamily: 'corbel_b.ttf',
+    fontFamily: getBoldFont(),
     fontSize: 50,
     fontWeight: '700'
   },
