@@ -1,9 +1,10 @@
-import {LOAD_DATA_SUCCESS, LOAD_DATA_FAILURE} from '../../../Commons/Constants'
+import {LOAD_DATA_SUCCESS, LOAD_DATA_FAILURE, LOAD_SLIDING_IMAGES_SUCCESS, LOAD_SLIDING_IMAGES_FAILURE} from '../../../Commons/Constants'
 
 const INITIAL_STATE = {
     reservations: undefined,
     categories: undefined,
     photo: undefined,
+    slidingImages: undefined,
   };
 
 export default function mscReducer() {
@@ -24,6 +25,18 @@ export default function mscReducer() {
             reservations: undefined,
             categories: undefined,
             photo: undefined,
+          };
+
+          case LOAD_SLIDING_IMAGES_SUCCESS:
+          return {
+            ...state,
+            slidingImages: action.slidingImages,
+          };
+
+          case LOAD_SLIDING_IMAGES_FAILURE:
+          return {
+            ...state,
+            slidingImages: undefined,
           };
 
         default:

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {View, StyleSheet} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import Slideshow from 'react-native-image-slider-show';
 
 export default class MSP extends Component {
 
@@ -11,6 +12,7 @@ export default class MSP extends Component {
         <View style={styles.background}>
           <View style={styles.topBarContainer}>
           </View>
+          <Slideshow dataSource = {this.props.images ? this.props.images : []} height = {hp(26.5)} width = {wp(100)}/>
         </View>
       </LinearGradient>);
   }
