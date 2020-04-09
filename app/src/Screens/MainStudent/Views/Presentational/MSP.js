@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
-import {TouchableOpacity, Text, Image, View, StyleSheet} from 'react-native';
+import {FlatList, TouchableOpacity, Text, Image, View, StyleSheet} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import Slideshow from 'react-native-image-slider-show';
-import FitImage from 'react-native-fit-image';
-import { getRegularFont, getBoldFont } from '../../../../Commons/Fonts';
+import { getBoldFont, getRegularFont } from '../../../../Commons/Fonts';
 
 export default class MSP extends Component {
 
@@ -41,12 +40,65 @@ export default class MSP extends Component {
             </Text> 
 
             {(this.props.reservations) ? 
-            <FlatList contentContainerStyle={{ flexGrow: 1 }}/> : 
+            <FlatList contentContainerStyle={{ marginLeft: wp(3),marginTop: hp(5),flexGrow: 1 }}
+            data={this.props.reservations} 
+            renderItem={
+              ({ item, index }) => { return( console.log(item),
+                <TouchableOpacity style={{backgroundColor: 'transparent', height: hp(16), width: wp(61.3)}} onPress={ () => {this.props.onReservationClick(item, index)}}>
+                  <Image source={{uri: this.props.reservations.photos[index]}} style={{height: hp(16), width: wp(61.3), resizeMode: 'stretch'}}/>
+                  <View style={{alignItems: 'center', justifyContent: 'center', flexDirection: 'column', opacity: .6, position: 'absolute', backgroundColor: 'green', width: wp(61.3), height: hp(16)}}>
+                    <View style={{alignItems: 'center', justifyContent: 'center', backgroundColor: 'transparent', flexDirection: 'row', width: wp(61.3), height: hp(3)}}>
+                      <Text 
+                          numberOfLines={1} style={{marginLeft: wp(1), fontSize: hp(2.5),fontWeight: '400',textAlign: 'center',color: '#ffffff',fontFamily: getRegularFont()}}>
+                              {'Name : '}
+                      </Text> 
+                      <Text 
+                          numberOfLines={1} style={{marginLeft: wp(1), fontSize: hp(2.5),fontWeight: '400',textAlign: 'center',color: '#ffffff',fontFamily: getRegularFont()}}>
+                              {item.Name}
+                      </Text> 
+                    </View>
+                    <View style={{alignItems: 'center', justifyContent: 'center', backgroundColor: 'transparent', flexDirection: 'row', width: wp(61.3), height: hp(3)}}>
+                      <Text 
+                          numberOfLines={1} style={{marginLeft: wp(1), fontSize: hp(2.5),fontWeight: '400',textAlign: 'center',color: '#ffffff',fontFamily: getRegularFont()}}>
+                              {'Cost : '}
+                      </Text> 
+                      <Text 
+                          numberOfLines={1} style={{marginLeft: wp(1), fontSize: hp(2.5),fontWeight: '400',textAlign: 'center',color: '#ffffff',fontFamily: getRegularFont()}}>
+                              {item.Cost}
+                      </Text> 
+                    </View>
+                    <View style={{alignItems: 'center', justifyContent: 'center', backgroundColor: 'transparent', flexDirection: 'row', width: wp(61.3), height: hp(3)}}>
+                      <Text 
+                          numberOfLines={1} style={{marginLeft: wp(1), fontSize: hp(2.5),fontWeight: '400',textAlign: 'center',color: '#ffffff',fontFamily: getRegularFont()}}>
+                              {'Date : '}
+                      </Text> 
+                      <Text 
+                          numberOfLines={1} style={{marginLeft: wp(1), fontSize: hp(2.5),fontWeight: '400',textAlign: 'center',color: '#ffffff',fontFamily: getRegularFont()}}>
+                              {item.Date}
+                      </Text> 
+                    </View>
+                    <View style={{alignItems: 'center', justifyContent: 'center', backgroundColor: 'transparent', flexDirection: 'row', width: wp(61.3), height: hp(3)}}>
+                      <Text 
+                          numberOfLines={1} style={{marginLeft: wp(1), fontSize: hp(2.5),fontWeight: '400',textAlign: 'center',color: '#ffffff',fontFamily: getRegularFont()}}>
+                              {'Time : '}
+                      </Text> 
+                      <Text 
+                          numberOfLines={1} style={{marginLeft: wp(1), fontSize: hp(2.5),fontWeight: '400',textAlign: 'center',color: '#ffffff',fontFamily: getRegularFont()}}>
+                              {item.Time}
+                      </Text> 
+                    </View>
+                  </View>
+                </TouchableOpacity>
+              )}
+            }
+            horizontal={true}
+            keyExtractor={(item, index) => index.toString()}/> : 
             <TouchableOpacity style={{marginTop: hp(5), justifyContent: "center",borderRadius: hp(6), height: hp(15), width: wp(90.3) , backgroundColor: '#006b31', alignSelf: 'center'}} onPress={this.props.reservationPress}>
             <Text 
                 numberOfLines={1} style={{fontSize: hp(2),fontWeight: '700',textAlign: 'center',color: '#ffffff',fontFamily: getBoldFont()}}>
                     {'You Have Not Reserved Any Lessons'}
             </Text></TouchableOpacity> }
+
           </View>
           <View style={styles.categoriesContainer}>
             <Text 

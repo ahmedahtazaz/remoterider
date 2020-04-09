@@ -1,4 +1,4 @@
-import { LOAD_DATA, LOAD_DATA_SUCCESS, LOAD_DATA_FAILURE, LOAD_SLIDING_IMAGES, LOAD_SLIDING_IMAGES_SUCCESS, LOAD_SLIDING_IMAGES_FAILURE } from "../../../Commons/Constants";
+import { LOAD_PHOTO, LOAD_PHOTO_SUCCESS, LOAD_PHOTO_FAILURE, LOAD_SLIDING_IMAGES, LOAD_SLIDING_IMAGES_SUCCESS, LOAD_SLIDING_IMAGES_FAILURE, LOAD_RESERVATIONS_SUCCESS, LOAD_RESERVATIONS_FAILURE, LOAD_RESERVATIONS} from "../../../Commons/Constants";
 import {put, takeLatest} from 'redux-saga/effects';
 import firestore from '@react-native-firebase/firestore';
 import storage from '@react-native-firebase/storage';
@@ -22,10 +22,9 @@ function* loadSlidingImages(action) {
         yield put({type: LOAD_SLIDING_IMAGES_FAILURE});
 }
 
-function* loadData(action) {
+function* loadPhoto(action) {
 
-    let reservations = undefined;
-    let categories = undefined;
+    let photo = undefined;
 
     var currentUser = auth().currentUser;
 
@@ -33,13 +32,56 @@ function* loadData(action) {
 
     if(photo)
     {
-        yield put({type: LOAD_DATA_SUCCESS, photo: photo});
+        yield put({type: LOAD_PHOTO_SUCCESS, photo: photo});
     }
     else
-        yield put({type: LOAD_DATA_FAILURE});
+        yield put({type: LOAD_PHOTO_FAILURE});
+}
+
+function* loadReservations(action) {
+
+    let reservations = yield* loadReservationsInner();
+
+    if(reservations)
+    {
+        yield put({type: LOAD_RESERVATIONS_SUCCESS, reservations: reservations});
+    }
+    else
+        yield put({type: LOAD_RESERVATIONS_FAILURE});
+}
+
+function* loadReservationsInner() {
+
+    let data = undefined;
+    let reservations = undefined;
+
+    var currentUser = auth().currentUser;
+
+    yield firestore().collection('Reservations').doc(currentUser.uid).get().
+    then((doc) => {data = JSON.parse(doc.data().Reservations)}).catch((err) => {console.log(err)});
+
+    if(data)
+    {
+        reservations = data.map( (s) => {return s});
+
+        if(reservations)
+        {
+            let photos = [];
+
+            for(let i = 0; i < reservations.length; i++)
+            {
+                yield storage().ref(reservations[i].uuid+'.png').getDownloadURL().then((url) => {photos[i] = url}).catch((err) => {photos[i] = undefined, console.log(err)});
+            }
+
+            reservations.photos = photos;
+        }
+    }
+
+    return reservations;
 }
 
 export default function* loadDataActionWatcher() {
     yield takeLatest(`${LOAD_SLIDING_IMAGES}`, loadSlidingImages);
-    yield takeLatest(`${LOAD_DATA}`, loadData);
+    yield takeLatest(`${LOAD_PHOTO}`, loadPhoto);
+    yield takeLatest(`${LOAD_RESERVATIONS}`, loadReservations);
 }

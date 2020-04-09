@@ -1,4 +1,4 @@
-import {LOAD_DATA_SUCCESS, LOAD_DATA_FAILURE, LOAD_SLIDING_IMAGES_SUCCESS, LOAD_SLIDING_IMAGES_FAILURE} from '../../../Commons/Constants'
+import {LOAD_PHOTO_SUCCESS, LOAD_PHOTO_FAILURE, LOAD_SLIDING_IMAGES_SUCCESS, LOAD_SLIDING_IMAGES_FAILURE, LOAD_RESERVATIONS_SUCCESS, LOAD_RESERVATIONS_FAILURE} from '../../../Commons/Constants'
 
 const INITIAL_STATE = {
     reservations: undefined,
@@ -11,19 +11,15 @@ export default function mscReducer() {
     return function reducer(state = INITIAL_STATE, action) {
       switch (action.type) {
 
-        case LOAD_DATA_SUCCESS:
+        case LOAD_PHOTO_SUCCESS:
           return {
             ...state,
-            reservations: action.reservations,
-            categories: action.categories,
             photo: action.photo,
           };
 
-          case LOAD_DATA_FAILURE:
+          case LOAD_PHOTO_FAILURE:
           return {
             ...state,
-            reservations: undefined,
-            categories: undefined,
             photo: undefined,
           };
 
@@ -37,6 +33,18 @@ export default function mscReducer() {
           return {
             ...state,
             slidingImages: undefined,
+          };
+
+          case LOAD_RESERVATIONS_SUCCESS:
+          return {
+            ...state,
+            reservations: action.reservations,
+          };
+
+          case LOAD_RESERVATIONS_FAILURE:
+          return {
+            ...state,
+            reservations: undefined,
           };
 
         default:
