@@ -12,6 +12,7 @@ class MSC extends Component {
 
       this.backButtonPress = this.backButtonPress.bind(this);
       this.menuPress = this.menuPress.bind(this);
+      this.profilePress = this.profilePress.bind(this);
   }
 
   componentDidMount()
@@ -30,8 +31,13 @@ class MSC extends Component {
 
   }
 
+  profilePress()
+  {
+
+  }
+
   render() {
-        return (<MSP images={this.props.slidingImages} backButton={this.backButtonPress} menuPress = {this.menuPress} photo = {this.props.photo}/>);
+        return (<MSP images={this.props.slidingImages} backButton={this.backButtonPress} menuPress = {this.menuPress} photo = {this.props.photo} profilePress={this.profilePress}/>);
   }
 }
 
