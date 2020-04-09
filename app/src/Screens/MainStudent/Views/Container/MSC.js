@@ -11,6 +11,7 @@ class MSC extends Component {
       super(props);
 
       this.backButtonPress = this.backButtonPress.bind(this);
+      this.menuPress = this.menuPress.bind(this);
   }
 
   componentDidMount()
@@ -24,8 +25,13 @@ class MSC extends Component {
     RNExitApp.exitApp();
   }
 
+  menuPress()
+  {
+
+  }
+
   render() {
-        return (<MSP images={this.props.slidingImages} backButton={this.backButtonPress}/>);
+        return (<MSP images={this.props.slidingImages} backButton={this.backButtonPress} menuPress = {this.menuPress} photo = {this.props.photo}/>);
   }
 }
 
