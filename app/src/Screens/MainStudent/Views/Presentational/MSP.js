@@ -33,6 +33,36 @@ export default class MSP extends Component {
             </TouchableOpacity>
           </View>
           <Slideshow dataSource = {this.props.images ? this.props.images : []} height = {hp(26.5)} width = {wp(100)}/>
+          <View style={styles.reservationsContainer}>
+
+            <Text 
+                numberOfLines={1} style={{marginLeft: wp(3), position: 'absolute', left: 0, fontSize: hp(3),fontWeight: '700',textAlign: 'center',color: '#ffffff',fontFamily: getBoldFont()}}>
+                    {'Your Reservations'}
+            </Text> 
+
+            {(this.props.reservations) ? 
+            <FlatList contentContainerStyle={{ flexGrow: 1 }}/> : 
+            <TouchableOpacity style={{marginTop: hp(5), justifyContent: "center",borderRadius: hp(6), height: hp(15), width: wp(90.3) , backgroundColor: '#006b31', alignSelf: 'center'}} onPress={this.props.reservationPress}>
+            <Text 
+                numberOfLines={1} style={{fontSize: hp(2),fontWeight: '700',textAlign: 'center',color: '#ffffff',fontFamily: getBoldFont()}}>
+                    {'You Have Not Reserved Any Lessons'}
+            </Text></TouchableOpacity> }
+          </View>
+          <View style={styles.categoriesContainer}>
+            <Text 
+                numberOfLines={1} style={{marginLeft: wp(3), position: 'absolute', left: 0, fontSize: hp(3),fontWeight: '700',textAlign: 'center',color: '#ffffff',fontFamily: getBoldFont()}}>
+                    {'Available Categories'}
+            </Text> 
+
+            {(this.props.categories) ? 
+            <FlatList contentContainerStyle={{ flexGrow: 1 }}/> : 
+            <TouchableOpacity style={{marginTop: hp(5), justifyContent: "center",borderRadius: hp(6), height: hp(15), width: wp(90.3) , backgroundColor: '#006b31', alignSelf: 'center'}} onPress={this.props.reservationPress}>
+            <Text 
+                numberOfLines={1} style={{fontSize: hp(2),fontWeight: '700',textAlign: 'center',color: '#ffffff',fontFamily: getBoldFont()}}>
+                    {'No Available Categories For Reservation'}
+            </Text></TouchableOpacity> }
+
+          </View>
         </View>
       </LinearGradient>);
   }
@@ -51,5 +81,19 @@ const styles = StyleSheet.create({
     height: hp(11.5),
     flexDirection:'row',
     backgroundColor: '#5a9c79'
+  },
+  reservationsContainer: {
+    width: wp(100),
+    height: hp(22),
+    flexDirection:'column',
+    backgroundColor: 'transparent',
+    marginTop: hp(6.8)
+  },
+  categoriesContainer: {
+    width: wp(100),
+    height: hp(22),
+    flexDirection:'column',
+    backgroundColor: 'transparent',
+    marginTop: hp(6.8)
   },
 })
