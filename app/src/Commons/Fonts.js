@@ -1,7 +1,7 @@
 
 
 export function getBoldFont(){
-    return 'CORBELB';
+    return 'CUSTOM';
 }
 
 export function getRegularFont(){

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import SplashP from '../Presentational/SplashP'
 import { connect } from 'react-redux';
 import auth from '@react-native-firebase/auth';
-import { signInUserAction, moveToWelcome1Action, signInSuccessAction, signInFailureAction, checkUserTypeAction, moveToMSAction } from '../../Actions/SignInA';
+import { signOutUserAction, signInUserAction, moveToWelcome1Action, signInSuccessAction, signInFailureAction, checkUserTypeAction, moveToMSAction } from '../../Actions/SignInA';
 
 class SplashC extends Component {
 
@@ -18,6 +18,7 @@ class SplashC extends Component {
 
   componentDidMount()
   {
+    this.props.signOutUser();
     auth().onAuthStateChanged(this.signInCallBack);
   }
 
@@ -25,7 +26,7 @@ class SplashC extends Component {
   {
     if (user) 
     {
-      this.props.checkUserType();
+      //this.props.checkUserType();
       this.signInSuccess();
     } 
     else 
@@ -76,6 +77,7 @@ const mapDispatchToProps = (dispatch) => {
       moveToWelcome1: (navigation) => moveToWelcome1Action(navigation),
       checkUserType: () => dispatch(checkUserTypeAction()),
       moveToMS: (navigation) => moveToMSAction(navigation),
+      signOutUser: () => dispatch(signOutUserAction()),
   };
 };
 

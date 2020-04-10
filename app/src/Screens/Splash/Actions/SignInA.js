@@ -1,4 +1,4 @@
-import { SIGN_IN_USER, SIGN_IN_SUCCESS, SIGN_IN_FAILURE, CHECK_USER_TYPE } from "../../../Commons/Constants";
+import { SIGN_IN_USER, SIGN_IN_SUCCESS, SIGN_IN_FAILURE, CHECK_USER_TYPE, SIGN_OUT_USER } from "../../../Commons/Constants";
 
 export const signInUserAction = (email, password) => {
     return {
@@ -32,4 +32,10 @@ export const signInUserAction = (email, password) => {
 
   export const moveToMSAction = (navigation) => {
     return navigation.navigate('Main Student Screen'); 
+  };
+
+  export const signOutUserAction = () => {
+    return {
+      type:`${SIGN_OUT_USER}`,
+    }
   };

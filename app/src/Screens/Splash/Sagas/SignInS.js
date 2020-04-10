@@ -1,4 +1,4 @@
-import { SIGN_IN_USER, SIGN_IN_FAILURE, SIGN_IN_SUCCESS, CHECK_USER_TYPE, CHECK_USER_SUCCESS, CHECK_USER_FAILURE } from "../../../Commons/Constants";
+import { SIGN_IN_USER, SIGN_IN_FAILURE, SIGN_IN_SUCCESS, CHECK_USER_TYPE, CHECK_USER_SUCCESS, CHECK_USER_FAILURE, SIGN_OUT_USER } from "../../../Commons/Constants";
 import {put, takeLatest} from 'redux-saga/effects';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
@@ -7,7 +7,7 @@ function* signInUser(action) {
 
     let success = false;
 
-    auth().signInWithEmailAndPassword(
+    yield auth().signInWithEmailAndPassword(
         action.email, 
         action.password).then(() => {success = true}).catch((err) => {success = false, console.log(err)});
 
@@ -33,7 +33,22 @@ function* checkUserType(action) {
         yield put({type: CHECK_USER_FAILURE});
 }
 
+function* signOutUser(action) {
+
+    let success = false;
+
+    yield auth()
+    .signOut()
+    .then(() => success = true).catch((err) => console.log(err));
+
+    if(success)
+        yield put({type: SIGN_IN_FAILURE});
+    else
+        yield put({type: SIGN_IN_SUCCESS});
+}
+
 export default function* signInActionWatcher() {
     yield takeLatest(`${SIGN_IN_USER}`, signInUser);
     yield takeLatest(`${CHECK_USER_TYPE}`, checkUserType);
+    yield takeLatest(`${SIGN_OUT_USER}`, signOutUser);
 }
