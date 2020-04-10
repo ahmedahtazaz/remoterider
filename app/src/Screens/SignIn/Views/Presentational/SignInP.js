@@ -41,6 +41,13 @@ export default class SignInP extends Component {
             </View>
         </View>
 
+        <TouchableOpacity style={styles.forgotPasswordContainer} onPress={this.props.forgotPasswordHandler}>
+            <Text 
+                numberOfLines={1} style={styles.forgotText}>
+                    {'Forgot Password?'}
+            </Text> 
+        </TouchableOpacity>
+
         <TouchableOpacity style={styles.signInButton} onPress={this.props.signInButtonHandler}>
             <Text 
                 numberOfLines={1} style={styles.buttonText}>
@@ -90,10 +97,9 @@ const styles = StyleSheet.create({
         borderRadius: hp(1),
         backgroundColor: '#5a9c79',
         height: hp(5.5),
-        marginTop: hp(1),
         alignSelf: 'center',
         marginBottom: hp(5),
-        marginTop: hp(5)
+        marginTop: hp(1)
     },
     fieldMaincontainerStyle:{
         flexDirection: 'row',
@@ -124,5 +130,22 @@ const styles = StyleSheet.create({
         marginLeft: wp(3),
         borderBottomWidth: hp(.1),
         borderBottomColor: '#598a6f',
+    },
+    forgotText: {
+        fontSize: hp(2),
+        fontWeight: '700',
+        textAlign: 'center',
+        color: '#ffffff',
+        fontFamily: getBoldFont()
+    },
+    forgotPasswordContainer: {
+        justifyContent: "center",
+        width: wp(55),
+        borderRadius: hp(1),
+        backgroundColor: 'transparent',
+        height: hp(5.5),
+        marginTop: hp(1),
+        alignSelf: 'center',
+        marginBottom: hp(1),
     },
 })

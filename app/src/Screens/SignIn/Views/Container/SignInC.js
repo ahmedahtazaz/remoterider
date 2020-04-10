@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import SignInP from '../Presentational/SignInP'
 import User from '../../../../Commons/User';
-import { signInUserAction, negativeAction, errorDialogueAction, clearSignInErrorAction, showLoaderAction, hideLoaderAction } from '../../../Splash/Actions/SignInA';
+import { clearforgotPasswordAction, forgotPasswordAction, signInUserAction, negativeAction, errorDialogueAction, clearSignInErrorAction, showLoaderAction, hideLoaderAction } from '../../../Splash/Actions/SignInA';
 
 class SignInC extends Component {
 
@@ -16,12 +16,14 @@ class SignInC extends Component {
       this.passwordHandler = this.passwordHandler.bind(this);
       this.signInButtonHandler = this.signInButtonHandler.bind(this);
       this.negativePressed = this.negativePressed.bind(this);
+      this.forgotPasswordHandler = this.forgotPasswordHandler.bind(this);
   }
 
   negativePressed()
   {
     this.props.negativeButtonPressed();
     this.props.clearSignInError();
+    this.props.clearForgotPassword();
   }
 
   signInButtonHandler()
@@ -46,14 +48,30 @@ class SignInC extends Component {
     this.user.password = event;
   }
 
+  forgotPasswordHandler()
+  {
+      console.log('forgot password handler')
+      if(this.user.email)
+      {
+        this.props.forgotPassword(this.user.email);
+      }
+      else{
+        this.props.showErrorDialogue(this.negativePressed, 'Please Enter Your Email First');
+      }  
+  }
+
   render() {
 
     if(this.props.signInError)
     {
       this.props.showErrorDialogue(this.negativePressed, this.props.signInError);
     }
+    else if(this.props.forGotPasswordResponse)
+    {
+        this.props.showErrorDialogue(this.negativePressed, this.props.forGotPasswordResponse);
+    }
 
-    return (<SignInP loader={this.props.loader} signInButtonHandler={this.signInButtonHandler} emailHandler={this.emailHandler} passwordHandler={this.passwordHandler} />);
+    return (<SignInP forgotPasswordHandler={this.forgotPasswordHandler} loader={this.props.loader} signInButtonHandler={this.signInButtonHandler} emailHandler={this.emailHandler} passwordHandler={this.passwordHandler} />);
   }
 }
 
@@ -66,6 +84,8 @@ const mapDispatchToProps = (dispatch) => {
     clearSignInError: () => dispatch(clearSignInErrorAction()),
     showLoader: () => dispatch(showLoaderAction()),
     hideLoader: () => dispatch(hideLoaderAction()),
+    forgotPassword: (email) => dispatch(forgotPasswordAction(email)),
+    clearForgotPassword: () => dispatch(clearforgotPasswordAction()),
   };
 };
 
@@ -73,6 +93,7 @@ const mapStateToProps = (state) => {
   return {
     signInError: state.signInReducer.errMessage,
     loader: state.signInReducer.loader,
+    forGotPasswordResponse: state.signInReducer.forGotPasswordResponse,
   };
 };
 
