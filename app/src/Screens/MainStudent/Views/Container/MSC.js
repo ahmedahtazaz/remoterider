@@ -18,7 +18,6 @@ class MSC extends Component {
 
   componentDidMount()
   {
-    console.log('msc')
     this.props.loadPhoto();
     this.props.loadSlidingImages();
     this.props.loadReservations();

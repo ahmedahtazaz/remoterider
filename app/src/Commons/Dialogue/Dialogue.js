@@ -9,8 +9,6 @@ class Dialogue extends React.PureComponent {
 
     render(){
 
-        console.log(this.props);
-
         return(
             <Dialog visible={this.props.visible} footer={
                 <DialogFooter>
