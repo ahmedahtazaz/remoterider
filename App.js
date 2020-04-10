@@ -12,6 +12,7 @@ import Welcome2 from './app/src/Screens/Welcome2/Views/Container/Welcome2C';
 import SAStudent from './app/src/Screens/SignUpStudent/Views/Container/SASC';
 import SAInstructor from './app/src/Screens/SignUpTeacher/Views/Container/SAIC';
 import MSC from './app/src/Screens/MainStudent/Views/Container/MSC';
+import SignInC from './app/src/Screens/SignIn/Views/Container/SignInC';
 
 const sagaMiddleware = createSagaMiddleware();
 const store = createStore(createRootReducer(), compose(applyMiddleware(sagaMiddleware),),);
@@ -29,10 +30,11 @@ export default class App extends Component {
             <Stack.Navigator >
               <Stack.Screen name="Splash" component={Splash} options={{ headerShown: false}}/>
               <Stack.Screen name="Welcome" component={Welcome1} options={{ headerShown: false}}/>
-              <Stack.Screen name="Sign Up" component={Welcome2} options={{ headerShown: true, headerStyle: {backgroundColor: '#5a9c79' }}}/>
-              <Stack.Screen name="Student Sign Up" component={SAStudent} options={{ headerShown: true, headerStyle: {backgroundColor: '#5a9c79'}}}/>
-              <Stack.Screen name="Instructor Sign Up" component={SAInstructor} options={{ headerShown: true, headerStyle: {backgroundColor: '#5a9c79'}}}/>
+              <Stack.Screen name="Sign Up" component={Welcome2} options={{ headerShown: false}}/>
+              <Stack.Screen name="Student Sign Up" component={SAStudent} options={{ headerShown: false}}/>
+              <Stack.Screen name="Instructor Sign Up" component={SAInstructor} options={{ headerShown: false}}/>
               <Stack.Screen name="Main Student Screen" component={MSC} options={{ headerShown: false}}/>
+              <Stack.Screen name="Sign In" component={SignInC} options={{ headerShown: false}}/>
             </Stack.Navigator>
           </NavigationContainer>    
       </Provider>

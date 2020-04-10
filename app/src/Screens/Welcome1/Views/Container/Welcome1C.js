@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Welcome1P from '../Presentational/Welcome1P'
-import { moveToWelcome2Action } from '../../Actions/Welcome1A';
+import { moveToSignUpAction, moveToSignInAction } from '../../Actions/Welcome1A';
 import RNExitApp from 'react-native-exit-app';
 
 class Welcome1C extends Component {
@@ -26,7 +26,7 @@ class Welcome1C extends Component {
 
   signInPress()
   {
-
+    this.props.signInPress(this.props.navigation);
   }
 
   render() {
@@ -37,13 +37,13 @@ class Welcome1C extends Component {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    signUpPress: (navigation) => moveToWelcome2Action(navigation),
+    signUpPress: (navigation) => moveToSignUpAction(navigation),
+    signInPress: (navigation) => moveToSignInAction(navigation),
   };
 };
 
 const mapStateToProps = (state) => {
   return {
-    authenticated: state.signInReducer.authenticated,
   };
 };
 

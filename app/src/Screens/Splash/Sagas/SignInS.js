@@ -6,15 +6,16 @@ import firestore from '@react-native-firebase/firestore';
 function* signInUser(action) {
 
     let success = false;
+    let error = undefined;
 
     yield auth().signInWithEmailAndPassword(
         action.email, 
-        action.password).then(() => {success = true}).catch((err) => {success = false, console.log(err)});
+        action.password).then(() => {success = true}).catch((err) => {success = false, error = err.message});
 
     if(success)
         yield put({type: SIGN_IN_SUCCESS});
     else
-        yield put({type: SIGN_IN_FAILURE});
+        yield put({type: SIGN_IN_FAILURE, errMessage: error});
 }
 
 function* checkUserType(action) {
