@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import SASP from '../Presentational/SASP'
 import User from '../../../../Commons/User';
 import ImagePicker from 'react-native-image-crop-picker';
-import { clearSignUpErrorAction, errorDialogueAction, setPhotoAction, negativeAction, tcDialogueActionAction, toggleCheckBoxAction, signUpUserAction } from '../../Actions/SASA';
+import { hideLoaderAction, showLoaderAction, clearSignUpErrorAction, errorDialogueAction, setPhotoAction, negativeAction, tcDialogueActionAction, toggleCheckBoxAction, signUpUserAction } from '../../Actions/SASA';
 
 class SASC extends Component {
 
@@ -44,6 +44,9 @@ class SASC extends Component {
     {
         this.user.isInstructor = false;
         this.user.image = this.props.photo;
+
+        this.props.showLoader();
+        
         this.props.signUpUser(this.user);
     }
     else{
@@ -79,9 +82,11 @@ class SASC extends Component {
 
   render() {
     if(this.props.signUpError)
+    {
       this.props.showErrorDialogue(this.negativePressed, this.props.signUpError);
+    }
 
-    return (<SASP photoHint={this.props.photo !== undefined ? this.props.photo.filename : 'Tap to Add Photo'} onTCPress={this.tcCheckBoxHandler} signUpButtonHandler={this.signUpButtonHandler} userNameHandler={this.userNameHandler} emailHandler={this.emailHandler} passwordHandler={this.passwordHandler} photoHandler={this.photoHandler}/>);
+    return (<SASP loader={this.props.loader} photoHint={this.props.photo !== undefined ? this.props.photo.filename : 'Tap to Add Photo'} onTCPress={this.tcCheckBoxHandler} signUpButtonHandler={this.signUpButtonHandler} userNameHandler={this.userNameHandler} emailHandler={this.emailHandler} passwordHandler={this.passwordHandler} photoHandler={this.photoHandler}/>);
   }
 }
 
@@ -95,6 +100,8 @@ const mapDispatchToProps = (dispatch) => {
     setPhoto: (photo) => dispatch(setPhotoAction(photo)),
     showErrorDialogue: (negativeButtonPressed, message) => dispatch(errorDialogueAction(negativeButtonPressed, message)),
     clearSignUpError: () => dispatch(clearSignUpErrorAction()),
+    showLoader: () => dispatch(showLoaderAction()),
+    hideLoader: () => dispatch(hideLoaderAction()),
   };
 };
 
@@ -103,6 +110,7 @@ const mapStateToProps = (state) => {
     isTCChecked: state.checkboxReducer.checked,
     photo: state.photoReducer.photo,
     signUpError: state.signUpReducer.errMessage,
+    loader: state.signUpReducer.loader,
   };
 };
 

@@ -1,7 +1,7 @@
-import {SIGN_UP_SUCCESS, SIGN_UP_FAILURE, CLEAR_SIGN_UP_ERROR} from './Constants'
+import {SIGN_UP_SUCCESS, SIGN_UP_FAILURE, CLEAR_SIGN_UP_ERROR, HIDE_SIGN_UP_LOADER, SHOW_SIGNUP_LOADER} from './Constants'
 const INITIAL_STATE = {
     errMessage: undefined,
-
+    loader: false,
   };
 
 export default function signUpReducer() {
@@ -12,18 +12,32 @@ export default function signUpReducer() {
           return {
             ...state,
             errMessage: undefined,
+            loader: false,
           };
 
           case SIGN_UP_FAILURE:
           return {
             ...state,
             errMessage: action.errorMessage,
+            loader: false,
           };
 
           case CLEAR_SIGN_UP_ERROR:
           return {
             ...state,
             errMessage: undefined,
+          };
+
+          case SHOW_SIGNUP_LOADER:
+          return {
+            ...state,
+            loader: true,
+          };
+
+          case HIDE_SIGN_UP_LOADER:
+          return {
+            ...state,
+            loader: false,
           };
 
         default:

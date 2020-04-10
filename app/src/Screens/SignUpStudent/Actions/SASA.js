@@ -1,4 +1,4 @@
-import { CLEAR_SIGN_UP_ERROR, SET_DIALOGUE, TOGGLE_CHECKBOX, SIGN_UP_USER, SET_PHOTO } from "../../../Commons/Constants";
+import { CLEAR_SIGN_UP_ERROR, SET_DIALOGUE, TOGGLE_CHECKBOX, SIGN_UP_USER, SET_PHOTO, SHOW_SIGNUP_LOADER, HIDE_SIGN_UP_LOADER} from "../../../Commons/Constants";
 
 export const signUpUserAction = (user) => {
     return {
@@ -55,5 +55,17 @@ export const signUpUserAction = (user) => {
   export const clearSignUpErrorAction = () => {
     return {
       type:`${CLEAR_SIGN_UP_ERROR}`
+    }
+  };
+
+  export const showLoaderAction = () => {
+    return {
+      type:`${SHOW_SIGNUP_LOADER}`
+    }
+  };
+
+  export const hideLoaderAction = () => {
+    return {
+      type:`${HIDE_SIGN_UP_LOADER}`,
     }
   };

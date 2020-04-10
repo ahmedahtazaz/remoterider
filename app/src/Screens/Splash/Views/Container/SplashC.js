@@ -18,7 +18,7 @@ class SplashC extends Component {
 
   componentDidMount()
   {
-    this.props.signOutUser();
+    //this.props.signOutUser();
     auth().onAuthStateChanged(this.signInCallBack);
   }
 
@@ -26,7 +26,7 @@ class SplashC extends Component {
   {
     if (user) 
     {
-      //this.props.checkUserType();
+      this.props.checkUserType();
       this.signInSuccess();
     } 
     else 

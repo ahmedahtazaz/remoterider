@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {TextInput, TouchableOpacity, Text, Image, View, StyleSheet, KeyboardAvoidingView, ScrollView} from 'react-native';
+import {TextInput, TouchableOpacity, Text, Image, View, StyleSheet, ActivityIndicator} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import Hyperlink from 'react-native-hyperlink';
@@ -22,7 +22,6 @@ export default class App extends Component {
       contentContainerStyle={{flexGrow: 1}}
     >
       <LinearGradient colors={['#006b31', '#00652e', '#005e2b' , '#005326', '#004b22', '#00411e', '#003a1b', '#003619']} style={{flex: 1}}>      
-        
         <Image source={topStyle} style={styles.topStyle}/>
 
         <Text 
@@ -73,6 +72,7 @@ export default class App extends Component {
             </Text> 
         </TouchableOpacity>
         <Dialogue/>
+        {(this.props.loader) ? <View style={{alignSelf: 'center', height: hp(100), width: wp(100), justifyContent: 'center', position: 'absolute', zIndex: 1000}}><ActivityIndicator size="large" color="white" animating={this.props.loader}/></View> : null}
       </LinearGradient></KeyboardAwareScrollView>);
   }
 }
