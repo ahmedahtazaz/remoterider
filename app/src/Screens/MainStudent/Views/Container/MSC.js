@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import MSP from '../Presentational/MSP'
 import { connect } from 'react-redux';
-import {loadPhotoAction, loadSlidingImagesAction, loadReservationsAction} from '../../Actions/MSA';
+import {loadPhotoAction, loadSlidingImagesAction, loadReservationsAction, loadCategoriesAction} from '../../Actions/MSA';
 import RNExitApp from 'react-native-exit-app';
 
 class MSC extends Component {
@@ -21,6 +21,7 @@ class MSC extends Component {
     this.props.loadPhoto();
     this.props.loadSlidingImages();
     this.props.loadReservations();
+    this.props.loadCategories();
   }
 
   backButtonPress()
@@ -43,8 +44,13 @@ class MSC extends Component {
 
   }
 
+  onCategoriesClick(item, index)
+  {
+
+  }
+
   render() {
-        return (<MSP onReservationClick={this.onReservationClick} reservations={this.props.reservations} images={this.props.slidingImages} backButton={this.backButtonPress} menuPress = {this.menuPress} photo = {this.props.photo} profilePress={this.profilePress}/>);
+        return (<MSP onCategoriesClick={this.onCategoriesClick} categories={this.props.categories} onReservationClick={this.onReservationClick} reservations={this.props.reservations} images={this.props.slidingImages} backButton={this.backButtonPress} menuPress = {this.menuPress} photo = {this.props.photo} profilePress={this.profilePress}/>);
   }
 }
 
@@ -54,6 +60,7 @@ const mapDispatchToProps = (dispatch) => {
     loadPhoto: () => dispatch(loadPhotoAction()),
     loadSlidingImages: () => dispatch(loadSlidingImagesAction()),
     loadReservations: () => dispatch(loadReservationsAction()),
+    loadCategories: () => dispatch(loadCategoriesAction()),
   };
 };
 

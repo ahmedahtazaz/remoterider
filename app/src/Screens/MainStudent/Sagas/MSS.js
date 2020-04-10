@@ -1,4 +1,4 @@
-import { LOAD_PHOTO, LOAD_PHOTO_SUCCESS, LOAD_PHOTO_FAILURE, LOAD_SLIDING_IMAGES, LOAD_SLIDING_IMAGES_SUCCESS, LOAD_SLIDING_IMAGES_FAILURE, LOAD_RESERVATIONS_SUCCESS, LOAD_RESERVATIONS_FAILURE, LOAD_RESERVATIONS} from "../../../Commons/Constants";
+import { LOAD_PHOTO, LOAD_PHOTO_SUCCESS, LOAD_PHOTO_FAILURE, LOAD_SLIDING_IMAGES, LOAD_SLIDING_IMAGES_SUCCESS, LOAD_SLIDING_IMAGES_FAILURE, LOAD_RESERVATIONS_SUCCESS, LOAD_RESERVATIONS_FAILURE, LOAD_RESERVATIONS, LOAD_CATEGORIES, LOAD_CATEGORIES_SUCCESS, LOAD_CATEGORIES_FAILURE} from "../../../Commons/Constants";
 import {put, takeLatest} from 'redux-saga/effects';
 import firestore from '@react-native-firebase/firestore';
 import storage from '@react-native-firebase/storage';
@@ -80,8 +80,28 @@ function* loadReservationsInner() {
     return reservations;
 }
 
+function* loadCategories(action) {
+
+    let categories = undefined;
+    let data = undefined;
+
+
+    yield firestore().collection('Categories').doc('Available').get().
+    then((doc) => {data = JSON.parse(doc.data().Categories)}).catch((err) => {console.log(err)});
+
+    if(data)
+    {
+        categories = data.map( (s) => {return s});
+
+        yield put({type: LOAD_CATEGORIES_SUCCESS, categories: categories});
+    }
+    else
+        yield put({type: LOAD_CATEGORIES_FAILURE});
+}
+
 export default function* loadDataActionWatcher() {
     yield takeLatest(`${LOAD_SLIDING_IMAGES}`, loadSlidingImages);
     yield takeLatest(`${LOAD_PHOTO}`, loadPhoto);
     yield takeLatest(`${LOAD_RESERVATIONS}`, loadReservations);
+    yield takeLatest(`${LOAD_CATEGORIES}`, loadCategories);
 }

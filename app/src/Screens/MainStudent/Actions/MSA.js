@@ -1,4 +1,4 @@
-import {LOAD_PHOTO, LOAD_SLIDING_IMAGES, LOAD_RESERVATIONS} from '../../../Commons/Constants'
+import {LOAD_PHOTO, LOAD_SLIDING_IMAGES, LOAD_RESERVATIONS, LOAD_CATEGORIES} from '../../../Commons/Constants'
 
 export const loadPhotoAction = () => {
     return {
@@ -15,5 +15,11 @@ export const loadPhotoAction = () => {
   export const loadReservationsAction = () => {
     return {
       type:`${LOAD_RESERVATIONS}`,
+    }
+  };
+
+  export const loadCategoriesAction = () => {
+    return {
+      type:`${LOAD_CATEGORIES}`,
     }
   };

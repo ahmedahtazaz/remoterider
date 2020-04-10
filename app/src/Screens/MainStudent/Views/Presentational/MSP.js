@@ -44,7 +44,7 @@ export default class MSP extends Component {
             data={this.props.reservations} 
             renderItem={
               ({ item, index }) => { return(
-                <TouchableOpacity style={{backgroundColor: 'transparent', height: hp(16), width: wp(61.3)}} onPress={ () => {this.props.onReservationClick(item, index)}}>
+                <TouchableOpacity style={{marginRight: wp(3), backgroundColor: 'transparent', height: hp(16), width: wp(61.3)}} onPress={ () => {this.props.onReservationClick(item, index)}}>
                   <Image source={{uri: this.props.reservations.photos[index]}} style={{height: hp(16), width: wp(61.3), resizeMode: 'stretch'}}/>
                   <View style={{alignItems: 'center', justifyContent: 'center', flexDirection: 'column', opacity: .6, position: 'absolute', backgroundColor: 'green', width: wp(61.3), height: hp(16)}}>
                     <View style={{alignItems: 'center', justifyContent: 'center', backgroundColor: 'transparent', flexDirection: 'row', width: wp(61.3), height: hp(3)}}>
@@ -107,7 +107,25 @@ export default class MSP extends Component {
             </Text> 
 
             {(this.props.categories) ? 
-            <FlatList contentContainerStyle={{ flexGrow: 1 }}/> : 
+            <FlatList contentContainerStyle={{ marginLeft: wp(3),marginTop: hp(5),flexGrow: 1 }}
+            data={this.props.categories} 
+            renderItem={
+              ({ item, index }) => { return(
+                <TouchableOpacity style={{marginRight: wp(3), backgroundColor: 'transparent', height: hp(16), width: wp(61.3)}} onPress={ () => {this.props.onCategoriesClick(item, index)}}>
+                  <Image source={{uri: item.Photo}} style={{height: hp(16), width: wp(61.3), resizeMode: 'stretch'}}/>
+                  <View style={{alignItems: 'center', justifyContent: 'center', flexDirection: 'column', opacity: .7, position: 'absolute', backgroundColor: 'green', width: wp(61.3), height: hp(16)}}>
+                    <View style={{alignItems: 'center', justifyContent: 'center', backgroundColor: 'transparent', flexDirection: 'row', width: wp(61.3), height: hp(3)}}>
+                      <Text 
+                          numberOfLines={1} style={{marginLeft: wp(1), fontSize: hp(3),fontWeight: '700',textAlign: 'center',color: '#ffffff',fontFamily: getRegularFont()}}>
+                              {item.Name}
+                      </Text> 
+                    </View>
+                  </View>
+                </TouchableOpacity>
+              )}
+            }
+            horizontal={true}
+            keyExtractor={(item, index) => index.toString()}/> : 
             <TouchableOpacity style={{marginTop: hp(5), justifyContent: "center",borderRadius: hp(6), height: hp(15), width: wp(90.3) , backgroundColor: '#006b31', alignSelf: 'center'}} onPress={this.props.reservationPress}>
             <Text 
                 numberOfLines={1} style={{fontSize: hp(2),fontWeight: '700',textAlign: 'center',color: '#ffffff',fontFamily: getBoldFont()}}>
