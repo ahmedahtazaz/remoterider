@@ -19,8 +19,6 @@
 		18161663243E39EE006E1020 /* CORBELB.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 18161661243E39EE006E1020 /* CORBELB.TTF */; };
 		183A3B8D24406C86002AA8C0 /* CUSTOM.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 183A3B8C24406C86002AA8C0 /* CUSTOM.ttf */; };
 		18A0A6A5243CE06900DC32C0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 18A0A6A4243CE06900DC32C0 /* GoogleService-Info.plist */; };
-		18EF667E2442238D002E2845 /* assets in Resources */ = {isa = PBXBuildFile; fileRef = 18EF667D2442238C002E2845 /* assets */; };
-		18EF6680244223A0002E2845 /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = 18EF667F244223A0002E2845 /* main.jsbundle */; };
 		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -59,8 +57,6 @@
 		183A3B8C24406C86002AA8C0 /* CUSTOM.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = CUSTOM.ttf; path = ../../../Downloads/corbel/CUSTOM.ttf; sourceTree = "<group>"; };
 		18A0A6A4243CE06900DC32C0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		18EF667C24421AE5002E2845 /* RemoteRider.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = RemoteRider.entitlements; path = remoterider/RemoteRider.entitlements; sourceTree = "<group>"; };
-		18EF667D2442238C002E2845 /* assets */ = {isa = PBXFileReference; lastKnownFileType = folder; path = assets; sourceTree = "<group>"; };
-		18EF667F244223A0002E2845 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
 		2434E2B8952527536C6120DB /* libPods-remoterider-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-remoterider-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E47B1E0B4A5D006451C7 /* remoterider-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "remoterider-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* remoterider-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "remoterider-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -184,8 +180,6 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				18EF667F244223A0002E2845 /* main.jsbundle */,
-				18EF667D2442238C002E2845 /* assets */,
 				183A3B8C24406C86002AA8C0 /* CUSTOM.ttf */,
 				18161661243E39EE006E1020 /* CORBELB.TTF */,
 				18A0A6A4243CE06900DC32C0 /* GoogleService-Info.plist */,
@@ -359,9 +353,7 @@
 				183A3B8D24406C86002AA8C0 /* CUSTOM.ttf in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				18161663243E39EE006E1020 /* CORBELB.TTF in Resources */,
-				18EF667E2442238D002E2845 /* assets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
-				18EF6680244223A0002E2845 /* main.jsbundle in Resources */,
 				18A0A6A5243CE06900DC32C0 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

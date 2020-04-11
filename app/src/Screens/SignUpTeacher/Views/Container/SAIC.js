@@ -52,7 +52,7 @@ class SAIC extends Component {
         this.props.signUpUser(this.user);
     }
     else{
-      this.props.showErrorDialogue(this.negativePressed, 'Please Enter Your Name First');
+      this.props.showErrorDialogue(this.negativePressed, 'Please Enter Your Name');
     }
   }
  

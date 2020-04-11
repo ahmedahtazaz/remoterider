@@ -36,7 +36,7 @@ class SignInC extends Component {
         this.props.signInUser(this.user.email, this.user.password);
       }
       else
-        this.props.showErrorDialogue(this.negativePressed, 'Please Enter Email and Password First');
+        this.props.showErrorDialogue(this.negativePressed, 'Please Enter Email and Password.');
   }
 
   emailHandler(event)
@@ -56,7 +56,7 @@ class SignInC extends Component {
         this.props.forgotPassword(this.user.email);
       }
       else{
-        this.props.showErrorDialogue(this.negativePressed, 'Please Enter Your Email First');
+        this.props.showErrorDialogue(this.negativePressed, 'Please Enter Your Email');
       }  
   }
 
