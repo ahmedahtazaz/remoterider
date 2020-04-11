@@ -15,19 +15,17 @@ export default class App extends Component {
     return (
       <LinearGradient colors={['#006b31', '#00652e', '#005e2b' , '#005326', '#004b22', '#00411e', '#003a1b', '#003619']} style={{flex: 1}}>      
         
-        <View style={styles.topcontainer}>
-            <View style={{flexDirection: 'row'}}>
-              <TouchableOpacity style={{flex:.4}} onPress={this.props.backButton}>
-                <Image source={backArrow} style={{flex: 1, resizeMode: 'contain'}}></Image>
+            <View style={styles.topBarContainer}>
+              <TouchableOpacity style={{zIndex: 1000, position: "absolute", left: 0, marginLeft: wp(2), height: hp(2.8), width: wp(7.8) , backgroundColor: 'transparent', alignSelf: 'center'}} onPress={this.props.backButton}>
+                <Image source={backArrow} style={{height: hp(2.8), width: wp(7.8), resizeMode: 'contain'}}></Image>
               </TouchableOpacity>
-              <View style={{flex: 8, alignItems: 'center', justifyContent: 'center'}}>
+              <View style={styles.riderTextContainer}> 
                 <Text 
                   numberOfLines={1} style={styles.riderText}>
                       {'Remote Rider'}
                 </Text> 
-              </View>
+              </View> 
             </View>
-            </View>  
             <View style={styles.container}>
             <Text 
                 numberOfLines={2} style={styles.text1}>
@@ -83,10 +81,10 @@ export default class App extends Component {
 
 // Style for "Background"
 const styles = StyleSheet.create({
-  topcontainer: {
-    width: wp('100%'),
-    alignItems: 'flex-start',
-    marginTop: hp(3),
+  topBarContainer: {
+    width: wp(100),
+    height: hp(11.5),
+    flexDirection:'row',
     backgroundColor: '#5a9c79'
   },
   container: {
@@ -164,9 +162,9 @@ const styles = StyleSheet.create({
   lMSectionText2: {
     color: '#ffffff',
     width: wp(77.5),
-    height: hp(9),
+    height: hp(6),
     fontFamily: getRegularFont(),
-    fontSize: hp(2),
+    fontSize: hp(1.8),
     fontWeight: '400',
     textAlign: 'center',
     marginLeft: wp(11),
@@ -181,11 +179,21 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
     marginLeft: wp(5.8),
   },
+  riderTextContainer: {
+      backgroundColor: 'transparent',
+      position: "absolute", 
+      left: 0, 
+      right: 0, 
+      alignItems: "center",
+      justifyContent: 'center',
+      height: hp(11.5),
+  },
   riderText: {
     color: '#ffffff',
     fontFamily: getBoldFont(),
     fontSize: hp(4),
-    fontWeight: '700'
+    fontWeight: '700',
+    alignSelf: 'center'
   },
   text1: {
     color: '#ffffff',
@@ -196,10 +204,10 @@ const styles = StyleSheet.create({
   },
   signInButton: {
     justifyContent: "center",
-    width: wp(55),
+    width: wp(53),
     borderRadius: hp(1),
     backgroundColor: '#5a9c79',
-    height: hp(5.5),
+    height: hp(5),
   },
   buttonText: {
     fontSize: hp(2.5),
@@ -210,10 +218,10 @@ const styles = StyleSheet.create({
   },
   signUpButton: {
     justifyContent: "center",
-    width: wp(55),
+    width: wp(53),
     borderRadius: hp(1),
     backgroundColor: '#006b31',
-    height: hp(5.5),
+    height: hp(5),
     marginTop: hp(1)
   },
 })

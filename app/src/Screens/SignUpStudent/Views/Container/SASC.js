@@ -21,6 +21,7 @@ class SASC extends Component {
       this.signUpButtonHandler = this.signUpButtonHandler.bind(this);
       this.tcCheckBoxHandler = this.tcCheckBoxHandler.bind(this);
       this.negativePressed = this.negativePressed.bind(this);
+      this.backButton = this.backButton.bind(this);
   }
 
   negativePressed()
@@ -80,13 +81,18 @@ class SASC extends Component {
       }).catch((err) => {this.props.showErrorDialogue(this.negativePressed, err.message)}); 
   }
 
+  backButton()
+  {
+    this.props.navigation.navigate('Sign Up'); 
+  }
+
   render() {
     if(this.props.signUpError)
     {
       this.props.showErrorDialogue(this.negativePressed, this.props.signUpError);
     }
 
-    return (<SASP loader={this.props.loader} photoHint={this.props.photo !== undefined ? this.props.photo.filename : 'Tap to Add Photo'} onTCPress={this.tcCheckBoxHandler} signUpButtonHandler={this.signUpButtonHandler} userNameHandler={this.userNameHandler} emailHandler={this.emailHandler} passwordHandler={this.passwordHandler} photoHandler={this.photoHandler}/>);
+    return (<SASP backButton={this.backButton} loader={this.props.loader} photoHint={this.props.photo !== undefined ? this.props.photo.filename : 'Tap to Add Photo'} onTCPress={this.tcCheckBoxHandler} signUpButtonHandler={this.signUpButtonHandler} userNameHandler={this.userNameHandler} emailHandler={this.emailHandler} passwordHandler={this.passwordHandler} photoHandler={this.photoHandler}/>);
   }
 }
 

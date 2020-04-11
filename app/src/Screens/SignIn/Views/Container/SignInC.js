@@ -17,6 +17,7 @@ class SignInC extends Component {
       this.signInButtonHandler = this.signInButtonHandler.bind(this);
       this.negativePressed = this.negativePressed.bind(this);
       this.forgotPasswordHandler = this.forgotPasswordHandler.bind(this);
+      this.backButton = this.backButton.bind(this);
   }
 
   negativePressed()
@@ -59,6 +60,11 @@ class SignInC extends Component {
       }  
   }
 
+  backButton()
+  {
+    this.props.navigation.navigate('Welcome'); 
+  }
+
   render() {
 
     if(this.props.signInError)
@@ -70,7 +76,7 @@ class SignInC extends Component {
         this.props.showErrorDialogue(this.negativePressed, this.props.forGotPasswordResponse);
     }
 
-    return (<SignInP forgotPasswordHandler={this.forgotPasswordHandler} loader={this.props.loader} signInButtonHandler={this.signInButtonHandler} emailHandler={this.emailHandler} passwordHandler={this.passwordHandler} />);
+    return (<SignInP backButton={this.backButton} forgotPasswordHandler={this.forgotPasswordHandler} loader={this.props.loader} signInButtonHandler={this.signInButtonHandler} emailHandler={this.emailHandler} passwordHandler={this.passwordHandler} />);
   }
 }
 

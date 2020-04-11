@@ -11,6 +11,7 @@ class Welcome2C extends Component {
 
       this.signUpAsTeacher = this.signUpAsTeacher.bind(this);
       this.signUpAsStudent = this.signUpAsStudent.bind(this);
+      this.backButton = this.backButton.bind(this);
   }
 
   signUpAsTeacher()
@@ -23,8 +24,13 @@ class Welcome2C extends Component {
     this.props.signUpAsStudent(this.props.navigation);
   }
 
+  backButton()
+  {
+    this.props.navigation.navigate('Welcome'); 
+  }
+
   render() {
-    return (<Welcome2P studentHandler = {this.signUpAsStudent} teacherHandler = {this.signUpAsTeacher}/>);
+    return (<Welcome2P backButton={this.backButton} studentHandler = {this.signUpAsStudent} teacherHandler = {this.signUpAsTeacher}/>);
   }
 }
 

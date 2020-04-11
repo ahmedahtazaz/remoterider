@@ -16,13 +16,18 @@ export default class App extends Component {
     const emailImage = require('../../../../assets/emailImage.png');
     const passImage = require('../../../../assets/passImage.png');
     const plusImage = require('../../../../assets/plusImage.png');
+    const backArrow = require('../../../../assets/backArrow.png');
 
     return (
         <KeyboardAwareScrollView
       contentContainerStyle={{flexGrow: 1}}
     >
       <LinearGradient colors={['#006b31', '#00652e', '#005e2b' , '#005326', '#004b22', '#00411e', '#003a1b', '#003619']} style={{flex: 1}}>      
-        
+        <View style={styles.topBarContainer}>
+            <TouchableOpacity style={{marginLeft: wp(2), height: hp(2.8), width: wp(7.8) , backgroundColor: 'transparent', alignSelf: 'center'}} onPress={this.props.backButton}>
+            <Image source={backArrow} style={{height: hp(2.8), width: wp(7.8), resizeMode: 'contain'}}></Image>
+            </TouchableOpacity>
+        </View>
         <Image source={topStyle} style={styles.topStyle}/>
 
         <Text 
@@ -86,8 +91,16 @@ export default class App extends Component {
 
 // Style for "Background"
 const styles = StyleSheet.create({
+    topBarContainer: {
+        width: wp(100),
+        height: hp(11.5),
+        flexDirection:'row',
+        backgroundColor: '#5a9c79',
+        position: 'absolute',
+        zIndex: 1000
+    },
     topStyle: {
-        height: hp(34),
+        height: hp(40),
         width: wp('100%'),
         resizeMode: 'stretch'
     },
