@@ -18,7 +18,7 @@ export const signUpUserAction = (user) => {
     return {
       type:`${SET_DIALOGUE}`,
       visible: true,
-      message: 'Please Accept the Terms & Conditions.',
+      message: 'Please Accept the Terms & Conditions. For Terms & Conditions visit www.remoterider.app',
       negative: 'OK',
       negativeButtonPressed: negativeButtonPressed,
     }
