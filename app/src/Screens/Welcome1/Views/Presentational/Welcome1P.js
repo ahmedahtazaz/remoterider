@@ -172,11 +172,13 @@ const styles = StyleSheet.create({
   },
   welcomeImage1: {
     width: wp('42.5%'),
-    resizeMode: 'contain'
+    resizeMode: 'contain',
+    height: hp(13),
   },
   welcomeImage2: {
     width: wp('42.5%'),
     resizeMode: 'contain',
+    height: hp(13),
     marginLeft: wp(5.8),
   },
   riderTextContainer: {
