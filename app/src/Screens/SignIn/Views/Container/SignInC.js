@@ -50,7 +50,6 @@ class SignInC extends Component {
 
   forgotPasswordHandler()
   {
-      console.log('forgot password handler')
       if(this.user.email)
       {
         this.props.forgotPassword(this.user.email);

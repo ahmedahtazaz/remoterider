@@ -9,8 +9,6 @@ function* loadSlidingImages(action) {
     let data = undefined;
     let images = [];
 
-    console.log('sliding images load')
-
     yield firestore().collection('SlidingImages').doc('Images').get().
     then((doc) => {
         if(doc.data()) 
@@ -140,7 +138,6 @@ function* loadScheduledLessonsInner() {
     {
         reservations = data.map( (s) => {if(s.confirmed) return s});
 
-        console.log('res sche', reservations)
         if(reservations)
         {
             let photos = [];
@@ -157,7 +154,6 @@ function* loadScheduledLessonsInner() {
             }
 
             reservations.photos = photos;
-            console.log('res sche photos', reservations.photos)
         }
     }
 
@@ -191,7 +187,7 @@ function* loadPendingLessonsInner() {
     if(data)
     {
         reservations = data.map( (s) => {if(!s.confirmed) return s});
-        console.log('res pen', reservations)
+        
         if(reservations)
         {
             let photos = [];
@@ -208,7 +204,6 @@ function* loadPendingLessonsInner() {
             }
 
             reservations.photos = photos;
-            console.log('res pen photos', reservations.photos)
         }
     }
 
