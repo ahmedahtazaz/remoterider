@@ -92,7 +92,7 @@ class SAIC extends Component {
       this.props.showErrorDialogue(this.negativePressed, this.props.signUpError);
     }
 
-    return (<SAIP photoHint={this.props.photo !== undefined ? this.props.photo.filename : 'Tap to Add Photo'} profileandler={this.profileandler} onTCPress={this.tcCheckBoxHandler} signUpButtonHandler={this.signUpButtonHandler} userNameHandler={this.userNameHandler} emailHandler={this.emailHandler} passwordHandler={this.passwordHandler} photoHandler={this.photoHandler}/>);
+    return (<SAIP loader={this.props.loader} photoHint={this.props.photo !== undefined ? this.props.photo.filename : 'Tap to Add Photo'} profileandler={this.profileandler} onTCPress={this.tcCheckBoxHandler} signUpButtonHandler={this.signUpButtonHandler} userNameHandler={this.userNameHandler} emailHandler={this.emailHandler} passwordHandler={this.passwordHandler} photoHandler={this.photoHandler}/>);
   }
 }
 

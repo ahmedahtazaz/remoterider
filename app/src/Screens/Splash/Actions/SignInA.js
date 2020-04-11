@@ -34,6 +34,10 @@ export const signInUserAction = (email, password) => {
     return navigation.navigate('Main Student Screen'); 
   };
 
+  export const moveToMIAction = (navigation) => {
+    return navigation.navigate('Main Instructor Screen'); 
+  };
+
   export const signOutUserAction = () => {
     return {
       type:`${SIGN_OUT_USER}`,

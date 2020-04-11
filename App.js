@@ -13,6 +13,7 @@ import SAStudent from './app/src/Screens/SignUpStudent/Views/Container/SASC';
 import SAInstructor from './app/src/Screens/SignUpTeacher/Views/Container/SAIC';
 import MSC from './app/src/Screens/MainStudent/Views/Container/MSC';
 import SignInC from './app/src/Screens/SignIn/Views/Container/SignInC';
+import MSIC from './app/src/Screens/MainTeacher/Views/Container/MSIC';
 
 const sagaMiddleware = createSagaMiddleware();
 const store = createStore(createRootReducer(), compose(applyMiddleware(sagaMiddleware),),);
@@ -23,7 +24,7 @@ const Stack = createStackNavigator();
 export default class App extends Component {
 
   render() {
-    console.disableYellowBox = true; 
+    //console.disableYellowBox = true; 
     return (
       <Provider store={store}>
           <NavigationContainer >
@@ -35,6 +36,7 @@ export default class App extends Component {
               <Stack.Screen name="Instructor Sign Up" component={SAInstructor} options={{ headerShown: false}}/>
               <Stack.Screen name="Main Student Screen" component={MSC} options={{ headerShown: false}}/>
               <Stack.Screen name="Sign In" component={SignInC} options={{ headerShown: false}}/>
+              <Stack.Screen name="Main Instructor Screen" component={MSIC} options={{ headerShown: false}}/>
             </Stack.Navigator>
           </NavigationContainer>    
       </Provider>
