@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import MSIP from '../Presentational/MSIP'
 import { connect } from 'react-redux';
-import {loadPhotoAction, loadSlidingImagesAction, loadScheduledLessonsAction, loadPendingLessonsAction} from '../../Actions/MSIA';
+import {profilePressedAction, menuPresedAction, loadPhotoAction, loadSlidingImagesAction, loadScheduledLessonsAction, loadPendingLessonsAction} from '../../Actions/MSIA';
 import RNExitApp from 'react-native-exit-app';
 
 class MSIC extends Component {
@@ -14,6 +14,12 @@ class MSIC extends Component {
       this.menuPress = this.menuPress.bind(this);
       this.profilePress = this.profilePress.bind(this);
       this.availabilityPress = this.availabilityPress.bind(this);
+  }
+
+  componentWillUnmount()
+  {
+    this.props.menuPresed(true);
+    this.props.profilePressed(true);
   }
 
   componentDidMount()
@@ -31,12 +37,12 @@ class MSIC extends Component {
 
   menuPress()
   {
-
+    this.props.menuPresed(false);
   }
 
   profilePress()
   {
-
+    this.props.profilePressed(false);
   }
 
   availabilityPress(item, index)
@@ -61,6 +67,8 @@ const mapDispatchToProps = (dispatch) => {
     loadSlidingImages: () => dispatch(loadSlidingImagesAction()),
     loadScheduledLessons: () => dispatch(loadScheduledLessonsAction()),
     loadPendingLessons: () => dispatch(loadPendingLessonsAction()),
+    menuPresed: (status) => dispatch(menuPresedAction(status)),
+    profilePressed: (status) => dispatch(profilePressedAction(status)),
   };
 };
 

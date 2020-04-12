@@ -1,4 +1,4 @@
-import {LOAD_PHOTO, LOAD_SLIDING_IMAGES, LOAD_RESERVATIONS, LOAD_CATEGORIES, SET_MENU_VISIBILITY} from '../../../Commons/Constants'
+import {LOAD_PHOTO, LOAD_SLIDING_IMAGES, LOAD_RESERVATIONS, LOAD_CATEGORIES, SET_MENU_VISIBILITY, SET_PROFILE_VISIBILITY} from '../../../Commons/Constants'
 
 export const loadPhotoAction = () => {
     return {
@@ -28,5 +28,12 @@ export const loadPhotoAction = () => {
     return {
       type:`${SET_MENU_VISIBILITY}`,
       showmenu: showmenu,
+    }
+  };
+
+  export const profilePressedAction = (showprofile) => {
+    return {
+      type:`${SET_PROFILE_VISIBILITY}`,
+      showprofile: showprofile,
     }
   };

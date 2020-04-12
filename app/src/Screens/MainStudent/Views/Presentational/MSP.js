@@ -5,6 +5,7 @@ import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-nativ
 import Slideshow from 'react-native-image-slider-show';
 import { getBoldFont, getRegularFont } from '../../../../Commons/Fonts';
 import MenuDialogue from '../../../../Commons/MenuDialogue/MenuDialogue';
+import ProfileDialogue from '../../../../Commons/ProfileDialogue/ProfileDialogue';
 
 export default class MSP extends Component {
 
@@ -134,6 +135,7 @@ export default class MSP extends Component {
 
           </View>
           <MenuDialogue/>
+          <ProfileDialogue/>
         </View>
       </LinearGradient>);
   }

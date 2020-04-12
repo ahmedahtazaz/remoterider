@@ -4,6 +4,8 @@ import LinearGradient from 'react-native-linear-gradient';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import Slideshow from 'react-native-image-slider-show';
 import { getBoldFont, getRegularFont } from '../../../../Commons/Fonts';
+import MenuDialogue from '../../../../Commons/MenuDialogue/MenuDialogue';
+import ProfileDialogue from '../../../../Commons/ProfileDialogue/ProfileDialogue';
 
 export default class MSIP extends Component {
 
@@ -147,6 +149,8 @@ export default class MSIP extends Component {
             </Text></TouchableOpacity> }
 
           </View>
+          <MenuDialogue/>
+          <ProfileDialogue/>
         </View>
       </LinearGradient>);
   }

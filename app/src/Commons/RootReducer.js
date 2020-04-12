@@ -7,6 +7,7 @@ import photoReducer from './PhotoReducer';
 import signUpReducer from './SignUpReducer';
 import mscReducer from '../Screens/MainStudent/Reducer/MSR';
 import menudialogueReducer from '../Commons/MenuDialogue/MenuDialogueReducer';
+import profiledialogueReducer from '../Commons/ProfileDialogue/ProfileDialogueReducer';
 
 const createRootReducer  = () => combineReducers({
     signInReducer: signInReducer(),
@@ -17,6 +18,7 @@ const createRootReducer  = () => combineReducers({
     signUpReducer: signUpReducer(),
     mscreducer: mscReducer(),
     menudialogueReducer: menudialogueReducer(),
+    profiledialogueReducer: profiledialogueReducer(),
 });
 
 export default createRootReducer ;

@@ -1,4 +1,4 @@
-import {LOAD_PHOTO, LOAD_SLIDING_IMAGES, LOAD_SCHEDULED_LESSONS, LOAD_PENDING_LESSONS} from '../../../Commons/Constants'
+import {LOAD_PHOTO, LOAD_SLIDING_IMAGES, LOAD_SCHEDULED_LESSONS, LOAD_PENDING_LESSONS, SET_MENU_VISIBILITY, SET_PROFILE_VISIBILITY} from '../../../Commons/Constants'
 
 export const loadPhotoAction = () => {
     return {
@@ -21,5 +21,19 @@ export const loadPhotoAction = () => {
   export const loadPendingLessonsAction = () => {
     return {
       type:`${LOAD_PENDING_LESSONS}`,
+    }
+  };
+
+  export const menuPresedAction = (showmenu) => {
+    return {
+      type:`${SET_MENU_VISIBILITY}`,
+      showmenu: showmenu,
+    }
+  };
+
+  export const profilePressedAction = (showprofile) => {
+    return {
+      type:`${SET_PROFILE_VISIBILITY}`,
+      showprofile: showprofile,
     }
   };

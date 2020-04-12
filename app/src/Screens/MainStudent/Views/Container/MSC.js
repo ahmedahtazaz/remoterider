@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import MSP from '../Presentational/MSP'
 import { connect } from 'react-redux';
-import {menuPresedAction, loadPhotoAction, loadSlidingImagesAction, loadReservationsAction, loadCategoriesAction} from '../../Actions/MSA';
+import {profilePressedAction, menuPresedAction, loadPhotoAction, loadSlidingImagesAction, loadReservationsAction, loadCategoriesAction} from '../../Actions/MSA';
 import RNExitApp from 'react-native-exit-app';
 
 class MSC extends Component {
@@ -19,6 +19,7 @@ class MSC extends Component {
   componentWillUnmount()
   {
     this.props.menuPresed(true);
+    this.props.profilePressed(true);
   }
 
   componentDidMount()
@@ -41,7 +42,7 @@ class MSC extends Component {
 
   profilePress()
   {
-
+    this.props.profilePressed(false);
   }
 
   onReservationClick(item, index)
@@ -67,6 +68,7 @@ const mapDispatchToProps = (dispatch) => {
     loadReservations: () => dispatch(loadReservationsAction()),
     loadCategories: () => dispatch(loadCategoriesAction()),
     menuPresed: (status) => dispatch(menuPresedAction(status)),
+    profilePressed: (status) => dispatch(profilePressedAction(status)),
   };
 };
 
