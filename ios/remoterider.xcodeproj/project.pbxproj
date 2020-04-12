@@ -16,10 +16,10 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		16364F3B9D798A845FDF27AE /* libPods-remoterider.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BA535D545B1D6CDA7CF8C535 /* libPods-remoterider.a */; };
 		1781318599308BE4F0FD68B7 /* libPods-remoteriderTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EDF9BCA9805744C91689F731 /* libPods-remoteriderTests.a */; };
+		182A02002443C6E2008A97F3 /* assets in Resources */ = {isa = PBXBuildFile; fileRef = 182A01FF2443C6E2008A97F3 /* assets */; };
+		182A02022443C6F3008A97F3 /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = 182A02012443C6F3008A97F3 /* main.jsbundle */; };
 		183A3B8D24406C86002AA8C0 /* CUSTOM.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 183A3B8C24406C86002AA8C0 /* CUSTOM.ttf */; };
 		18A0A6A5243CE06900DC32C0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 18A0A6A4243CE06900DC32C0 /* GoogleService-Info.plist */; };
-		18EF66822442EF75002E2845 /* assets in Resources */ = {isa = PBXBuildFile; fileRef = 18EF66812442EF74002E2845 /* assets */; };
-		18EF66842442EF81002E2845 /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = 18EF66832442EF80002E2845 /* main.jsbundle */; };
 		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -54,11 +54,11 @@
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = remoterider/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = remoterider/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = remoterider/main.m; sourceTree = "<group>"; };
+		182A01FF2443C6E2008A97F3 /* assets */ = {isa = PBXFileReference; lastKnownFileType = folder; path = assets; sourceTree = "<group>"; };
+		182A02012443C6F3008A97F3 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
 		183A3B8C24406C86002AA8C0 /* CUSTOM.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = CUSTOM.ttf; path = ../../../Downloads/corbel/CUSTOM.ttf; sourceTree = "<group>"; };
 		18A0A6A4243CE06900DC32C0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		18EF667C24421AE5002E2845 /* RemoteRider.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = RemoteRider.entitlements; path = remoterider/RemoteRider.entitlements; sourceTree = "<group>"; };
-		18EF66812442EF74002E2845 /* assets */ = {isa = PBXFileReference; lastKnownFileType = folder; path = assets; sourceTree = "<group>"; };
-		18EF66832442EF80002E2845 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
 		2434E2B8952527536C6120DB /* libPods-remoterider-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-remoterider-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E47B1E0B4A5D006451C7 /* remoterider-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "remoterider-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* remoterider-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "remoterider-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -182,8 +182,8 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				18EF66832442EF80002E2845 /* main.jsbundle */,
-				18EF66812442EF74002E2845 /* assets */,
+				182A02012443C6F3008A97F3 /* main.jsbundle */,
+				182A01FF2443C6E2008A97F3 /* assets */,
 				183A3B8C24406C86002AA8C0 /* CUSTOM.ttf */,
 				18A0A6A4243CE06900DC32C0 /* GoogleService-Info.plist */,
 				13B07FAE1A68108700A75B9A /* remoterider */,
@@ -306,6 +306,7 @@
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
+						DevelopmentTeam = K8DN8CJTLL;
 						ProvisioningStyle = Manual;
 					};
 					2D02E47A1E0B4A5D006451C7 = {
@@ -353,11 +354,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				182A02002443C6E2008A97F3 /* assets in Resources */,
 				183A3B8D24406C86002AA8C0 /* CUSTOM.ttf in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
-				18EF66822442EF75002E2845 /* assets in Resources */,
+				182A02022443C6F3008A97F3 /* main.jsbundle in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
-				18EF66842442EF81002E2845 /* main.jsbundle in Resources */,
 				18A0A6A5243CE06900DC32C0 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -712,13 +713,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = remoterider/RemoteRider.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = K8DN8CJTLL;
 				INFOPLIST_FILE = remoterider/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 1.1;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -726,7 +728,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.remoterider;
 				PRODUCT_NAME = RemoteRider;
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE_SPECIFIER = "David Darby's Remote Rider Apple Distribution";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -744,6 +746,7 @@
 				DEVELOPMENT_TEAM = K8DN8CJTLL;
 				INFOPLIST_FILE = remoterider/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 1.1;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
