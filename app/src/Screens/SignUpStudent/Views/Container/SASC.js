@@ -22,6 +22,12 @@ class SASC extends Component {
       this.tcCheckBoxHandler = this.tcCheckBoxHandler.bind(this);
       this.negativePressed = this.negativePressed.bind(this);
       this.backButton = this.backButton.bind(this);
+      this.confirmPasswordHandler = this.confirmPasswordHandler.bind(this);
+  }
+
+  confirmPasswordHandler(event)
+  {
+    this.user.confirmPassword = event;
   }
 
   negativePressed()
@@ -43,12 +49,18 @@ class SASC extends Component {
     }
     else if(this.user.name !== undefined)
     {
+      if(this.user.password !== this.user.confirmPassword)
+      {
+        this.props.showErrorDialogue(this.negativePressed, 'Passwords do not match.');
+      }
+      else{
         this.user.isInstructor = false;
         this.user.image = this.props.photo;
 
         this.props.showLoader();
         
         this.props.signUpUser(this.user);
+      }
     }
     else{
       this.props.showErrorDialogue(this.negativePressed, 'Please Enter Your Name');
@@ -92,7 +104,7 @@ class SASC extends Component {
       this.props.showErrorDialogue(this.negativePressed, this.props.signUpError);
     }
 
-    return (<SASP backButton={this.backButton} loader={this.props.loader} photoHint={this.props.photo !== undefined ? this.props.photo.filename : 'Tap to Add Photo'} onTCPress={this.tcCheckBoxHandler} signUpButtonHandler={this.signUpButtonHandler} userNameHandler={this.userNameHandler} emailHandler={this.emailHandler} passwordHandler={this.passwordHandler} photoHandler={this.photoHandler}/>);
+    return (<SASP confirmPasswordHandler={this.confirmPasswordHandler} backButton={this.backButton} loader={this.props.loader} photoHint={this.props.photo !== undefined ? this.props.photo.filename : 'Tap to Add Photo'} onTCPress={this.tcCheckBoxHandler} signUpButtonHandler={this.signUpButtonHandler} userNameHandler={this.userNameHandler} emailHandler={this.emailHandler} passwordHandler={this.passwordHandler} photoHandler={this.photoHandler}/>);
   }
 }
 

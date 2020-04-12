@@ -18,6 +18,7 @@ class SignInC extends Component {
       this.negativePressed = this.negativePressed.bind(this);
       this.forgotPasswordHandler = this.forgotPasswordHandler.bind(this);
       this.backButton = this.backButton.bind(this);
+      this.confirmPasswordHandler = this.confirmPasswordHandler.bind(this);
   }
 
   negativePressed()
@@ -31,9 +32,16 @@ class SignInC extends Component {
   {
       if(this.user.email && this.user.password)
       {
-        this.props.showLoader();
+        if(this.user.password !== this.user.confirmPassword)
+        {
+          this.props.showErrorDialogue(this.negativePressed, 'Passwords do not match.');
+        }
+        else
+        {
+          this.props.showLoader();
     
-        this.props.signInUser(this.user.email, this.user.password);
+          this.props.signInUser(this.user.email, this.user.password);
+        }
       }
       else
         this.props.showErrorDialogue(this.negativePressed, 'Please Enter Email and Password.');
@@ -47,6 +55,11 @@ class SignInC extends Component {
   passwordHandler(event)
   {
     this.user.password = event;
+  }
+
+  confirmPasswordHandler(event)
+  {
+    this.user.confirmPassword = event;
   }
 
   forgotPasswordHandler()
@@ -76,7 +89,7 @@ class SignInC extends Component {
         this.props.showErrorDialogue(this.negativePressed, this.props.forGotPasswordResponse);
     }
 
-    return (<SignInP backButton={this.backButton} forgotPasswordHandler={this.forgotPasswordHandler} loader={this.props.loader} signInButtonHandler={this.signInButtonHandler} emailHandler={this.emailHandler} passwordHandler={this.passwordHandler} />);
+    return (<SignInP confirmPasswordHandler={this.confirmPasswordHandler} backButton={this.backButton} forgotPasswordHandler={this.forgotPasswordHandler} loader={this.props.loader} signInButtonHandler={this.signInButtonHandler} emailHandler={this.emailHandler} passwordHandler={this.passwordHandler} />);
   }
 }
 

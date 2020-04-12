@@ -50,7 +50,13 @@ export default class App extends Component {
         <View style={styles.fieldMaincontainerStyle}> 
             <Image source={passImage} style={styles.passImage}/>
             <View style={styles.fieldInnercontainerStyle}> 
-                <TextInput onChangeText={this.props.passwordHandler} style={styles.inputStyle} autoCorrect={false} placeholder={'Password'} placeholderTextColor = "#598a6f" />
+                <TextInput secureTextEntry={true} onChangeText={this.props.passwordHandler} style={styles.inputStyle} autoCorrect={false} placeholder={'Password'} placeholderTextColor = "#598a6f" />
+            </View>
+        </View>
+        <View style={styles.fieldMaincontainerStyle}> 
+            <Image source={passImage} style={styles.passImage}/>
+            <View style={styles.fieldInnercontainerStyle}> 
+                <TextInput secureTextEntry={true} onChangeText={this.props.confirmPasswordHandler} style={styles.inputStyle} autoCorrect={false} placeholder={'Confirm Password'} placeholderTextColor = "#598a6f" />
             </View>
         </View>
         <View style={styles.fieldMaincontainerStyle}> 
