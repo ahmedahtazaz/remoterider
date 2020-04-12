@@ -4,13 +4,13 @@ import LinearGradient from 'react-native-linear-gradient';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import Slideshow from 'react-native-image-slider-show';
 import { getBoldFont, getRegularFont } from '../../../../Commons/Fonts';
+import MenuDialogue from '../../../../Commons/MenuDialogue/MenuDialogue';
 
 export default class MSP extends Component {
 
   render() {
     const backArrow = require('../../../../assets/backArrow.png');
     const menu = require('../../../../assets/menu.png');
-
     return (
       <LinearGradient colors={['#006b31', '#00652e', '#005e2b' , '#005326', '#004b22', '#00411e', '#003a1b', '#003619']} style={{flex: 1}}>      
         <View style={styles.background}>
@@ -133,6 +133,7 @@ export default class MSP extends Component {
             </Text></TouchableOpacity> }
 
           </View>
+          <MenuDialogue/>
         </View>
       </LinearGradient>);
   }
@@ -165,5 +166,11 @@ const styles = StyleSheet.create({
     flexDirection:'column',
     backgroundColor: 'transparent',
     marginTop: hp(6.8)
+  },
+  menuPopUp: {
+    width: wp(100),
+    height: hp(100),
+    backgroundColor: 'red',
+    zIndex: 2000
   },
 })

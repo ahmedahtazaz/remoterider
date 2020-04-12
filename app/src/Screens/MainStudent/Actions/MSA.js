@@ -1,4 +1,4 @@
-import {LOAD_PHOTO, LOAD_SLIDING_IMAGES, LOAD_RESERVATIONS, LOAD_CATEGORIES} from '../../../Commons/Constants'
+import {LOAD_PHOTO, LOAD_SLIDING_IMAGES, LOAD_RESERVATIONS, LOAD_CATEGORIES, SET_MENU_VISIBILITY} from '../../../Commons/Constants'
 
 export const loadPhotoAction = () => {
     return {
@@ -21,5 +21,12 @@ export const loadPhotoAction = () => {
   export const loadCategoriesAction = () => {
     return {
       type:`${LOAD_CATEGORIES}`,
+    }
+  };
+
+  export const menuPresedAction = (showmenu) => {
+    return {
+      type:`${SET_MENU_VISIBILITY}`,
+      showmenu: showmenu,
     }
   };
