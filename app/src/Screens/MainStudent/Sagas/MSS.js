@@ -1,4 +1,4 @@
-import { LOAD_PHOTO, LOAD_PHOTO_SUCCESS, LOAD_PHOTO_FAILURE, LOAD_SLIDING_IMAGES, LOAD_SLIDING_IMAGES_SUCCESS, LOAD_SLIDING_IMAGES_FAILURE, LOAD_RESERVATIONS_SUCCESS, LOAD_RESERVATIONS_FAILURE, LOAD_RESERVATIONS, LOAD_CATEGORIES, LOAD_CATEGORIES_SUCCESS, LOAD_CATEGORIES_FAILURE, LOAD_SCHEDULED_LESSONS, LOAD_SCHEDULED_LESSONS_SUCCESS, LOAD_SCHEDULED_LESSONS_FAILURE, LOAD_PENDING_LESSONS_SUCCESS, LOAD_PENDING_LESSONS_FAILURE, LOAD_PENDING_LESSONS} from "../../../Commons/Constants";
+import { LOAD_PHOTO, LOAD_PHOTO_SUCCESS, LOAD_PHOTO_FAILURE, LOAD_SLIDING_IMAGES, LOAD_SLIDING_IMAGES_SUCCESS, LOAD_SLIDING_IMAGES_FAILURE, LOAD_RESERVATIONS_SUCCESS, LOAD_RESERVATIONS_FAILURE, LOAD_RESERVATIONS, LOAD_CATEGORIES, LOAD_CATEGORIES_SUCCESS, LOAD_CATEGORIES_FAILURE, LOAD_SCHEDULED_LESSONS, LOAD_SCHEDULED_LESSONS_SUCCESS, LOAD_SCHEDULED_LESSONS_FAILURE, LOAD_PENDING_LESSONS_SUCCESS, LOAD_PENDING_LESSONS_FAILURE, LOAD_PENDING_LESSONS, LOAD_FEATURED_INSTRUCTORS, LOAD_FEATURED_INSTRUCTORS_SUCCESS, LOAD_FEATURED_INSTRUCTORS_FAILURE} from "../../../Commons/Constants";
 import {put, takeLatest} from 'redux-saga/effects';
 import firestore from '@react-native-firebase/firestore';
 import storage from '@react-native-firebase/storage';
@@ -210,6 +210,54 @@ function* loadPendingLessonsInner() {
     return reservations;
 }
 
+function* loadFeatured(action) {
+
+    let featured = yield* loadFeaturedInner();
+
+    if(featured)
+    {
+        yield put({type: LOAD_FEATURED_INSTRUCTORS_SUCCESS, featured: featured});
+    }
+    else
+        yield put({type: LOAD_FEATURED_INSTRUCTORS_FAILURE});
+}
+
+function* loadFeaturedInner() {
+
+    let data = undefined;
+    let reservations = undefined;
+
+    yield firestore().collection('Featured').doc('Featured').get().
+    then((doc) => {
+        if(doc.data())
+            data = JSON.parse(doc.data().Featured)}).catch((err) => {console.log(err)});
+
+    if(data)
+    {
+        reservations = data.map( (s) => {return s});
+
+        if(reservations)
+        {
+            let photos = [];
+
+            for(let i = 0; i < reservations.length; i++)
+            {
+                if(reservations[i])
+                    yield storage().ref(reservations[i].uuid+'.png').getDownloadURL().then((url) => {photos[i] = url}).catch((err) => {photos[i] = undefined, console.log(err)});
+                else
+                {
+                    reservations.splice(i, 1);
+                    i--;
+                }
+            }
+
+            reservations.photos = photos;
+        }
+    }
+
+    return reservations;
+}
+
 export default function* loadDataActionWatcher() {
     yield takeLatest(`${LOAD_SLIDING_IMAGES}`, loadSlidingImages);
     yield takeLatest(`${LOAD_PHOTO}`, loadPhoto);
@@ -217,4 +265,5 @@ export default function* loadDataActionWatcher() {
     yield takeLatest(`${LOAD_CATEGORIES}`, loadCategories);
     yield takeLatest(`${LOAD_SCHEDULED_LESSONS}`, loadScheduledLessons);
     yield takeLatest(`${LOAD_PENDING_LESSONS}`, loadPendingLessons);
+    yield takeLatest(`${LOAD_FEATURED_INSTRUCTORS}`, loadFeatured);
 }

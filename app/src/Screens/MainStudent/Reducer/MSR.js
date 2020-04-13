@@ -1,4 +1,4 @@
-import {LOAD_PHOTO_SUCCESS, LOAD_PHOTO_FAILURE, LOAD_SLIDING_IMAGES_SUCCESS, LOAD_SLIDING_IMAGES_FAILURE, LOAD_RESERVATIONS_SUCCESS, LOAD_RESERVATIONS_FAILURE, LOAD_CATEGORIES_SUCCESS, LOAD_CATEGORIES_FAILURE, LOAD_PENDING_LESSONS_SUCCESS, LOAD_PENDING_LESSONS_FAILURE, LOAD_SCHEDULED_LESSONS_SUCCESS, LOAD_SCHEDULED_LESSONS_FAILURE, SET_MENU_VISIBILITY} from '../../../Commons/Constants'
+import {LOAD_PHOTO_SUCCESS, LOAD_PHOTO_FAILURE, LOAD_SLIDING_IMAGES_SUCCESS, LOAD_SLIDING_IMAGES_FAILURE, LOAD_RESERVATIONS_SUCCESS, LOAD_RESERVATIONS_FAILURE, LOAD_CATEGORIES_SUCCESS, LOAD_CATEGORIES_FAILURE, LOAD_PENDING_LESSONS_SUCCESS, LOAD_PENDING_LESSONS_FAILURE, LOAD_SCHEDULED_LESSONS_SUCCESS, LOAD_SCHEDULED_LESSONS_FAILURE, SET_MENU_VISIBILITY, LOAD_FEATURED_INSTRUCTORS_SUCCESS, LOAD_FEATURED_INSTRUCTORS_FAILURE} from '../../../Commons/Constants'
 
 const INITIAL_STATE = {
     reservations: undefined,
@@ -8,6 +8,7 @@ const INITIAL_STATE = {
     scheduled: undefined,
     pending: undefined,
     showmenu: false,
+    featured: undefined,
   };
 
 export default function mscReducer() {
@@ -90,6 +91,18 @@ export default function mscReducer() {
           return {
             ...state,
             showmenu: !action.showmenu,
+          };
+
+          case LOAD_FEATURED_INSTRUCTORS_SUCCESS:
+          return {
+            ...state,
+            featured: action.featured,
+          };
+
+          case LOAD_FEATURED_INSTRUCTORS_FAILURE:
+          return {
+            ...state,
+            featured: undefined,
           };
 
         default:

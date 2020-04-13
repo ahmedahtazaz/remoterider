@@ -14,6 +14,7 @@ class MSC extends Component {
       this.menuPress = this.menuPress.bind(this);
       this.profilePress = this.profilePress.bind(this);
       this.onReservationClick = this.onReservationClick.bind(this);
+      this.makeReservationsHandler = this.makeReservationsHandler.bind(this);
   }
 
   componentWillUnmount()
@@ -55,8 +56,13 @@ class MSC extends Component {
 
   }
 
+  makeReservationsHandler()
+  {
+    this.props.navigation.navigate('Search for Instructor'); 
+  }
+
   render() {
-        return (<MSP showmenu={this.props.showmenu} onCategoriesClick={this.onCategoriesClick} categories={this.props.categories} onReservationClick={this.onReservationClick} reservations={this.props.reservations} images={this.props.slidingImages} backButton={this.backButtonPress} menuPress = {this.menuPress} photo = {this.props.photo} profilePress={this.profilePress}/>);
+        return (<MSP reservationPress={this.makeReservationsHandler} showmenu={this.props.showmenu} onCategoriesClick={this.onCategoriesClick} categories={this.props.categories} onReservationClick={this.onReservationClick} reservations={this.props.reservations} images={this.props.slidingImages} backButton={this.backButtonPress} menuPress = {this.menuPress} photo = {this.props.photo} profilePress={this.profilePress}/>);
   }
 }
 
