@@ -1,4 +1,4 @@
-import { LOAD_PHOTO, LOAD_PHOTO_SUCCESS, LOAD_PHOTO_FAILURE, LOAD_SLIDING_IMAGES, LOAD_SLIDING_IMAGES_SUCCESS, LOAD_SLIDING_IMAGES_FAILURE, LOAD_RESERVATIONS_SUCCESS, LOAD_RESERVATIONS_FAILURE, LOAD_RESERVATIONS, LOAD_CATEGORIES, LOAD_CATEGORIES_SUCCESS, LOAD_CATEGORIES_FAILURE, LOAD_SCHEDULED_LESSONS, LOAD_SCHEDULED_LESSONS_SUCCESS, LOAD_SCHEDULED_LESSONS_FAILURE, LOAD_PENDING_LESSONS_SUCCESS, LOAD_PENDING_LESSONS_FAILURE, LOAD_PENDING_LESSONS, LOAD_FEATURED_INSTRUCTORS, LOAD_FEATURED_INSTRUCTORS_SUCCESS, LOAD_FEATURED_INSTRUCTORS_FAILURE} from "../../../Commons/Constants";
+import { LOAD_PHOTO, LOAD_PHOTO_SUCCESS, LOAD_PHOTO_FAILURE, LOAD_SLIDING_IMAGES, LOAD_SLIDING_IMAGES_SUCCESS, LOAD_SLIDING_IMAGES_FAILURE, LOAD_RESERVATIONS_SUCCESS, LOAD_RESERVATIONS_FAILURE, LOAD_RESERVATIONS, LOAD_CATEGORIES, LOAD_CATEGORIES_SUCCESS, LOAD_CATEGORIES_FAILURE, LOAD_SCHEDULED_LESSONS, LOAD_SCHEDULED_LESSONS_SUCCESS, LOAD_SCHEDULED_LESSONS_FAILURE, LOAD_PENDING_LESSONS_SUCCESS, LOAD_PENDING_LESSONS_FAILURE, LOAD_PENDING_LESSONS, LOAD_FEATURED_INSTRUCTORS, LOAD_FEATURED_INSTRUCTORS_SUCCESS, LOAD_FEATURED_INSTRUCTORS_FAILURE, LOAD_SEARCH_RESULTS, LOAD_SEARCH_RESULTS_SUCCESS, LOAD_SEARCH_RESULTS_FAILURE} from "../../../Commons/Constants";
 import {put, takeLatest} from 'redux-saga/effects';
 import firestore from '@react-native-firebase/firestore';
 import storage from '@react-native-firebase/storage';
@@ -258,6 +258,104 @@ function* loadFeaturedInner() {
     return reservations;
 }
 
+function* loadSearchResults(action) {
+
+    let searchResults = yield* loadSearchResultsInner(action.querry);
+
+    if(searchResults)
+    {
+        yield put({type: LOAD_SEARCH_RESULTS_SUCCESS, searchResults: searchResults});
+    }
+    else
+        yield put({type: LOAD_SEARCH_RESULTS_FAILURE});
+}
+
+function* loadSearchResultsInner(searchString) {
+
+    let dataUsers = [];
+    let dataFeatured = [];
+
+    let results = [];
+
+    yield firestore().collection('Users').orderBy('name')
+                .startAt(searchString)
+                .endAt(searchString + '\uf8ff')
+                .get().
+    then((doc) => {
+        if(doc.docs && doc.docs.length > 0)
+        {
+            for(let i = 0; i < doc.docs.length; i++)
+            {
+                if(doc.docs[i].data().isInstructor)
+                {
+                    dataUsers.push(doc.docs[i].data());
+                }
+            }
+        }}).catch((err) => {console.log(err)});
+
+    yield firestore().collection('Featured').doc('Featured').get().
+    then((doc) => {
+        if(doc.data())
+        {
+            let data = JSON.parse(doc.data().Featured);
+
+            if(data && data.length > 0)
+            {
+                for(let i = 0; i < data.length; i++)
+                {
+                    if((data[i].name.includes(searchString) || data[i].name.includes(searchString.toLowerCase())) && ( data[i - 1] !== undefined ? data[i].name !== data[i - 1].name : true))
+                        dataFeatured.push(data[i]);
+                }
+            }
+        }}).catch((err) => {console.log(err)});
+
+        console.log('datausers', dataUsers);
+        console.log('datafeatured', dataFeatured);
+
+        if(dataUsers.length > 0)
+        {
+            if(dataFeatured.length > 0)
+            {
+                for(let i = 0; i < dataUsers.length; i++)
+                {
+                    results.push(dataUsers[i]);
+
+                    for(let j = 0; j < dataFeatured.length; j++)
+                    {
+                        if(dataFeatured[j].name !== dataUsers[i].name && dataUsers[i].cost !== dataFeatured[i].cost)
+                            results.push(dataFeatured[j]);
+                    }
+                }
+            }
+            else
+                results = dataUsers;
+        }
+        else if(dataFeatured.length > 0)
+            results = dataFeatured;
+        else
+            results = undefined;
+
+        if(results)
+        {
+            let photos = [];
+
+            for(let i = 0; i < results.length; i++)
+            {
+                if(results[i])
+                    yield storage().ref(results[i].uuid+'.png').getDownloadURL().then((url) => {photos[i] = url}).catch((err) => {photos[i] = undefined, console.log(err)});
+                else
+                {
+                    results.splice(i, 1);
+                    i--;
+                }
+            }
+
+            results.photos = photos;
+        }
+
+    return results;
+}
+
 export default function* loadDataActionWatcher() {
     yield takeLatest(`${LOAD_SLIDING_IMAGES}`, loadSlidingImages);
     yield takeLatest(`${LOAD_PHOTO}`, loadPhoto);
@@ -266,4 +364,5 @@ export default function* loadDataActionWatcher() {
     yield takeLatest(`${LOAD_SCHEDULED_LESSONS}`, loadScheduledLessons);
     yield takeLatest(`${LOAD_PENDING_LESSONS}`, loadPendingLessons);
     yield takeLatest(`${LOAD_FEATURED_INSTRUCTORS}`, loadFeatured);
+    yield takeLatest(`${LOAD_SEARCH_RESULTS}`, loadSearchResults);
 }

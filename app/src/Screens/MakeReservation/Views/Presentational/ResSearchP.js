@@ -25,46 +25,86 @@ export default class ResSearchP extends Component {
             </View>
           </View>
 
+          {(this.props.searchResults) ? 
           <View style={styles.featuredInstructorsContainer}>
 
+          <Text 
+              numberOfLines={1} style={{marginLeft: wp(3), fontSize: hp(3),fontWeight: '700',color: '#ffffff',fontFamily: getBoldFont()}}>
+                  {'Search Results'}
+          </Text> 
+          <FlatList contentContainerStyle={{ marginLeft: wp(3),marginTop: hp(2), flexGrow: 1 }}
+          data={this.props.searchResults} 
+          renderItem={
+            ({ item, index }) => { return(
+              <TouchableOpacity style={{marginBottom: hp(1.3),  marginRight: wp(3), backgroundColor: 'transparent', height: hp(13), width: wp(50)}} onPress={ () => {this.props.onInstructorClick(item, index)}}>
+                <Image source={{uri: this.props.searchResults.photos[index]}} style={{height: hp(13), width: wp(50), resizeMode: 'stretch'}}/>
+                <View style={{alignItems: 'center', justifyContent: 'center', flexDirection: 'column', opacity: .6, position: 'absolute', backgroundColor: 'green',  width: wp(50), height: hp(13)}}>
+                  <View style={{alignItems: 'center', justifyContent: 'center', backgroundColor: 'transparent', flexDirection: 'row', width: wp(50), height: hp(6)}}>
+                    <Text 
+                        numberOfLines={1} style={{marginLeft: wp(1), fontSize: hp(2),fontWeight: '400',textAlign: 'center',color: '#ffffff',fontFamily: getRegularFont()}}>
+                            {'Name : '}
+                    </Text> 
+                    <Text 
+                        style={{width: wp(35), marginLeft: wp(1), fontSize: hp(2),fontWeight: '400',color: '#ffffff',fontFamily: getRegularFont()}}>
+                            {item.Name || item.name}
+                    </Text> 
+                  </View>
+                  <View style={{alignItems: 'center', justifyContent: 'center', backgroundColor: 'transparent', flexDirection: 'row', width: wp(50), height: hp(3)}}>
+                    <Text 
+                        numberOfLines={1} style={{marginLeft: wp(1), fontSize: hp(2),fontWeight: '400',textAlign: 'center',color: '#ffffff',fontFamily: getRegularFont()}}>
+                            {'Cost : '}
+                    </Text> 
+                    <Text 
+                        numberOfLines={1} style={{marginLeft: wp(1), fontSize: hp(2),fontWeight: '400',textAlign: 'center',color: '#ffffff',fontFamily: getRegularFont()}}>
+                            {item.Cost || item.cost}
+                    </Text> 
+                  </View>
+                </View>
+              </TouchableOpacity>
+            )}
+          }
+          numColumns={2}
+          keyExtractor={(item, index) => index.toString()}/></View> :
+            <View style={styles.featuredInstructorsContainer}>
+
             <Text 
-                numberOfLines={1} style={{marginLeft: wp(3), position: 'absolute', left: 0, fontSize: hp(3),fontWeight: '700',textAlign: 'center',color: '#ffffff',fontFamily: getBoldFont()}}>
+                numberOfLines={1} style={{marginLeft: wp(3), fontSize: hp(3),fontWeight: '700',color: '#ffffff',fontFamily: getBoldFont()}}>
                     {'Featured Instructors'}
             </Text> 
 
             {(this.props.featured) ? 
-            <FlatList contentContainerStyle={{ marginLeft: wp(3),marginTop: hp(5),flexGrow: 1 }}
+            <FlatList contentContainerStyle={{ marginLeft: wp(3),marginTop: hp(2),flexGrow: 1 }}
             data={this.props.featured} 
             renderItem={
               ({ item, index }) => { return(
-                <TouchableOpacity style={{marginRight: wp(3), backgroundColor: 'transparent', height: hp(16), width: wp(61.3)}} onPress={ () => {this.props.onInstructorClick(item, index)}}>
-                  <Image source={{uri: this.props.featured.photos[index]}} style={{height: hp(16), width: wp(61.3), resizeMode: 'stretch'}}/>
-                  <View style={{alignItems: 'center', justifyContent: 'center', flexDirection: 'column', opacity: .6, position: 'absolute', backgroundColor: 'green', width: wp(61.3), height: hp(16)}}>
-                    <View style={{alignItems: 'center', justifyContent: 'center', backgroundColor: 'transparent', flexDirection: 'row', width: wp(61.3), height: hp(3)}}>
+                <TouchableOpacity style={{ marginBottom: hp(1.3), marginRight: wp(3), backgroundColor: 'transparent', height: hp(13), width: wp(50)}} onPress={ () => {this.props.onInstructorClick(item, index)}}>
+                  <Image source={{uri: this.props.featured.photos[index]}} style={{height: hp(13), width: wp(50), resizeMode: 'stretch'}}/>
+                  <View style={{alignItems: 'center', justifyContent: 'center', flexDirection: 'column', opacity: .6, position: 'absolute', backgroundColor: 'green', width: wp(50), height: hp(13)}}>
+                    <View style={{alignItems: 'center', justifyContent: 'center', backgroundColor: 'transparent', flexDirection: 'row', width: wp(50), height: hp(6)}}>
                       <Text 
-                          numberOfLines={1} style={{marginLeft: wp(1), fontSize: hp(2.5),fontWeight: '400',textAlign: 'center',color: '#ffffff',fontFamily: getRegularFont()}}>
+                          numberOfLines={1} style={{ marginLeft: wp(1), fontSize: hp(2),fontWeight: '400',textAlign: 'center',color: '#ffffff',fontFamily: getRegularFont()}}>
                               {'Name : '}
                       </Text> 
                       <Text 
-                          numberOfLines={1} style={{marginLeft: wp(1), fontSize: hp(2.5),fontWeight: '400',textAlign: 'center',color: '#ffffff',fontFamily: getRegularFont()}}>
-                              {item.Name}
+                          style={{width: wp(35), marginLeft: wp(1), fontSize: hp(2),fontWeight: '400',color: '#ffffff',fontFamily: getRegularFont()}}>
+                              {item.Name || item.name}
                       </Text> 
                     </View>
-                    <View style={{alignItems: 'center', justifyContent: 'center', backgroundColor: 'transparent', flexDirection: 'row', width: wp(61.3), height: hp(3)}}>
+                    <View style={{alignItems: 'center', justifyContent: 'center', backgroundColor: 'transparent', flexDirection: 'row', width: wp(50), height: hp(3)}}>
                       <Text 
-                          numberOfLines={1} style={{marginLeft: wp(1), fontSize: hp(2.5),fontWeight: '400',textAlign: 'center',color: '#ffffff',fontFamily: getRegularFont()}}>
+                          numberOfLines={1} style={{marginLeft: wp(1), fontSize: hp(2),fontWeight: '400',textAlign: 'center',color: '#ffffff',fontFamily: getRegularFont()}}>
                               {'Cost : '}
                       </Text> 
                       <Text 
-                          numberOfLines={1} style={{marginLeft: wp(1), fontSize: hp(2.5),fontWeight: '400',textAlign: 'center',color: '#ffffff',fontFamily: getRegularFont()}}>
-                              {item.Cost}
+                          numberOfLines={1} style={{marginLeft: wp(1), fontSize: hp(2),fontWeight: '400',textAlign: 'center',color: '#ffffff',fontFamily: getRegularFont()}}>
+                              {item.Cost || item.cost}
                       </Text> 
                     </View>
                   </View>
                 </TouchableOpacity>
               )}
             }
-            horizontal={true}
+            numColumns={2}
             keyExtractor={(item, index) => index.toString()}/> : 
             <TouchableOpacity style={{marginTop: hp(5), justifyContent: "center",borderRadius: hp(6), height: hp(15), width: wp(90.3) , backgroundColor: '#006b31', alignSelf: 'center'}}>
             <Text 
@@ -72,7 +112,8 @@ export default class ResSearchP extends Component {
                     {'No Featured Instructors are available'}
             </Text></TouchableOpacity> }
 
-          </View>
+          </View>}
+          
         </View>
       </LinearGradient>);
   }
@@ -94,7 +135,6 @@ const styles = StyleSheet.create({
   },
   featuredInstructorsContainer: {
     width: wp(100),
-    height: hp(22),
     flexDirection:'column',
     backgroundColor: 'transparent',
     marginTop: hp(6.8)
