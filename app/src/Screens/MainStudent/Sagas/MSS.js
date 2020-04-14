@@ -413,9 +413,9 @@ function* loadAvailableTimeSlotsInner(date, uuid) {
     {
         available = [];
 
-        let initial = Number.parseInt(date, 10) + (3600000 * 9);
+        let initial = Number.parseInt(date, 10);
 
-        for(let i = 0; i < 8; i++)
+        for(let i = 0; i < 24; i++)
         {
             let newDate = new Date(initial + (3600000 * i));
             let nextHourDate = new Date(initial + (3600000 * i) + 3600000);
