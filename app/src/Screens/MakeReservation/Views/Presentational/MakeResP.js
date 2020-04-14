@@ -4,6 +4,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import { getBoldFont, getRegularFont } from '../../../../Commons/Fonts';
 import Calendar from '../../../Calendar/Calendar';
+import Dialog from '../../../../Commons/Dialogue/Dialogue';
 
 export default class MakeResP extends Component {
 
@@ -32,7 +33,7 @@ export default class MakeResP extends Component {
           </Text>   
           <TouchableOpacity style={{alignSelf: 'center', marginTop: hp(1), backgroundColor: 'transparent', height: hp(16), width: wp(61.3)}}>
             <Image source={{uri: this.props.instructorPhoto}} style={{height: hp(16), width: wp(61.3), resizeMode: 'stretch'}}/>    
-            <View style={{alignItems: 'center', justifyContent: 'center', flexDirection: 'column', opacity: .6, position: 'absolute', backgroundColor: 'green', width: wp(61.3), height: hp(16)}}>
+            <View style={{alignItems: 'center', justifyContent: 'center', flexDirection: 'column', opacity: .6, position: 'absolute', backgroundColor: '#006b31', width: wp(61.3), height: hp(16)}}>
                     <View style={{alignItems: 'center', justifyContent: 'center', backgroundColor: 'transparent', flexDirection: 'row', width: wp(61.3), height: hp(3)}}>
                       <Text 
                           numberOfLines={1} style={{marginLeft: wp(1), fontSize: hp(2),fontWeight: '400',textAlign: 'center',color: '#ffffff',fontFamily: getRegularFont()}}>
@@ -51,7 +52,7 @@ export default class MakeResP extends Component {
           </Text> 
           <Calendar onDateChange={this.props.onDateChange}/>
           {(this.props.availableTimeSlots) ? 
-          <View style={{height:hp(15), marginTop: hp(2), flexDirection: 'column'}}>
+          <View style={{height:hp(21), marginTop: hp(2), flexDirection: 'column'}}>
           <Text 
             numberOfLines={1} style={{height: hp(3), marginLeft: wp(3), fontSize: hp(2.2),fontWeight: '700',color: '#ffffff',fontFamily: getBoldFont()}}>
                 {'Available Lesson Times'}
@@ -60,20 +61,44 @@ export default class MakeResP extends Component {
             data={this.props.availableTimeSlots} 
             renderItem={
               ({ item, index }) => { return(
-                <TouchableOpacity style={{borderRadius: hp(2), marginRight: wp(3), backgroundColor: 'transparent', height: hp(5), width: wp(40)}}>
-                 <View style={{borderRadius: hp(2),  alignItems: 'center', justifyContent: 'center', backgroundColor: 'green', flexDirection: 'row', width: wp(40), height: hp(5)}}>
-                    <Text 
-                        numberOfLines={1} style={{width: wp(40), marginLeft: wp(1), fontSize: hp(1.8),fontWeight: '400',textAlign: 'center',color: '#ffffff',fontFamily: getRegularFont()}}>
-                            {item.time}
-                    </Text> 
-                </View>
+                <TouchableOpacity style={{borderRadius: hp(2), marginRight: wp(3), backgroundColor: 'transparent', height: hp(5), width: wp(40)}} onPress={() => {this.props.onTimeSlotClick(item, index)}}>
+                 {(this.props.selectedSlot !== undefined && this.props.selectedSlot === index) ?
+                 <View style={{borderRadius: hp(2),  alignItems: 'center', justifyContent: 'center', backgroundColor: '#5a9c79', flexDirection: 'row', width: wp(40), height: hp(5)}}>
+                 <Text 
+                     numberOfLines={1} style={{width: wp(40), marginLeft: wp(1), fontSize: hp(1.8),fontWeight: '400',textAlign: 'center',color: '#ffffff',fontFamily: getRegularFont()}}>
+                         {item.time}
+                 </Text> 
+             </View> :
+             <View style={{borderRadius: hp(2),  alignItems: 'center', justifyContent: 'center', backgroundColor: '#006b31', flexDirection: 'row', width: wp(40), height: hp(5)}}>
+                <Text 
+                    numberOfLines={1} style={{width: wp(40), marginLeft: wp(1), fontSize: hp(1.8),fontWeight: '400',textAlign: 'center',color: '#ffffff',fontFamily: getRegularFont()}}>
+                        {item.time}
+                </Text> 
+            </View>}
                 </TouchableOpacity>
               )}
             }
             horizontal={true}
-            keyExtractor={(item, index) => index.toString()}/></View> :
+            keyExtractor={(item, index) => index.toString()}/>
+            {(this.props.selectedSlot !== undefined) ? 
+            <View style={{alignSelf: 'center', height:hp(10), flexDirection: 'row'}}>
+                <TouchableOpacity style={{alignItems: 'center', justifyContent: 'center', borderRadius: hp(1), marginRight: wp(3), backgroundColor: '#006b31', height: hp(4), width: wp(35)}} onPress={() => {this.props.onConfirm(this.props.selectedSlot)}}>
+                 <Text 
+                    numberOfLines={1} style={{marginTop: hp(.8), alignSelf: 'center', width: wp(35), fontSize: hp(2.5),fontWeight: '400',textAlign: 'center',color: '#ffffff',fontFamily: getRegularFont()}}>
+                        {'Confirm'}
+                </Text> 
+                </TouchableOpacity>
+                <TouchableOpacity style={{alignItems: 'center', justifyContent: 'center', borderRadius: hp(1), marginRight: wp(3), backgroundColor: 'red', height: hp(4), width: wp(35)}} onPress={() => {this.props.Cancel()}}>
+                <Text 
+                    numberOfLines={1} style={{marginTop: hp(.8), alignSelf: 'center', width: wp(35), fontSize: hp(2.5),fontWeight: '400',textAlign: 'center',color: '#ffffff',fontFamily: getRegularFont()}}>
+                        {'Cancel'}
+                </Text> 
+                </TouchableOpacity>
+            </View> : 
+            null}
+            </View> :
           null}
-          
+          <Dialog/>
         </View>
       </LinearGradient>);
   }

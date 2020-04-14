@@ -1,4 +1,4 @@
-import { LOAD_PHOTO, LOAD_PHOTO_SUCCESS, LOAD_PHOTO_FAILURE, LOAD_SLIDING_IMAGES, LOAD_SLIDING_IMAGES_SUCCESS, LOAD_SLIDING_IMAGES_FAILURE, LOAD_RESERVATIONS_SUCCESS, LOAD_RESERVATIONS_FAILURE, LOAD_RESERVATIONS, LOAD_CATEGORIES, LOAD_CATEGORIES_SUCCESS, LOAD_CATEGORIES_FAILURE, LOAD_SCHEDULED_LESSONS, LOAD_SCHEDULED_LESSONS_SUCCESS, LOAD_SCHEDULED_LESSONS_FAILURE, LOAD_PENDING_LESSONS_SUCCESS, LOAD_PENDING_LESSONS_FAILURE, LOAD_PENDING_LESSONS, LOAD_FEATURED_INSTRUCTORS, LOAD_FEATURED_INSTRUCTORS_SUCCESS, LOAD_FEATURED_INSTRUCTORS_FAILURE, LOAD_SEARCH_RESULTS, LOAD_SEARCH_RESULTS_SUCCESS, LOAD_SEARCH_RESULTS_FAILURE, LOAD_AVAILABLE_TIME_SLOTS, LOAD_AVAILABLE_TIME_SLOTS_SUCCESS, LOAD_AVAILABLE_TIME_SLOTS_FAILURE} from "../../../Commons/Constants";
+import { LOAD_PHOTO, LOAD_PHOTO_SUCCESS, LOAD_PHOTO_FAILURE, LOAD_SLIDING_IMAGES, LOAD_SLIDING_IMAGES_SUCCESS, LOAD_SLIDING_IMAGES_FAILURE, LOAD_RESERVATIONS_SUCCESS, LOAD_RESERVATIONS_FAILURE, LOAD_RESERVATIONS, LOAD_CATEGORIES, LOAD_CATEGORIES_SUCCESS, LOAD_CATEGORIES_FAILURE, LOAD_SCHEDULED_LESSONS, LOAD_SCHEDULED_LESSONS_SUCCESS, LOAD_SCHEDULED_LESSONS_FAILURE, LOAD_PENDING_LESSONS_SUCCESS, LOAD_PENDING_LESSONS_FAILURE, LOAD_PENDING_LESSONS, LOAD_FEATURED_INSTRUCTORS, LOAD_FEATURED_INSTRUCTORS_SUCCESS, LOAD_FEATURED_INSTRUCTORS_FAILURE, LOAD_SEARCH_RESULTS, LOAD_SEARCH_RESULTS_SUCCESS, LOAD_SEARCH_RESULTS_FAILURE, LOAD_AVAILABLE_TIME_SLOTS, LOAD_AVAILABLE_TIME_SLOTS_SUCCESS, LOAD_AVAILABLE_TIME_SLOTS_FAILURE, MAKE_RESERVATION, MAKE_RESERVATION_SUCCESS, MAKE_RESERVATION_FAILURE} from "../../../Commons/Constants";
 import {put, takeLatest} from 'redux-saga/effects';
 import firestore from '@react-native-firebase/firestore';
 import storage from '@react-native-firebase/storage';
@@ -132,7 +132,7 @@ function* loadScheduledLessonsInner() {
     yield firestore().collection('Reservations').doc(currentUser.uid).get().
     then((doc) => {
         if(doc.data())
-            data = JSON.parse(doc.data().Reservations)}).catch((err) => {console.log(err)});
+            data = doc.data().Reservations}).catch((err) => {console.log(err)});
 
     if(data)
     {
@@ -182,7 +182,7 @@ function* loadPendingLessonsInner() {
     yield firestore().collection('Reservations').doc(currentUser.uid).get().
     then((doc) => {
         if(doc.data())
-            data = JSON.parse(doc.data().Reservations)}).catch((err) => {console.log(err)});
+            data = doc.data().Reservations}).catch((err) => {console.log(err)});
 
     if(data)
     {
@@ -430,6 +430,52 @@ function* loadAvailableTimeSlotsInner(date, uuid) {
     return available;
 }
 
+function* makeReservation(action) {
+
+    let message = yield* makeReservationInner(action.date, action.instructor);
+
+    if(message)
+    {
+        yield put({type: MAKE_RESERVATION_SUCCESS, makeReservMessage: message});
+    }
+    else
+        yield put({type: MAKE_RESERVATION_FAILURE, makeReservMessage: 'Failed to Make Reservation. Please Retry'});
+}
+
+function* makeReservationInner(date, instructor) {
+
+    let data = undefined;
+    var currentUser = auth().currentUser;
+    let newReservations = [];
+
+    let message = undefined;
+
+    yield firestore().collection('Reservations').doc(instructor.uuid).get().
+    then((doc) => {
+        if(doc && doc.data() && doc.data().Reservations)
+            data = doc.data().Reservations;
+
+            console.log(data)
+            
+            if(data && data.length > 0)
+            {
+                newReservations = data;
+            }
+
+            newReservations.push({"uuid" : currentUser.uid, "confirmed" : "false", date: date});
+
+        }).catch((err) => {console.log(err)});
+
+    if(newReservations && newReservations.length > 0)
+    {
+        yield firestore().collection('Reservations').doc(instructor.uuid).set({"Reservations" :newReservations}).then(
+            () => {message = "We have successfully sent your request to "+instructor.name}
+        ).catch((err) => console.log(err));
+    }
+
+    return message;
+}
+
 export default function* loadDataActionWatcher() {
     yield takeLatest(`${LOAD_SLIDING_IMAGES}`, loadSlidingImages);
     yield takeLatest(`${LOAD_PHOTO}`, loadPhoto);
@@ -440,4 +486,5 @@ export default function* loadDataActionWatcher() {
     yield takeLatest(`${LOAD_FEATURED_INSTRUCTORS}`, loadFeatured);
     yield takeLatest(`${LOAD_SEARCH_RESULTS}`, loadSearchResults);
     yield takeLatest(`${LOAD_AVAILABLE_TIME_SLOTS}`, loadAvailableTimeSlots);
+    yield takeLatest(`${MAKE_RESERVATION}`, makeReservation);
 }
