@@ -11,8 +11,7 @@ export default class MakeResP extends Component {
   render() {
     const backArrow = require('../../../../assets/backArrow.png');
     const menu = require('../../../../assets/menu.png');
-
-    console.log('instructor phooto', this.props.instructorPhoto);
+    
     return (
       <LinearGradient colors={['#006b31', '#00652e', '#005e2b' , '#005326', '#004b22', '#00411e', '#003a1b', '#003619']} style={{flex: 1}}>      
         <View style={styles.background}>

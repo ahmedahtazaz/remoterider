@@ -6,6 +6,7 @@ import Slideshow from 'react-native-image-slider-show';
 import { getBoldFont, getRegularFont } from '../../../../Commons/Fonts';
 import MenuDialogue from '../../../../Commons/MenuDialogue/MenuDialogue';
 import ProfileDialogue from '../../../../Commons/ProfileDialogue/ProfileDialogue';
+import PictureDialogue from '../../../../Commons/Dialogue/PictureDialogue';
 
 export default class MSIP extends Component {
 
@@ -45,7 +46,7 @@ export default class MSIP extends Component {
             <FlatList contentContainerStyle={{ marginLeft: wp(3),marginTop: hp(5),flexGrow: 1 }}
             data={this.props.scheduled} 
             renderItem={
-              ({ item, index }) => { return( console.log('sche item', item),
+              ({ item, index }) => { return( 
                 <TouchableOpacity style={{marginRight: wp(3), backgroundColor: 'transparent', height: hp(16), width: wp(61.3)}} onPress={ () => {this.props.onReservationClick(item, index)}}>
                   <Image source={{uri: this.props.scheduled.photos[index]}} style={{height: hp(16), width: wp(61.3), resizeMode: 'stretch'}}/>
                   <View style={{alignItems: 'center', justifyContent: 'center', flexDirection: 'column', opacity: .6, position: 'absolute', backgroundColor: 'green', width: wp(61.3), height: hp(16)}}>
@@ -56,7 +57,7 @@ export default class MSIP extends Component {
                       </Text> 
                       <Text 
                           numberOfLines={1} style={{marginLeft: wp(1), fontSize: hp(2.5),fontWeight: '400',textAlign: 'center',color: '#ffffff',fontFamily: getRegularFont()}}>
-                              {item.Name}
+                              {item.name}
                       </Text> 
                     </View>
                     <View style={{alignItems: 'center', justifyContent: 'center', backgroundColor: 'transparent', flexDirection: 'row', width: wp(61.3), height: hp(3)}}>
@@ -66,7 +67,7 @@ export default class MSIP extends Component {
                       </Text> 
                       <Text 
                           numberOfLines={1} style={{marginLeft: wp(1), fontSize: hp(2.5),fontWeight: '400',textAlign: 'center',color: '#ffffff',fontFamily: getRegularFont()}}>
-                              {item.Date}
+                              {item.showableDate}
                       </Text> 
                     </View>
                     <View style={{alignItems: 'center', justifyContent: 'center', backgroundColor: 'transparent', flexDirection: 'row', width: wp(61.3), height: hp(3)}}>
@@ -76,7 +77,7 @@ export default class MSIP extends Component {
                       </Text> 
                       <Text 
                           numberOfLines={1} style={{marginLeft: wp(1), fontSize: hp(2.5),fontWeight: '400',textAlign: 'center',color: '#ffffff',fontFamily: getRegularFont()}}>
-                              {item.Time}
+                              {item.time}
                       </Text> 
                     </View>
                   </View>
@@ -103,7 +104,7 @@ export default class MSIP extends Component {
             data={this.props.pending} 
             renderItem={
               ({ item, index }) => { return(
-                <TouchableOpacity style={{marginRight: wp(3), backgroundColor: 'transparent', height: hp(16), width: wp(61.3)}} onPress={ () => {this.props.onCategoriesClick(item, index)}}>
+                <TouchableOpacity style={{marginRight: wp(3), backgroundColor: 'transparent', height: hp(16), width: wp(61.3)}} onPress={ () => {this.props.onPendingClick(item, index)}}>
                   <Image source={{uri: this.props.pending.photos[index]}} style={{height: hp(16), width: wp(61.3), resizeMode: 'stretch'}}/>
                   <View style={{alignItems: 'center', justifyContent: 'center', flexDirection: 'column', opacity: .6, position: 'absolute', backgroundColor: 'green', width: wp(61.3), height: hp(16)}}>
                     <View style={{alignItems: 'center', justifyContent: 'center', backgroundColor: 'transparent', flexDirection: 'row', width: wp(61.3), height: hp(3)}}>
@@ -113,7 +114,7 @@ export default class MSIP extends Component {
                       </Text> 
                       <Text 
                           numberOfLines={1} style={{marginLeft: wp(1), fontSize: hp(2.5),fontWeight: '400',textAlign: 'center',color: '#ffffff',fontFamily: getRegularFont()}}>
-                              {item.Name}
+                              {item.name}
                       </Text> 
                     </View>
                     <View style={{alignItems: 'center', justifyContent: 'center', backgroundColor: 'transparent', flexDirection: 'row', width: wp(61.3), height: hp(3)}}>
@@ -123,7 +124,7 @@ export default class MSIP extends Component {
                       </Text> 
                       <Text 
                           numberOfLines={1} style={{marginLeft: wp(1), fontSize: hp(2.5),fontWeight: '400',textAlign: 'center',color: '#ffffff',fontFamily: getRegularFont()}}>
-                              {item.Date}
+                              {item.showableDate}
                       </Text> 
                     </View>
                     <View style={{alignItems: 'center', justifyContent: 'center', backgroundColor: 'transparent', flexDirection: 'row', width: wp(61.3), height: hp(3)}}>
@@ -133,7 +134,7 @@ export default class MSIP extends Component {
                       </Text> 
                       <Text 
                           numberOfLines={1} style={{marginLeft: wp(1), fontSize: hp(2.5),fontWeight: '400',textAlign: 'center',color: '#ffffff',fontFamily: getRegularFont()}}>
-                              {item.Time}
+                              {item.time}
                       </Text> 
                     </View>
                   </View>
@@ -151,6 +152,7 @@ export default class MSIP extends Component {
           </View>
           <MenuDialogue/>
           <ProfileDialogue/>
+          <PictureDialogue/>
         </View>
       </LinearGradient>);
   }

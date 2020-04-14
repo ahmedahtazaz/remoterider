@@ -1,4 +1,4 @@
-import {SET_DIALOGUE} from '../Constants'
+import {SET_DIALOGUE, SET_CONFIRMATION_DIALOGUE} from '../Constants'
 
 const INITIAL_STATE = {
     visible: false,
@@ -6,6 +6,9 @@ const INITIAL_STATE = {
     positve: undefined,
     negative: undefined,
     negativeButtonPressed: undefined,
+    student: undefined,
+    studentPhoto: undefined,
+    positivePressed: undefined
   };
 
 export default function dialogueReducer() {
@@ -20,6 +23,19 @@ export default function dialogueReducer() {
                 positve: action.positive,
                 negative: action.negative,
                 negativeButtonPressed: action.negativeButtonPressed,
+              };
+
+          case SET_CONFIRMATION_DIALOGUE:
+            return {
+                ...state,
+                visible: action.visible,
+                message: action.message,
+                positve: action.positive,
+                negative: action.negative,
+                negativeButtonPressed: action.negativeButtonPressed,
+                student: action.student,
+                studentPhoto: action.studentPhoto,
+                positivePressed: action.positivePressed
               };
 
         default:

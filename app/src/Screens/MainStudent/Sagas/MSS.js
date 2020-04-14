@@ -1,4 +1,4 @@
-import { LOAD_PHOTO, LOAD_PHOTO_SUCCESS, LOAD_PHOTO_FAILURE, LOAD_SLIDING_IMAGES, LOAD_SLIDING_IMAGES_SUCCESS, LOAD_SLIDING_IMAGES_FAILURE, LOAD_RESERVATIONS_SUCCESS, LOAD_RESERVATIONS_FAILURE, LOAD_RESERVATIONS, LOAD_CATEGORIES, LOAD_CATEGORIES_SUCCESS, LOAD_CATEGORIES_FAILURE, LOAD_SCHEDULED_LESSONS, LOAD_SCHEDULED_LESSONS_SUCCESS, LOAD_SCHEDULED_LESSONS_FAILURE, LOAD_PENDING_LESSONS_SUCCESS, LOAD_PENDING_LESSONS_FAILURE, LOAD_PENDING_LESSONS, LOAD_FEATURED_INSTRUCTORS, LOAD_FEATURED_INSTRUCTORS_SUCCESS, LOAD_FEATURED_INSTRUCTORS_FAILURE, LOAD_SEARCH_RESULTS, LOAD_SEARCH_RESULTS_SUCCESS, LOAD_SEARCH_RESULTS_FAILURE, LOAD_AVAILABLE_TIME_SLOTS, LOAD_AVAILABLE_TIME_SLOTS_SUCCESS, LOAD_AVAILABLE_TIME_SLOTS_FAILURE, MAKE_RESERVATION, MAKE_RESERVATION_SUCCESS, MAKE_RESERVATION_FAILURE} from "../../../Commons/Constants";
+import { LOAD_PHOTO, LOAD_PHOTO_SUCCESS, LOAD_PHOTO_FAILURE, LOAD_SLIDING_IMAGES, LOAD_SLIDING_IMAGES_SUCCESS, LOAD_SLIDING_IMAGES_FAILURE, LOAD_RESERVATIONS_SUCCESS, LOAD_RESERVATIONS_FAILURE, LOAD_RESERVATIONS, LOAD_CATEGORIES, LOAD_CATEGORIES_SUCCESS, LOAD_CATEGORIES_FAILURE, LOAD_SCHEDULED_LESSONS, LOAD_SCHEDULED_LESSONS_SUCCESS, LOAD_SCHEDULED_LESSONS_FAILURE, LOAD_PENDING_LESSONS_SUCCESS, LOAD_PENDING_LESSONS_FAILURE, LOAD_PENDING_LESSONS, LOAD_FEATURED_INSTRUCTORS, LOAD_FEATURED_INSTRUCTORS_SUCCESS, LOAD_FEATURED_INSTRUCTORS_FAILURE, LOAD_SEARCH_RESULTS, LOAD_SEARCH_RESULTS_SUCCESS, LOAD_SEARCH_RESULTS_FAILURE, LOAD_AVAILABLE_TIME_SLOTS, LOAD_AVAILABLE_TIME_SLOTS_SUCCESS, LOAD_AVAILABLE_TIME_SLOTS_FAILURE, MAKE_RESERVATION, MAKE_RESERVATION_SUCCESS, MAKE_RESERVATION_FAILURE, DECLINE_STUDENT, DECLINE_STUDENT_SUCCESS, DECLINE_STUDENT_FAILURE, CONFIRM_STUDENT, CONFIRM_STUDENT_SUCCESS, CONFIRM_STUDENT_FAILURE} from "../../../Commons/Constants";
 import {put, takeLatest} from 'redux-saga/effects';
 import firestore from '@react-native-firebase/firestore';
 import storage from '@react-native-firebase/storage';
@@ -136,7 +136,7 @@ function* loadScheduledLessonsInner() {
 
     if(data)
     {
-        reservations = data.map( (s) => {if(s.confirmed) return s});
+        reservations = data.map( (s) => {if(s.confirmed === "true") return s});
 
         if(reservations)
         {
@@ -154,10 +154,38 @@ function* loadScheduledLessonsInner() {
             }
 
             reservations.photos = photos;
+
+            for(let i = 0; i < reservations.length; i++)
+            {
+                if(reservations[i])
+                {
+                    if(reservations[i].date)
+                    {
+                        let newDate = new Date(Number.parseInt(reservations[i].date, 10));
+                        let nextHour = new Date(Number.parseInt(reservations[i].date, 10) + 3600000);
+
+                        let showableDate = newDate.getUTCDate()+'/'+newDate.getUTCMonth()+'/'+newDate.getUTCFullYear();
+                        let time = newDate.getUTCHours()+'.00 to '+nextHour.getUTCHours()+'.00 UTC';
+
+                        reservations[i].showableDate = showableDate;
+                        reservations[i].time = time;
+                    }
+
+                    yield firestore().collection('Users').doc(reservations[i].uuid).get().
+                    then((doc) => {
+                        if(doc.data())
+                            reservations[i].name = doc.data().name}).catch((err) => {console.log(err)});
+                }
+                else
+                {
+                    reservations.splice(i, 1);
+                    i--;
+                }
+            }
         }
     }
 
-    return reservations;
+    return reservations && reservations.length === 0 ? undefined : reservations;
 }
 
 function* loadPendingLessons(action) {
@@ -186,7 +214,7 @@ function* loadPendingLessonsInner() {
 
     if(data)
     {
-        reservations = data.map( (s) => {if(!s.confirmed) return s});
+        reservations = data.map( (s) => {if(!s.confirmed || s.confirmed === "false") return s});
         
         if(reservations)
         {
@@ -204,10 +232,38 @@ function* loadPendingLessonsInner() {
             }
 
             reservations.photos = photos;
+
+            for(let i = 0; i < reservations.length; i++)
+            {
+                if(reservations[i])
+                {
+                    if(reservations[i].date)
+                    {
+                        let newDate = new Date(Number.parseInt(reservations[i].date, 10));
+                        let nextHour = new Date(Number.parseInt(reservations[i].date, 10) + 3600000);
+
+                        let showableDate = newDate.getUTCDate()+'/'+newDate.getUTCMonth()+'/'+newDate.getUTCFullYear();
+                        let time = newDate.getUTCHours()+'.00 to '+nextHour.getUTCHours()+'.00 UTC';
+
+                        reservations[i].showableDate = showableDate;
+                        reservations[i].time = time;
+                    }
+
+                    yield firestore().collection('Users').doc(reservations[i].uuid).get().
+                    then((doc) => {
+                        if(doc.data())
+                            reservations[i].name = doc.data().name}).catch((err) => {console.log(err)});
+                }
+                else
+                {
+                    reservations.splice(i, 1);
+                    i--;
+                }
+            }
         }
     }
 
-    return reservations;
+    return reservations && reservations.length === 0 ? undefined : reservations;
 }
 
 function* loadFeatured(action) {
@@ -308,9 +364,6 @@ function* loadSearchResultsInner(searchString) {
                 }
             }
         }}).catch((err) => {console.log(err)});
-
-        console.log('datausers', dataUsers);
-        console.log('datafeatured', dataFeatured);
 
         if(dataUsers.length > 0)
         {
@@ -454,8 +507,6 @@ function* makeReservationInner(date, instructor) {
     then((doc) => {
         if(doc && doc.data() && doc.data().Reservations)
             data = doc.data().Reservations;
-
-            console.log(data)
             
             if(data && data.length > 0)
             {
@@ -476,6 +527,106 @@ function* makeReservationInner(date, instructor) {
     return message;
 }
 
+function* declineStudent(action) {
+
+    let success = yield* declineStudentInner(action.date, action.student);
+
+    if(success)
+    {
+        yield put({type: DECLINE_STUDENT_SUCCESS});
+    }
+    else
+        yield put({type: DECLINE_STUDENT_FAILURE});
+}
+
+function* declineStudentInner(date, student) {
+
+    let data = undefined;
+    var currentUser = auth().currentUser;
+    let newReservations = [];
+
+    let success = false;
+
+    let currentuid = currentUser.uid;
+
+    yield firestore().collection('Reservations').doc(currentuid).get().
+    then((doc) => {
+        if(doc && doc.data() && doc.data().Reservations)
+            data = doc.data().Reservations;
+            
+            if(data && data.length > 0)
+            {
+                newReservations = data;
+
+                for(let i = 0; i < newReservations.length; i++)
+                {
+                    if(newReservations[i].uuid.toString() === student.uuid.toString() && newReservations[i].date.toString() === student.date.toString())
+                    {
+                        newReservations.splice(i, 1);
+                        break;
+                    }
+                }
+            }
+
+        }).catch((err) => {console.log(err)});
+
+    yield firestore().collection('Reservations').doc(currentuid).set({"Reservations" :newReservations}).then(
+        () => {success = true}
+    ).catch((err) => console.log(err));
+
+    return success;
+}
+
+function* confirmStudent(action) {
+
+    let success = yield* confirmStudentInner(action.date, action.student);
+
+    if(success)
+    {
+        yield put({type: CONFIRM_STUDENT_SUCCESS});
+    }
+    else
+        yield put({type: CONFIRM_STUDENT_FAILURE});
+}
+
+function* confirmStudentInner(date, student) {
+
+    let data = undefined;
+    var currentUser = auth().currentUser;
+    let newReservations = [];
+
+    let success = false;
+
+    let currentuid = currentUser.uid;
+
+    yield firestore().collection('Reservations').doc(currentuid).get().
+    then((doc) => {
+        if(doc && doc.data() && doc.data().Reservations)
+            data = doc.data().Reservations;
+            
+            if(data && data.length > 0)
+            {
+                newReservations = data;
+
+                for(let i = 0; i < newReservations.length; i++)
+                {
+                    if(newReservations[i].uuid.toString() === student.uuid.toString() && newReservations[i].date.toString() === student.date.toString())
+                    {
+                        newReservations[i].confirmed = "true";
+                        break;
+                    }
+                }
+            }
+
+        }).catch((err) => {console.log(err)});
+
+    yield firestore().collection('Reservations').doc(currentuid).set({"Reservations" :newReservations}).then(
+        () => {success = true}
+    ).catch((err) => console.log(err));
+
+    return success;
+}
+
 export default function* loadDataActionWatcher() {
     yield takeLatest(`${LOAD_SLIDING_IMAGES}`, loadSlidingImages);
     yield takeLatest(`${LOAD_PHOTO}`, loadPhoto);
@@ -487,4 +638,6 @@ export default function* loadDataActionWatcher() {
     yield takeLatest(`${LOAD_SEARCH_RESULTS}`, loadSearchResults);
     yield takeLatest(`${LOAD_AVAILABLE_TIME_SLOTS}`, loadAvailableTimeSlots);
     yield takeLatest(`${MAKE_RESERVATION}`, makeReservation);
+    yield takeLatest(`${DECLINE_STUDENT}`, declineStudent);
+    yield takeLatest(`${CONFIRM_STUDENT}`, confirmStudent);
 }
