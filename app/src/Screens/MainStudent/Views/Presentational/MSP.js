@@ -112,7 +112,7 @@ export default class MSP extends Component {
             data={this.props.categories} 
             renderItem={
               ({ item, index }) => { return(
-                <TouchableOpacity style={{marginRight: wp(3), backgroundColor: 'transparent', height: hp(16), width: wp(61.3)}} onPress={ () => {this.props.onCategoriesClick(item, index)}}>
+                <TouchableOpacity style={{marginRight: wp(3), backgroundColor: 'transparent', height: hp(16), width: wp(61.3)}} onPress={ this.props.reservationPress }>
                   <Image source={{uri: item.Photo}} style={{height: hp(16), width: wp(61.3), resizeMode: 'stretch'}}/>
                   <View style={{alignItems: 'center', justifyContent: 'center', flexDirection: 'column', opacity: .7, position: 'absolute', backgroundColor: 'green', width: wp(61.3), height: hp(16)}}>
                     <View style={{alignItems: 'center', justifyContent: 'center', backgroundColor: 'transparent', flexDirection: 'row', width: wp(61.3), height: hp(3)}}>

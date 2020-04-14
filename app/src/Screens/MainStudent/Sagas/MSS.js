@@ -1,4 +1,4 @@
-import { LOAD_PHOTO, LOAD_PHOTO_SUCCESS, LOAD_PHOTO_FAILURE, LOAD_SLIDING_IMAGES, LOAD_SLIDING_IMAGES_SUCCESS, LOAD_SLIDING_IMAGES_FAILURE, LOAD_RESERVATIONS_SUCCESS, LOAD_RESERVATIONS_FAILURE, LOAD_RESERVATIONS, LOAD_CATEGORIES, LOAD_CATEGORIES_SUCCESS, LOAD_CATEGORIES_FAILURE, LOAD_SCHEDULED_LESSONS, LOAD_SCHEDULED_LESSONS_SUCCESS, LOAD_SCHEDULED_LESSONS_FAILURE, LOAD_PENDING_LESSONS_SUCCESS, LOAD_PENDING_LESSONS_FAILURE, LOAD_PENDING_LESSONS, LOAD_FEATURED_INSTRUCTORS, LOAD_FEATURED_INSTRUCTORS_SUCCESS, LOAD_FEATURED_INSTRUCTORS_FAILURE, LOAD_SEARCH_RESULTS, LOAD_SEARCH_RESULTS_SUCCESS, LOAD_SEARCH_RESULTS_FAILURE} from "../../../Commons/Constants";
+import { LOAD_PHOTO, LOAD_PHOTO_SUCCESS, LOAD_PHOTO_FAILURE, LOAD_SLIDING_IMAGES, LOAD_SLIDING_IMAGES_SUCCESS, LOAD_SLIDING_IMAGES_FAILURE, LOAD_RESERVATIONS_SUCCESS, LOAD_RESERVATIONS_FAILURE, LOAD_RESERVATIONS, LOAD_CATEGORIES, LOAD_CATEGORIES_SUCCESS, LOAD_CATEGORIES_FAILURE, LOAD_SCHEDULED_LESSONS, LOAD_SCHEDULED_LESSONS_SUCCESS, LOAD_SCHEDULED_LESSONS_FAILURE, LOAD_PENDING_LESSONS_SUCCESS, LOAD_PENDING_LESSONS_FAILURE, LOAD_PENDING_LESSONS, LOAD_FEATURED_INSTRUCTORS, LOAD_FEATURED_INSTRUCTORS_SUCCESS, LOAD_FEATURED_INSTRUCTORS_FAILURE, LOAD_SEARCH_RESULTS, LOAD_SEARCH_RESULTS_SUCCESS, LOAD_SEARCH_RESULTS_FAILURE, LOAD_AVAILABLE_TIME_SLOTS, LOAD_AVAILABLE_TIME_SLOTS_SUCCESS, LOAD_AVAILABLE_TIME_SLOTS_FAILURE} from "../../../Commons/Constants";
 import {put, takeLatest} from 'redux-saga/effects';
 import firestore from '@react-native-firebase/firestore';
 import storage from '@react-native-firebase/storage';
@@ -356,6 +356,80 @@ function* loadSearchResultsInner(searchString) {
     return results;
 }
 
+function* loadAvailableTimeSlots(action) {
+
+    let available = yield* loadAvailableTimeSlotsInner(action.date, action.uuid);
+
+    if(available)
+    {
+        yield put({type: LOAD_AVAILABLE_TIME_SLOTS_SUCCESS, availableTimeSlots: available});
+    }
+    else
+        yield put({type: LOAD_AVAILABLE_TIME_SLOTS_FAILURE});
+}
+
+function* loadAvailableTimeSlotsInner(date, uuid) {
+
+    let available = undefined;
+
+    yield firestore().collection('Users').doc(uuid).get().
+    then((doc) => {
+        if(doc.data())
+        {
+            let data = JSON.parse(doc.data().availableSlots);
+
+            if(data && data.length > 0)
+            {
+                for(let i = 0; i < data.length; i++)
+                {
+                    let innerDate = data[i].date;
+
+                    if(innerDate.toString() === date.toString())
+                    {
+                        if(data[i].time && data[i].time.length > 0)
+                        {
+                            available = [];
+
+                            for(let j = 0; j < data[i].time.length; j++)
+                            {
+                                let newDate = new Date(Number.parseInt(data[i].time[j], 10));
+                                let nextHourDate = new Date(Number.parseInt(data[i].time[j], 10) + 3600000);
+
+                                let currentHour = newDate.getUTCHours();
+                                let nextHour = nextHourDate.getUTCHours();
+
+                                available.push({"time": currentHour+".00 to "+nextHour+".00 UTC", "date": data[i].time[j]});
+                            }
+                        }
+
+                        break;
+                    }
+                }
+            }
+        }
+    }).catch((err) => {console.log(err)});
+
+    if(!available)
+    {
+        available = [];
+
+        let initial = Number.parseInt(date, 10) + (3600000 * 9);
+
+        for(let i = 0; i < 8; i++)
+        {
+            let newDate = new Date(initial + (3600000 * i));
+            let nextHourDate = new Date(initial + (3600000 * i) + 3600000);
+
+            let currentHour = newDate.getUTCHours();
+            let nextHour = nextHourDate.getUTCHours();
+
+            available.push({"time": currentHour+".00 to "+nextHour+".00 UTC", "date": date});
+        }
+    }
+
+    return available;
+}
+
 export default function* loadDataActionWatcher() {
     yield takeLatest(`${LOAD_SLIDING_IMAGES}`, loadSlidingImages);
     yield takeLatest(`${LOAD_PHOTO}`, loadPhoto);
@@ -365,4 +439,5 @@ export default function* loadDataActionWatcher() {
     yield takeLatest(`${LOAD_PENDING_LESSONS}`, loadPendingLessons);
     yield takeLatest(`${LOAD_FEATURED_INSTRUCTORS}`, loadFeatured);
     yield takeLatest(`${LOAD_SEARCH_RESULTS}`, loadSearchResults);
+    yield takeLatest(`${LOAD_AVAILABLE_TIME_SLOTS}`, loadAvailableTimeSlots);
 }

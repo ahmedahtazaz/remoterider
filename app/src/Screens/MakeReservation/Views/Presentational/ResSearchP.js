@@ -39,7 +39,7 @@ export default class ResSearchP extends Component {
               <TouchableOpacity style={{marginBottom: hp(1.3),  marginRight: wp(3), backgroundColor: 'transparent', height: hp(13), width: wp(50)}} onPress={ () => {this.props.onInstructorClick(item, index)}}>
                 <Image source={{uri: this.props.searchResults.photos[index]}} style={{height: hp(13), width: wp(50), resizeMode: 'stretch'}}/>
                 <View style={{alignItems: 'center', justifyContent: 'center', flexDirection: 'column', opacity: .6, position: 'absolute', backgroundColor: 'green',  width: wp(50), height: hp(13)}}>
-                  <View style={{alignItems: 'center', justifyContent: 'center', backgroundColor: 'transparent', flexDirection: 'row', width: wp(50), height: hp(6)}}>
+                  <View style={{backgroundColor: 'transparent', flexDirection: 'row', width: wp(50)}}>
                     <Text 
                         numberOfLines={1} style={{marginLeft: wp(1), fontSize: hp(2),fontWeight: '400',textAlign: 'center',color: '#ffffff',fontFamily: getRegularFont()}}>
                             {'Name : '}
@@ -49,13 +49,13 @@ export default class ResSearchP extends Component {
                             {item.Name || item.name}
                     </Text> 
                   </View>
-                  <View style={{alignItems: 'center', justifyContent: 'center', backgroundColor: 'transparent', flexDirection: 'row', width: wp(50), height: hp(3)}}>
+                  <View style={{backgroundColor: 'transparent', flexDirection: 'row', width: wp(50), height: hp(3)}}>
                     <Text 
-                        numberOfLines={1} style={{marginLeft: wp(1), fontSize: hp(2),fontWeight: '400',textAlign: 'center',color: '#ffffff',fontFamily: getRegularFont()}}>
+                        numberOfLines={1} style={{marginLeft: wp(1), fontSize: hp(2),fontWeight: '400',color: '#ffffff',fontFamily: getRegularFont()}}>
                             {'Cost : '}
                     </Text> 
                     <Text 
-                        numberOfLines={1} style={{marginLeft: wp(1), fontSize: hp(2),fontWeight: '400',textAlign: 'center',color: '#ffffff',fontFamily: getRegularFont()}}>
+                        numberOfLines={1} style={{marginLeft: wp(1), fontSize: hp(2),fontWeight: '400',color: '#ffffff',fontFamily: getRegularFont()}}>
                             {item.Cost || item.cost}
                     </Text> 
                   </View>
@@ -77,12 +77,12 @@ export default class ResSearchP extends Component {
             data={this.props.featured} 
             renderItem={
               ({ item, index }) => { return(
-                <TouchableOpacity style={{ marginBottom: hp(1.3), marginRight: wp(3), backgroundColor: 'transparent', height: hp(13), width: wp(50)}} onPress={ () => {this.props.onInstructorClick(item, index)}}>
+                <TouchableOpacity style={{ marginBottom: hp(1.3), marginRight: wp(3), backgroundColor: 'transparent', height: hp(13), width: wp(50)}} onPress={ () => {this.props.onInstructorClickFeatured(item, index)}}>
                   <Image source={{uri: this.props.featured.photos[index]}} style={{height: hp(13), width: wp(50), resizeMode: 'stretch'}}/>
                   <View style={{alignItems: 'center', justifyContent: 'center', flexDirection: 'column', opacity: .6, position: 'absolute', backgroundColor: 'green', width: wp(50), height: hp(13)}}>
-                    <View style={{alignItems: 'center', justifyContent: 'center', backgroundColor: 'transparent', flexDirection: 'row', width: wp(50), height: hp(6)}}>
+                    <View style={{backgroundColor: 'transparent', flexDirection: 'row', width: wp(50)}}>
                       <Text 
-                          numberOfLines={1} style={{ marginLeft: wp(1), fontSize: hp(2),fontWeight: '400',textAlign: 'center',color: '#ffffff',fontFamily: getRegularFont()}}>
+                          numberOfLines={1} style={{ marginLeft: wp(1), fontSize: hp(2),fontWeight: '400',color: '#ffffff',fontFamily: getRegularFont()}}>
                               {'Name : '}
                       </Text> 
                       <Text 
@@ -90,13 +90,13 @@ export default class ResSearchP extends Component {
                               {item.Name || item.name}
                       </Text> 
                     </View>
-                    <View style={{alignItems: 'center', justifyContent: 'center', backgroundColor: 'transparent', flexDirection: 'row', width: wp(50), height: hp(3)}}>
+                    <View style={{backgroundColor: 'transparent', flexDirection: 'row', width: wp(50), height: hp(3)}}>
                       <Text 
-                          numberOfLines={1} style={{marginLeft: wp(1), fontSize: hp(2),fontWeight: '400',textAlign: 'center',color: '#ffffff',fontFamily: getRegularFont()}}>
+                          numberOfLines={1} style={{marginLeft: wp(1), fontSize: hp(2),fontWeight: '400',color: '#ffffff',fontFamily: getRegularFont()}}>
                               {'Cost : '}
                       </Text> 
                       <Text 
-                          numberOfLines={1} style={{marginLeft: wp(1), fontSize: hp(2),fontWeight: '400',textAlign: 'center',color: '#ffffff',fontFamily: getRegularFont()}}>
+                          numberOfLines={1} style={{marginLeft: wp(1), fontSize: hp(2),fontWeight: '400',color: '#ffffff',fontFamily: getRegularFont()}}>
                               {item.Cost || item.cost}
                       </Text> 
                     </View>
