@@ -142,7 +142,7 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state) => {
   
     return {
-        visible: state.dialogueReducer.visible,
+        visible: state.dialogueReducer.pictureDialogueVisible,
         student: state.dialogueReducer.student,
         studentPhoto: state.dialogueReducer.studentPhoto,
         positive: state.dialogueReducer.positve,

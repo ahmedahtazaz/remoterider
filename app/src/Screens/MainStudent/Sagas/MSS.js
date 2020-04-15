@@ -1,4 +1,4 @@
-import { LOAD_PHOTO, LOAD_PHOTO_SUCCESS, LOAD_PHOTO_FAILURE, LOAD_SLIDING_IMAGES, LOAD_SLIDING_IMAGES_SUCCESS, LOAD_SLIDING_IMAGES_FAILURE, LOAD_RESERVATIONS_SUCCESS, LOAD_RESERVATIONS_FAILURE, LOAD_RESERVATIONS, LOAD_CATEGORIES, LOAD_CATEGORIES_SUCCESS, LOAD_CATEGORIES_FAILURE, LOAD_SCHEDULED_LESSONS, LOAD_SCHEDULED_LESSONS_SUCCESS, LOAD_SCHEDULED_LESSONS_FAILURE, LOAD_PENDING_LESSONS_SUCCESS, LOAD_PENDING_LESSONS_FAILURE, LOAD_PENDING_LESSONS, LOAD_FEATURED_INSTRUCTORS, LOAD_FEATURED_INSTRUCTORS_SUCCESS, LOAD_FEATURED_INSTRUCTORS_FAILURE, LOAD_SEARCH_RESULTS, LOAD_SEARCH_RESULTS_SUCCESS, LOAD_SEARCH_RESULTS_FAILURE, LOAD_AVAILABLE_TIME_SLOTS, LOAD_AVAILABLE_TIME_SLOTS_SUCCESS, LOAD_AVAILABLE_TIME_SLOTS_FAILURE, MAKE_RESERVATION, MAKE_RESERVATION_SUCCESS, MAKE_RESERVATION_FAILURE, DECLINE_STUDENT, DECLINE_STUDENT_SUCCESS, DECLINE_STUDENT_FAILURE, CONFIRM_STUDENT, CONFIRM_STUDENT_SUCCESS, CONFIRM_STUDENT_FAILURE} from "../../../Commons/Constants";
+import { LOAD_PHOTO, LOAD_PHOTO_SUCCESS, LOAD_PHOTO_FAILURE, LOAD_SLIDING_IMAGES, LOAD_SLIDING_IMAGES_SUCCESS, LOAD_SLIDING_IMAGES_FAILURE, LOAD_RESERVATIONS_SUCCESS, LOAD_RESERVATIONS_FAILURE, LOAD_RESERVATIONS, LOAD_CATEGORIES, LOAD_CATEGORIES_SUCCESS, LOAD_CATEGORIES_FAILURE, LOAD_SCHEDULED_LESSONS, LOAD_SCHEDULED_LESSONS_SUCCESS, LOAD_SCHEDULED_LESSONS_FAILURE, LOAD_PENDING_LESSONS_SUCCESS, LOAD_PENDING_LESSONS_FAILURE, LOAD_PENDING_LESSONS, LOAD_FEATURED_INSTRUCTORS, LOAD_FEATURED_INSTRUCTORS_SUCCESS, LOAD_FEATURED_INSTRUCTORS_FAILURE, LOAD_SEARCH_RESULTS, LOAD_SEARCH_RESULTS_SUCCESS, LOAD_SEARCH_RESULTS_FAILURE, LOAD_AVAILABLE_TIME_SLOTS, LOAD_AVAILABLE_TIME_SLOTS_SUCCESS, LOAD_AVAILABLE_TIME_SLOTS_FAILURE, MAKE_RESERVATION, MAKE_RESERVATION_SUCCESS, MAKE_RESERVATION_FAILURE, DECLINE_STUDENT, DECLINE_STUDENT_SUCCESS, DECLINE_STUDENT_FAILURE, CONFIRM_STUDENT, CONFIRM_STUDENT_SUCCESS, CONFIRM_STUDENT_FAILURE, LOAD_CURRENT_USER, LOAD_CURRENT_USER_SUCCESS, LOAD_CURRENT_USER_FAILURE, SET_COST, SET_COST_SUCCESS, SET_COST_FAILURE} from "../../../Commons/Constants";
 import {put, takeLatest} from 'redux-saga/effects';
 import firestore from '@react-native-firebase/firestore';
 import storage from '@react-native-firebase/storage';
@@ -627,6 +627,78 @@ function* confirmStudentInner(date, student) {
     return success;
 }
 
+function* loadCurrentUser(action) {
+
+    let user = yield* loadCurrentUserInner();
+
+    if(user)
+    {
+        yield put({type: LOAD_CURRENT_USER_SUCCESS, currentUser: user});
+    }
+    else
+        yield put({type: LOAD_CURRENT_USER_FAILURE});
+}
+
+function* loadCurrentUserInner() {
+
+    let user = undefined;
+    var currentUser = auth().currentUser;
+
+    let currentuid = currentUser.uid;
+
+    yield firestore().collection('Users').doc(currentuid).get().
+    then((doc) => {
+        if(doc && doc.data())
+            user = doc.data();
+
+        }).catch((err) => {console.log(err)});
+
+    return user;
+}
+
+function* setCost(action) {
+
+    let success = yield* setCostInner(action.cost, action.currency);
+
+    if(success)
+    {
+        yield put({type: SET_COST_SUCCESS});
+    }
+    else
+        yield put({type: SET_COST_FAILURE});
+}
+
+function* setCostInner(cost, currency) {
+
+    let user = undefined;
+    var currentUser = auth().currentUser;
+
+    let currentuid = currentUser.uid;
+
+    let success = false;
+
+    yield firestore().collection('Users').doc(currentuid).get().
+    then((doc) => {
+        if(doc && doc.data())
+            {
+                user = doc.data();
+
+                user.cost = cost+" "+currency;
+            }
+
+        }).catch((err) => {console.log(err)});
+
+    if(user)
+    {
+        yield firestore().collection('Users').doc(currentuid).update({
+            cost: user.cost,
+            }).then(success = true).catch((err) => {success = false, error = err.message});
+    }
+    
+
+    return success;
+}
+
 export default function* loadDataActionWatcher() {
     yield takeLatest(`${LOAD_SLIDING_IMAGES}`, loadSlidingImages);
     yield takeLatest(`${LOAD_PHOTO}`, loadPhoto);
@@ -640,4 +712,6 @@ export default function* loadDataActionWatcher() {
     yield takeLatest(`${MAKE_RESERVATION}`, makeReservation);
     yield takeLatest(`${DECLINE_STUDENT}`, declineStudent);
     yield takeLatest(`${CONFIRM_STUDENT}`, confirmStudent);
+    yield takeLatest(`${LOAD_CURRENT_USER}`, loadCurrentUser);
+    yield takeLatest(`${SET_COST}`, setCost);
 }

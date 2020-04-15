@@ -8,7 +8,8 @@ const INITIAL_STATE = {
     negativeButtonPressed: undefined,
     student: undefined,
     studentPhoto: undefined,
-    positivePressed: undefined
+    positivePressed: undefined,
+    pictureDialogueVisible: false,
   };
 
 export default function dialogueReducer() {
@@ -28,7 +29,7 @@ export default function dialogueReducer() {
           case SET_CONFIRMATION_DIALOGUE:
             return {
                 ...state,
-                visible: action.visible,
+                pictureDialogueVisible: action.visible,
                 message: action.message,
                 positve: action.positive,
                 negative: action.negative,

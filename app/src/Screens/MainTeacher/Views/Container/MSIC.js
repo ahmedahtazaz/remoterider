@@ -3,7 +3,7 @@ import MSIP from '../Presentational/MSIP'
 import { connect } from 'react-redux';
 import {confirmStudentAction, declineStudentAction, resetConfirmationDialogueAction, showConfirmationDialogueAction, profilePressedAction, menuPresedAction, loadPhotoAction, loadSlidingImagesAction, loadScheduledLessonsAction, loadPendingLessonsAction} from '../../Actions/MSIA';
 import RNExitApp from 'react-native-exit-app';
-import { DECLINE_STUDENT_FAILURE } from '../../../../Commons/Constants';
+import { DECLINE_STUDENT_FAILURE, LOAD_CURRENT_USER } from '../../../../Commons/Constants';
 
 class MSIC extends Component {
 
@@ -32,6 +32,7 @@ class MSIC extends Component {
     this.props.loadSlidingImages();
     this.props.loadScheduledLessons();
     this.props.loadPendingLessons();
+    this.props.loadCurrentUser();
   }
 
   backButtonPress()
@@ -66,9 +67,9 @@ class MSIC extends Component {
     this.props.profilePressed(false);
   }
 
-  availabilityPress(item, index)
+  availabilityPress()
   {
-
+    this.props.navigation.navigate('Manage Availability'); 
   }
 
   onpendingLessonsClick(item, index)
@@ -105,6 +106,7 @@ const mapDispatchToProps = (dispatch) => {
     declineStudent: (student) => dispatch(declineStudentAction(student)),
     confirmStudent: (student) => dispatch(confirmStudentAction(student)),
     resetReload: () => dispatch({"type": DECLINE_STUDENT_FAILURE}),
+    loadCurrentUser: () => dispatch({"type": LOAD_CURRENT_USER}),
   };
 };
 

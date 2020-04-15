@@ -16,6 +16,7 @@ import SignInC from './app/src/Screens/SignIn/Views/Container/SignInC';
 import MSIC from './app/src/Screens/MainTeacher/Views/Container/MSIC';
 import ResSearchC from './app/src/Screens/MakeReservation/Views/Container/ResSearchC';
 import MakeResC from './app/src/Screens/MakeReservation/Views/Container/MakeResC';
+import ManagaAC from './app/src/Screens/ManageAvailability/Views/Container/ManagaAC';
 
 const sagaMiddleware = createSagaMiddleware();
 const store = createStore(createRootReducer(), compose(applyMiddleware(sagaMiddleware),),);
@@ -40,6 +41,7 @@ export default class App extends Component {
               <Stack.Screen name="Main Instructor Screen" component={MSIC} options={{ headerShown: false}}/>
               <Stack.Screen name="Search for Instructor" component={ResSearchC} options={{ headerShown: false}}/>
               <Stack.Screen name="Make Reservation with Instructor" component={MakeResC} options={{ headerShown: false}}/>
+              <Stack.Screen name="Manage Availability" component={ManagaAC} options={{ headerShown: false}}/>
             </Stack.Navigator>
           </NavigationContainer>    
       </Provider>
