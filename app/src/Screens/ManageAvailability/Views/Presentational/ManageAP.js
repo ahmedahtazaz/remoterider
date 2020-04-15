@@ -6,6 +6,7 @@ import { getBoldFont, getRegularFont } from '../../../../Commons/Fonts';
 import Calendar from '../../../Calendar/Calendar';
 import Dialog from '../../../../Commons/Dialogue/Dialogue';
 import { ScrollView } from 'react-native-gesture-handler';
+import PictureDialogue from '../../../../Commons/Dialogue/PictureDialogue';
 
 export default class ManageAP extends Component {
 
@@ -28,7 +29,7 @@ export default class ManageAP extends Component {
                     </Text> 
                 </TouchableOpacity>);
             case "pending":
-            return (<TouchableOpacity style={{alignItems: 'center', justifyContent: 'center', borderRadius: hp(1), backgroundColor: 'yellow', height: hp(4), width: wp(30)}} onPress={() => {this.props.onTimeSlotClick(item, index)}}>
+            return (<TouchableOpacity style={{alignItems: 'center', justifyContent: 'center', borderRadius: hp(1), backgroundColor: 'yellow', height: hp(4), width: wp(30)}} onPress={() => {this.props.onPendingTimeSlotClick(item, index)}}>
                 <Text 
                 numberOfLines={1} style={{marginTop: hp(.8), alignSelf: 'center', width: wp(35), fontSize: hp(1.8),fontWeight: '400',textAlign: 'center',color: '#ffffff',fontFamily: getRegularFont()}}>
                     {'Pending'}
@@ -155,6 +156,7 @@ export default class ManageAP extends Component {
             </View> :
           null}
           <Dialog/>
+          <PictureDialogue/>
         </View>
         </ScrollView>
       </LinearGradient>);

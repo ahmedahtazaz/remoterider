@@ -1,4 +1,4 @@
-import { CONFIRM_AVAILABILITY, LOAD_PHOTO, LOAD_PHOTO_SUCCESS, LOAD_PHOTO_FAILURE, LOAD_SLIDING_IMAGES, LOAD_SLIDING_IMAGES_SUCCESS, LOAD_SLIDING_IMAGES_FAILURE, LOAD_RESERVATIONS_SUCCESS, LOAD_RESERVATIONS_FAILURE, LOAD_RESERVATIONS, LOAD_CATEGORIES, LOAD_CATEGORIES_SUCCESS, LOAD_CATEGORIES_FAILURE, LOAD_SCHEDULED_LESSONS, LOAD_SCHEDULED_LESSONS_SUCCESS, LOAD_SCHEDULED_LESSONS_FAILURE, LOAD_PENDING_LESSONS_SUCCESS, LOAD_PENDING_LESSONS_FAILURE, LOAD_PENDING_LESSONS, LOAD_FEATURED_INSTRUCTORS, LOAD_FEATURED_INSTRUCTORS_SUCCESS, LOAD_FEATURED_INSTRUCTORS_FAILURE, LOAD_SEARCH_RESULTS, LOAD_SEARCH_RESULTS_SUCCESS, LOAD_SEARCH_RESULTS_FAILURE, LOAD_AVAILABLE_TIME_SLOTS, LOAD_AVAILABLE_TIME_SLOTS_SUCCESS, LOAD_AVAILABLE_TIME_SLOTS_FAILURE, MAKE_RESERVATION, MAKE_RESERVATION_SUCCESS, MAKE_RESERVATION_FAILURE, DECLINE_STUDENT, DECLINE_STUDENT_SUCCESS, DECLINE_STUDENT_FAILURE, CONFIRM_STUDENT, CONFIRM_STUDENT_SUCCESS, CONFIRM_STUDENT_FAILURE, LOAD_CURRENT_USER, LOAD_CURRENT_USER_SUCCESS, LOAD_CURRENT_USER_FAILURE, SET_COST, SET_COST_SUCCESS, SET_COST_FAILURE, LOAD_TIME_SLOTS, LOAD_TIME_SLOTS_SUCCESS, LOAD_TIME_SLOTS_FAILURE, CONFIRM_AVAILABILITY_SUCCESS, CONFIRM_AVAILABILITY_FAILURE} from "../../../Commons/Constants";
+import { CONFIRM_AVAILABILITY, LOAD_PHOTO, LOAD_PHOTO_SUCCESS, LOAD_PHOTO_FAILURE, LOAD_SLIDING_IMAGES, LOAD_SLIDING_IMAGES_SUCCESS, LOAD_SLIDING_IMAGES_FAILURE, LOAD_RESERVATIONS_SUCCESS, LOAD_RESERVATIONS_FAILURE, LOAD_RESERVATIONS, LOAD_CATEGORIES, LOAD_CATEGORIES_SUCCESS, LOAD_CATEGORIES_FAILURE, LOAD_SCHEDULED_LESSONS, LOAD_SCHEDULED_LESSONS_SUCCESS, LOAD_SCHEDULED_LESSONS_FAILURE, LOAD_PENDING_LESSONS_SUCCESS, LOAD_PENDING_LESSONS_FAILURE, LOAD_PENDING_LESSONS, LOAD_FEATURED_INSTRUCTORS, LOAD_FEATURED_INSTRUCTORS_SUCCESS, LOAD_FEATURED_INSTRUCTORS_FAILURE, LOAD_SEARCH_RESULTS, LOAD_SEARCH_RESULTS_SUCCESS, LOAD_SEARCH_RESULTS_FAILURE, LOAD_AVAILABLE_TIME_SLOTS, LOAD_AVAILABLE_TIME_SLOTS_SUCCESS, LOAD_AVAILABLE_TIME_SLOTS_FAILURE, MAKE_RESERVATION, MAKE_RESERVATION_SUCCESS, MAKE_RESERVATION_FAILURE, DECLINE_STUDENT, DECLINE_STUDENT_SUCCESS, DECLINE_STUDENT_FAILURE, CONFIRM_STUDENT, CONFIRM_STUDENT_SUCCESS, CONFIRM_STUDENT_FAILURE, LOAD_CURRENT_USER, LOAD_CURRENT_USER_SUCCESS, LOAD_CURRENT_USER_FAILURE, SET_COST, SET_COST_SUCCESS, SET_COST_FAILURE, LOAD_TIME_SLOTS, LOAD_TIME_SLOTS_SUCCESS, LOAD_TIME_SLOTS_FAILURE, CONFIRM_AVAILABILITY_SUCCESS, CONFIRM_AVAILABILITY_FAILURE, LOAD_PENDING_SLOT_DATA_SUCCESS, LOAD_PENDING_SLOT_DATA_FAILURE, LOAD_PENDING_SLOT_DATA} from "../../../Commons/Constants";
 import {put, takeLatest} from 'redux-saga/effects';
 import firestore from '@react-native-firebase/firestore';
 import storage from '@react-native-firebase/storage';
@@ -57,11 +57,12 @@ function* loadReservationsInner() {
     let reservations = undefined;
 
     var currentUser = auth().currentUser;
+    let currentUid= currentUser.uid;
 
-    yield firestore().collection('Reservations').doc(currentUser.uid).get().
+    yield firestore().collection('Reservations').doc(currentUid).get().
     then((doc) => {
         if(doc.data())
-            data = JSON.parse(doc.data().Reservations)}).catch((err) => {console.log(err)});
+            data = doc.data().Reservations}).catch((err) => {console.log(err)});
 
     if(data)
     {
@@ -74,7 +75,30 @@ function* loadReservationsInner() {
             for(let i = 0; i < reservations.length; i++)
             {
                 if(reservations[i])
+                {
                     yield storage().ref(reservations[i].uuid+'.png').getDownloadURL().then((url) => {photos[i] = url}).catch((err) => {photos[i] = undefined, console.log(err)});
+
+                    yield firestore().collection('Users').doc(reservations[i].uuid).get().then( (doc) => {
+                        if(doc && doc.data())
+                        {
+                            let data = doc.data();
+
+                            reservations[i].name = data.name;
+                            reservations[i].cost = data.cost;
+
+                            let onlyDate = new Date(Number.parseInt(reservations[i].date, 10));
+
+                            let newDate = new Date(Number.parseInt(reservations[i].date, 10));
+                            let nextHourDate = new Date(Number.parseInt(reservations[i].date, 10) + 3600000);
+                
+                            let currentHour = newDate.getUTCHours();
+                            let nextHour = nextHourDate.getUTCHours();
+
+                            reservations[i].showAbleTime = currentHour+".00 to "+nextHour+".00 UTC";
+                            reservations[i].showAbleDate = onlyDate.getUTCDate()+"/"+onlyDate.getUTCMonth()+"/"+onlyDate.getUTCFullYear();
+                        }
+                    }).catch();
+                }
                 else
                 {
                     reservations.splice(i, 1);
@@ -437,8 +461,10 @@ function* loadAvailableTimeSlotsInner(date, uuid) {
                 {
                     let innerDate = data[i].date;
 
+                    console.log('inner date', innerDate, 'date',  date);
                     if(innerDate.toString() === date.toString())
                     {
+                        console.log('inner date equal');
                         if(!available)
                             available = [];
 
@@ -584,10 +610,10 @@ function* makeReservationInner(date, instructor) {
             
                         if(Number.parseInt(newDate.getTime(), 10) === Number.parseInt(date, 10))
                         {
-                            available.push({"time": newDate.getTime(), "date": date, "status": "pending", "showAbleTime": currentHour+".00 to "+nextHour+".00 UTC"});
+                            available.push({"time": newDate.getTime(), "date": initial, "status": "pending", "showAbleTime": currentHour+".00 to "+nextHour+".00 UTC"});
                         }
                         else    
-                            available.push({"time": newDate.getTime(), "date": date, "status": "available", "showAbleTime": currentHour+".00 to "+nextHour+".00 UTC"});
+                            available.push({"time": newDate.getTime(), "date": initial, "status": "available", "showAbleTime": currentHour+".00 to "+nextHour+".00 UTC"});
                     }
                 }
             }
@@ -641,7 +667,6 @@ function* declineStudentInner(date, student) {
                 {
                     if(newReservations[i].uuid.toString() === student.uuid.toString() && newReservations[i].date.toString() === student.date.toString())
                     {
-                        console.log('inside pending')
                         newReservations.splice(i, 1);
                         i--;
                     }
@@ -758,6 +783,22 @@ function* confirmStudentInner(date, student) {
 
     if(success)
     {
+        let studentReservations = [];
+        let studentError = undefined;
+
+        let reservation = {"uuid":currentuid, "date": student.date, "confirmed": true};
+        studentReservations.push(reservation);
+        yield firestore().collection('Reservations').doc(student.uuid).update({"Reservations" :studentReservations}).then(
+            () => {success = true}
+        ).catch((err) => {studentError = true, console.log(err)});  
+
+        if(studentError)
+        {
+            yield firestore().collection('Reservations').doc(student.uuid).set({"Reservations" :studentReservations}).then(
+                () => {success = true}
+            ).catch((err) => {studentError = true, console.log(err)});  
+        }
+
         let available = [];
         let dateFound = false;
         let timefound = false;
@@ -975,6 +1016,80 @@ function* confirmAvailabilityInner(slots) {
     return success;
 }
 
+function* loadPendingSlotData(action) {
+
+    let student = yield* loadPendingSlotDataInner(action.slot);
+
+    if(student)
+    {
+        yield put({type: LOAD_PENDING_SLOT_DATA_SUCCESS, student: student, studentPhoto: student.photo});
+    }
+    else
+        yield put({type: LOAD_PENDING_SLOT_DATA_FAILURE});
+}
+
+function* loadPendingSlotDataInner(slot) {
+
+    
+    var currentUser = auth().currentUser;
+
+    let currentuid = currentUser.uid;
+
+    let studentUid = undefined;
+
+    let student = undefined;
+
+    yield firestore().collection('Reservations').doc(currentuid).get().then((doc) => {
+        if(doc && doc.data())
+        {
+            let data = doc.data();
+
+            let reservations = data.Reservations;
+
+            if(reservations && reservations.length > 0)
+            {
+                for(let i = 0; i < reservations.length; i++)
+                {
+                    let reservation = reservations[i];
+
+                    if(reservation.date.toString() === slot.time.toString())
+                    {
+                        studentUid = reservation.uuid;
+                        break;
+                    }
+                }
+            }
+        }
+    }).catch((err) => {console.log(err)});
+
+    if(studentUid)
+    {
+        yield firestore().collection('Users').doc(studentUid).get().then((doc) => {
+            if(doc && doc.data())
+            {
+                student = doc.data();
+
+                let newDate = new Date(Number.parseInt(slot.time, 10));
+                let nextHour = new Date(Number.parseInt(slot.time, 10) + 3600000);
+
+                let showableDate = newDate.getUTCDate()+'/'+newDate.getUTCMonth()+'/'+newDate.getUTCFullYear();
+                let time = newDate.getUTCHours()+'.00 to '+nextHour.getUTCHours()+'.00 UTC';
+
+                student.date = slot.time;
+                student.showableDate = showableDate;
+                student.time = time;
+            }
+        }).catch((err) => {console.log(err)});
+    }
+
+    if(student)
+    {
+        yield storage().ref(studentUid+'.png').getDownloadURL().then((url) => {student.photo = url}).catch((err) => {console.log(err)});
+    }
+
+    return student;
+}
+
 export default function* loadDataActionWatcher() {
     yield takeLatest(`${LOAD_SLIDING_IMAGES}`, loadSlidingImages);
     yield takeLatest(`${LOAD_PHOTO}`, loadPhoto);
@@ -992,4 +1107,5 @@ export default function* loadDataActionWatcher() {
     yield takeLatest(`${SET_COST}`, setCost);
     yield takeLatest(`${LOAD_TIME_SLOTS}`, loadTimeSlots);
     yield takeLatest(`${CONFIRM_AVAILABILITY}`, confirmAvailability);
+    yield takeLatest(`${LOAD_PENDING_SLOT_DATA}`, loadPendingSlotData);
 }
