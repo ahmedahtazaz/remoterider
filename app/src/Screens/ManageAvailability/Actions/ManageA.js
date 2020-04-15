@@ -1,16 +1,15 @@
-import { SET_DIALOGUE, LOAD_AVAILABLE_TIME_SLOTS, LOAD_AVAILABLE_TIME_SLOTS_FAILURE, SET_SELECTED_SLOT, RESET_SELECTED_SLOT, MAKE_RESERVATION, RESET_MAKE_RESERVATION, SET_COST} from "../../../Commons/Constants";
+import { SET_DIALOGUE, LOAD_AVAILABLE_TIME_SLOTS, LOAD_AVAILABLE_TIME_SLOTS_FAILURE, SET_SELECTED_SLOT, RESET_SELECTED_SLOT, MAKE_RESERVATION, RESET_MAKE_RESERVATION, SET_COST, LOAD_TIME_SLOTS, LOAD_TIME_SLOTS_FAILURE, CONFIRM_AVAILABILITY} from "../../../Commons/Constants";
 
-export const loadAvailableTimeSlotsAction = (date, uuid) => {
+export const loadTimeSlotsAction = (date) => {
     return {
-      type:`${LOAD_AVAILABLE_TIME_SLOTS}`,
+      type:`${LOAD_TIME_SLOTS}`,
       date: date,
-      uuid: uuid,
     }
   };
 
-  export const clearAvailableTimeSlotsAction = () => {
+  export const clearTimeSlotsAction = () => {
     return {
-      type:`${LOAD_AVAILABLE_TIME_SLOTS_FAILURE}`,
+      type:`${LOAD_TIME_SLOTS_FAILURE}`,
     }
   };
 
@@ -54,5 +53,12 @@ export const loadAvailableTimeSlotsAction = (date, uuid) => {
       user: user,
       cost: cost,
       currency: currency,
+    }
+  };
+
+  export const onAvailabilityConfirmAction = (slots) => {
+    return {
+      type:`${CONFIRM_AVAILABILITY}`,
+      slots: slots,
     }
   };

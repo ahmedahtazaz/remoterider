@@ -1,4 +1,4 @@
-import { LOAD_PHOTO, LOAD_PHOTO_SUCCESS, LOAD_PHOTO_FAILURE, LOAD_SLIDING_IMAGES, LOAD_SLIDING_IMAGES_SUCCESS, LOAD_SLIDING_IMAGES_FAILURE, LOAD_RESERVATIONS_SUCCESS, LOAD_RESERVATIONS_FAILURE, LOAD_RESERVATIONS, LOAD_CATEGORIES, LOAD_CATEGORIES_SUCCESS, LOAD_CATEGORIES_FAILURE, LOAD_SCHEDULED_LESSONS, LOAD_SCHEDULED_LESSONS_SUCCESS, LOAD_SCHEDULED_LESSONS_FAILURE, LOAD_PENDING_LESSONS_SUCCESS, LOAD_PENDING_LESSONS_FAILURE, LOAD_PENDING_LESSONS, LOAD_FEATURED_INSTRUCTORS, LOAD_FEATURED_INSTRUCTORS_SUCCESS, LOAD_FEATURED_INSTRUCTORS_FAILURE, LOAD_SEARCH_RESULTS, LOAD_SEARCH_RESULTS_SUCCESS, LOAD_SEARCH_RESULTS_FAILURE, LOAD_AVAILABLE_TIME_SLOTS, LOAD_AVAILABLE_TIME_SLOTS_SUCCESS, LOAD_AVAILABLE_TIME_SLOTS_FAILURE, MAKE_RESERVATION, MAKE_RESERVATION_SUCCESS, MAKE_RESERVATION_FAILURE, DECLINE_STUDENT, DECLINE_STUDENT_SUCCESS, DECLINE_STUDENT_FAILURE, CONFIRM_STUDENT, CONFIRM_STUDENT_SUCCESS, CONFIRM_STUDENT_FAILURE, LOAD_CURRENT_USER, LOAD_CURRENT_USER_SUCCESS, LOAD_CURRENT_USER_FAILURE, SET_COST, SET_COST_SUCCESS, SET_COST_FAILURE} from "../../../Commons/Constants";
+import { CONFIRM_AVAILABILITY, LOAD_PHOTO, LOAD_PHOTO_SUCCESS, LOAD_PHOTO_FAILURE, LOAD_SLIDING_IMAGES, LOAD_SLIDING_IMAGES_SUCCESS, LOAD_SLIDING_IMAGES_FAILURE, LOAD_RESERVATIONS_SUCCESS, LOAD_RESERVATIONS_FAILURE, LOAD_RESERVATIONS, LOAD_CATEGORIES, LOAD_CATEGORIES_SUCCESS, LOAD_CATEGORIES_FAILURE, LOAD_SCHEDULED_LESSONS, LOAD_SCHEDULED_LESSONS_SUCCESS, LOAD_SCHEDULED_LESSONS_FAILURE, LOAD_PENDING_LESSONS_SUCCESS, LOAD_PENDING_LESSONS_FAILURE, LOAD_PENDING_LESSONS, LOAD_FEATURED_INSTRUCTORS, LOAD_FEATURED_INSTRUCTORS_SUCCESS, LOAD_FEATURED_INSTRUCTORS_FAILURE, LOAD_SEARCH_RESULTS, LOAD_SEARCH_RESULTS_SUCCESS, LOAD_SEARCH_RESULTS_FAILURE, LOAD_AVAILABLE_TIME_SLOTS, LOAD_AVAILABLE_TIME_SLOTS_SUCCESS, LOAD_AVAILABLE_TIME_SLOTS_FAILURE, MAKE_RESERVATION, MAKE_RESERVATION_SUCCESS, MAKE_RESERVATION_FAILURE, DECLINE_STUDENT, DECLINE_STUDENT_SUCCESS, DECLINE_STUDENT_FAILURE, CONFIRM_STUDENT, CONFIRM_STUDENT_SUCCESS, CONFIRM_STUDENT_FAILURE, LOAD_CURRENT_USER, LOAD_CURRENT_USER_SUCCESS, LOAD_CURRENT_USER_FAILURE, SET_COST, SET_COST_SUCCESS, SET_COST_FAILURE, LOAD_TIME_SLOTS, LOAD_TIME_SLOTS_SUCCESS, LOAD_TIME_SLOTS_FAILURE, CONFIRM_AVAILABILITY_SUCCESS, CONFIRM_AVAILABILITY_FAILURE} from "../../../Commons/Constants";
 import {put, takeLatest} from 'redux-saga/effects';
 import firestore from '@react-native-firebase/firestore';
 import storage from '@react-native-firebase/storage';
@@ -699,6 +699,97 @@ function* setCostInner(cost, currency) {
     return success;
 }
 
+function* loadTimeSlots(action) {
+
+    let slots = yield* loadTimeSlotsInner(action.date);
+
+    if(slots)
+    {
+        yield put({type: LOAD_TIME_SLOTS_SUCCESS, timeSlots: slots});
+    }
+    else
+        yield put({type: LOAD_TIME_SLOTS_FAILURE});
+}
+
+function* loadTimeSlotsInner(date) {
+
+    let available = undefined;
+    var currentUser = auth().currentUser;
+
+    let currentuid = currentUser.uid;
+
+    yield firestore().collection('Users').doc(currentuid).get().
+    then((doc) => {
+        if(doc.data())
+        {
+            let data = doc.data().availableSlots;
+
+            if(data && data.length > 0)
+            {
+                available = [];
+                
+                for(let i = 0; i < data.length; i++)
+                {
+                    let innerDate = data[i].date;
+
+                    if(innerDate.toString() === date.toString())
+                    {
+                        available.push(data[i]);
+                    }
+                }
+            }
+        }
+    }).catch((err) => {console.log(err)});
+
+    if(!available)
+    {
+        available = [];
+
+        let initial = Number.parseInt(date, 10);
+
+        for(let i = 0; i < 24; i++)
+        {
+            let newDate = new Date(initial + (3600000 * i));
+            let nextHourDate = new Date(initial + (3600000 * i) + 3600000);
+
+            let currentHour = newDate.getUTCHours();
+            let nextHour = nextHourDate.getUTCHours();
+
+            available.push({"time": newDate.getTime(), "date": date, "status": "available", "showAbleTime": currentHour+".00 to "+nextHour+".00 UTC"});
+        }
+    }
+
+    return available;
+}
+
+function* confirmAvailability(action) {
+
+    let success = yield* confirmAvailabilityInner(action.slots);
+
+    if(success)
+    {
+        yield put({type: CONFIRM_AVAILABILITY_SUCCESS});
+    }
+    else
+        yield put({type: CONFIRM_AVAILABILITY_FAILURE});
+}
+
+function* confirmAvailabilityInner(slots) {
+
+    let success = false;
+    var currentUser = auth().currentUser;
+
+    let currentuid = currentUser.uid;
+
+    yield firestore().collection('Users').doc(currentuid).update({
+        availableSlots: slots,
+    }).then((doc) => {
+        success = true;
+    }).catch((err) => {console.log(err)});
+
+    return success;
+}
+
 export default function* loadDataActionWatcher() {
     yield takeLatest(`${LOAD_SLIDING_IMAGES}`, loadSlidingImages);
     yield takeLatest(`${LOAD_PHOTO}`, loadPhoto);
@@ -714,4 +805,6 @@ export default function* loadDataActionWatcher() {
     yield takeLatest(`${CONFIRM_STUDENT}`, confirmStudent);
     yield takeLatest(`${LOAD_CURRENT_USER}`, loadCurrentUser);
     yield takeLatest(`${SET_COST}`, setCost);
+    yield takeLatest(`${LOAD_TIME_SLOTS}`, loadTimeSlots);
+    yield takeLatest(`${CONFIRM_AVAILABILITY}`, confirmAvailability);
 }

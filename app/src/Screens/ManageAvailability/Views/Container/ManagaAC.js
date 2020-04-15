@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { setCostAction, dialogueOKAction, showialogueAction, loadAvailableTimeSlotsAction, clearAvailableTimeSlotsAction, setSelectedTimeSlotAction, resetSelectedTimeSlotAction} from '../../Actions/ManageA';
+import { onAvailabilityConfirmAction, setCostAction, dialogueOKAction, showialogueAction, loadTimeSlotsAction, clearTimeSlotsAction, setSelectedTimeSlotAction, resetSelectedTimeSlotAction} from '../../Actions/ManageA';
 import ManageAP from '../Presentational/ManageAP';
 import { SET_COST_FAILURE, LOAD_CURRENT_USER } from '../../../../Commons/Constants';
 
@@ -18,6 +18,7 @@ class ManageAC extends Component {
       this.costHandler = this.costHandler.bind(this);
       this.currencyHandler = this.currencyHandler.bind(this);
       this.onCostConfirm = this.onCostConfirm.bind(this);
+      this.onAvailabilityConfirm = this.onAvailabilityConfirm.bind(this);
   }
 
   componentWillMount()
@@ -28,7 +29,7 @@ class ManageAC extends Component {
   componentWillUnmount()
   {
     this.Cancel();
-    this.props.clearAvailableTimeSlots();
+    this.props.clearTimeSlots();
     this.dialogueButtonPress();
   }
 
@@ -37,22 +38,39 @@ class ManageAC extends Component {
     this.props.navigation.navigate('Main Instructor Screen'); 
   }
 
+  onAvailabilityConfirm()
+  {
+    this.props.availabilityConfirm(this.props.availableTimeSlots);
+  }
+
   onDateChange(date)
   {
     this.Cancel();
+    this.props.clearTimeSlots();
 
     let newDate = new Date(Date.UTC(date.year(), date.month(), date.date(), 0, 0, 0));
 
-    this.props.loadAvailableTimeSlots(newDate.getTime(), this.props.instructor.uuid);
+    this.props.loadTimeSlots(newDate.getTime());
   }
 
   onTimeSlotClick(item, index)
   {
+    if(item.status === 'available')
+    {
+        item.status = 'unavailable';
+    }
+    else if(item.status === 'unavailable')
+    {
+        item.status = 'available';
+    }
+
+    this.props.resetSelectedSlot();
     this.props.setselectedSlot(index);
   }
 
   Cancel()
   {
+    this.props.clearTimeSlots();
     this.props.resetSelectedSlot();
   }
 
@@ -90,15 +108,15 @@ class ManageAC extends Component {
         this.props.resetReload();
         this.props.loadCurrentUser();
     }
-    return (<ManageAP onCostConfirm={this.onCostConfirm} costHandler = {this.costHandler} currencyHandler = {this.currencyHandler} Cancel = {this.Cancel} onConfirm = {this.onConfirm} selectedSlot={this.props.selectedSlot} onTimeSlotClick={this.onTimeSlotClick} availableTimeSlots={this.props.availableTimeSlots} onDateChange={this.onDateChange} photo={this.props.photo} instructorPhoto={this.props.instructorPhoto} instructor={this.props.currentUser} backButton={this.backButton} loader={this.props.loader}/>);
+    return (<ManageAP onAvailabilityConfirm={this.onAvailabilityConfirm} onCostConfirm={this.onCostConfirm} costHandler = {this.costHandler} currencyHandler = {this.currencyHandler} Cancel = {this.Cancel} onConfirm = {this.onConfirm} selectedSlot={this.props.selectedSlot} onTimeSlotClick={this.onTimeSlotClick} availableTimeSlots={this.props.availableTimeSlots} onDateChange={this.onDateChange} photo={this.props.photo} instructorPhoto={this.props.instructorPhoto} instructor={this.props.currentUser} backButton={this.backButton} loader={this.props.loader}/>);
   }
 }
 
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    loadAvailableTimeSlots: (date, uuid) => dispatch(loadAvailableTimeSlotsAction(date, uuid)),
-    clearAvailableTimeSlots: () => dispatch(clearAvailableTimeSlotsAction()),
+    loadTimeSlots: (date) => dispatch(loadTimeSlotsAction(date)),
+    clearTimeSlots: () => dispatch(clearTimeSlotsAction()),
     setselectedSlot: (slot) => dispatch(setSelectedTimeSlotAction(slot)),
     resetSelectedSlot: () => dispatch(resetSelectedTimeSlotAction()),
     showDialogue: (negativeButtonPressed, message) => dispatch(showialogueAction(negativeButtonPressed, message)),
@@ -107,6 +125,7 @@ const mapDispatchToProps = (dispatch) => {
     dialogueOkPressed: () => dispatch(dialogueOKAction()),
     resetReload: () => dispatch({"type": SET_COST_FAILURE}),
     loadCurrentUser: () => dispatch({"type": LOAD_CURRENT_USER}),
+    availabilityConfirm: (slots) => dispatch(onAvailabilityConfirmAction(slots)),
   };
 };
 
@@ -114,7 +133,7 @@ const mapStateToProps = (state) => {
   return {
     photo: state.mscreducer.photo,
     currentUser: state.mscreducer.currentUser,
-    availableTimeSlots: state.mscreducer.availableTimeSlots,
+    availableTimeSlots: state.mscreducer.timeSlots,
     selectedSlot: state.mscreducer.selectedSlot,
     reload: state.mscreducer.reloadaAvailability,
   };
