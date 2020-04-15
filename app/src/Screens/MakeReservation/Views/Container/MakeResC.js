@@ -50,7 +50,7 @@ class MakeResC extends Component {
 
   onConfirm(slotIndex)
   {
-    this.props.makeReservation(Number.parseInt(this.props.availableTimeSlots[slotIndex].date, 10), this.props.instructor);
+    this.props.makeReservation(Number.parseInt(this.props.availableTimeSlots[slotIndex].time, 10), this.props.instructor);
   }
 
   Cancel()
@@ -63,6 +63,7 @@ class MakeResC extends Component {
     this.props.dialogueOkPressed();
     this.props.resetMakeReservation();
     this.props.resetSelectedSlot();
+    this.props.clearAvailableTimeSlots();
   }
 
   render() {

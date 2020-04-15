@@ -9,6 +9,41 @@ import { ScrollView } from 'react-native-gesture-handler';
 
 export default class ManageAP extends Component {
 
+  getSlotsView(status, item, index)
+  {
+        switch(status)
+        {
+            case "available":
+                return (<TouchableOpacity style={{alignItems: 'center', justifyContent: 'center', borderRadius: hp(1), backgroundColor: '#5a9c79', height: hp(4), width: wp(30)}} onPress={() => {this.props.onTimeSlotClick(item, index)}}>
+                    <Text 
+                    numberOfLines={1} style={{marginTop: hp(.8), alignSelf: 'center', width: wp(35), fontSize: hp(1.8),fontWeight: '400',textAlign: 'center',color: '#ffffff',fontFamily: getRegularFont()}}>
+                        {'Available'}
+                    </Text> 
+                </TouchableOpacity>);
+            case "unavailable":
+                return (<TouchableOpacity style={{alignItems: 'center', justifyContent: 'center', borderRadius: hp(1), backgroundColor: 'red', height: hp(4), width: wp(30)}} onPress={() => {this.props.onTimeSlotClick(item, index)}}>
+                    <Text 
+                    numberOfLines={1} style={{marginTop: hp(.8), alignSelf: 'center', width: wp(35), fontSize: hp(1.8),fontWeight: '400',textAlign: 'center',color: '#ffffff',fontFamily: getRegularFont()}}>
+                        {'Un Available'}
+                    </Text> 
+                </TouchableOpacity>);
+            case "pending":
+            return (<TouchableOpacity style={{alignItems: 'center', justifyContent: 'center', borderRadius: hp(1), backgroundColor: 'yellow', height: hp(4), width: wp(30)}} onPress={() => {this.props.onTimeSlotClick(item, index)}}>
+                <Text 
+                numberOfLines={1} style={{marginTop: hp(.8), alignSelf: 'center', width: wp(35), fontSize: hp(1.8),fontWeight: '400',textAlign: 'center',color: '#ffffff',fontFamily: getRegularFont()}}>
+                    {'Pending'}
+                </Text> 
+            </TouchableOpacity>);
+            case "confirmed":
+            return (<TouchableOpacity style={{alignItems: 'center', justifyContent: 'center', borderRadius: hp(1), backgroundColor: 'green', height: hp(4), width: wp(30)}} onPress={() => {this.props.onTimeSlotClick(item, index)}}>
+                <Text 
+                numberOfLines={1} style={{marginTop: hp(.8), alignSelf: 'center', width: wp(35), fontSize: hp(1.8),fontWeight: '400',textAlign: 'center',color: '#ffffff',fontFamily: getRegularFont()}}>
+                    {'Confirmed'}
+                </Text> 
+            </TouchableOpacity>);
+        }
+    }
+
   render() {
     const backArrow = require('../../../../assets/backArrow.png');
     const menu = require('../../../../assets/menu.png');
@@ -94,19 +129,7 @@ export default class ManageAP extends Component {
                         numberOfLines={1} style={{width: wp(40), marginLeft: wp(1), fontSize: hp(1.8),fontWeight: '400',textAlign: 'center',color: '#ffffff',fontFamily: getRegularFont()}}>
                             {item.showAbleTime}
                     </Text> 
-                    {(item.status === "available") ?
-                    <TouchableOpacity style={{alignItems: 'center', justifyContent: 'center', borderRadius: hp(1), backgroundColor: '#5a9c79', height: hp(4), width: wp(30)}} onPress={() => {this.props.onTimeSlotClick(item, index)}}>
-                        <Text 
-                        numberOfLines={1} style={{marginTop: hp(.8), alignSelf: 'center', width: wp(35), fontSize: hp(1.8),fontWeight: '400',textAlign: 'center',color: '#ffffff',fontFamily: getRegularFont()}}>
-                            {'Available'}
-                        </Text> 
-                    </TouchableOpacity> :
-                    <TouchableOpacity style={{alignItems: 'center', justifyContent: 'center', borderRadius: hp(1), backgroundColor: 'red', height: hp(4), width: wp(30)}} onPress={() => {this.props.onTimeSlotClick(item, index)}}>
-                        <Text 
-                        numberOfLines={1} style={{marginTop: hp(.8), alignSelf: 'center', width: wp(35), fontSize: hp(1.8),fontWeight: '400',textAlign: 'center',color: '#ffffff',fontFamily: getRegularFont()}}>
-                            {'Un Available'}
-                        </Text> 
-                </TouchableOpacity>}  
+                    {this.getSlotsView(item.status, item, index)}  
                  </View>
                 </TouchableOpacity>
               )}

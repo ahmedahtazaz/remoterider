@@ -429,7 +429,7 @@ function* loadAvailableTimeSlotsInner(date, uuid) {
     then((doc) => {
         if(doc.data())
         {
-            let data = JSON.parse(doc.data().availableSlots);
+            let data = doc.data().availableSlots;
 
             if(data && data.length > 0)
             {
@@ -439,23 +439,11 @@ function* loadAvailableTimeSlotsInner(date, uuid) {
 
                     if(innerDate.toString() === date.toString())
                     {
-                        if(data[i].time && data[i].time.length > 0)
-                        {
+                        if(!available)
                             available = [];
 
-                            for(let j = 0; j < data[i].time.length; j++)
-                            {
-                                let newDate = new Date(Number.parseInt(data[i].time[j], 10));
-                                let nextHourDate = new Date(Number.parseInt(data[i].time[j], 10) + 3600000);
-
-                                let currentHour = newDate.getUTCHours();
-                                let nextHour = nextHourDate.getUTCHours();
-
-                                available.push({"time": currentHour+".00 to "+nextHour+".00 UTC", "date": data[i].time[j]});
-                            }
-                        }
-
-                        break;
+                        if(data[i].status.toString() === 'available')
+                            available.push(data[i]);
                     }
                 }
             }
@@ -476,7 +464,7 @@ function* loadAvailableTimeSlotsInner(date, uuid) {
             let currentHour = newDate.getUTCHours();
             let nextHour = nextHourDate.getUTCHours();
 
-            available.push({"time": currentHour+".00 to "+nextHour+".00 UTC", "date": date});
+            available.push({"time": newDate.getTime(), "date": date, "status": "available", "showAbleTime": currentHour+".00 to "+nextHour+".00 UTC"});
         }
     }
 
@@ -524,6 +512,97 @@ function* makeReservationInner(date, instructor) {
         ).catch((err) => console.log(err));
     }
 
+    if(message)
+    {
+        let available = [];
+        let dateFound = false;
+        let timefound = false;
+
+        yield firestore().collection('Users').doc(instructor.uuid).get().
+        then((doc) => {
+            if(doc.data())
+            {
+                let data = doc.data().availableSlots;
+
+                if(data && data.length > 0)
+                {
+                    available = data;
+
+                    for(let i = 0; i < available.length; i++)
+                    {
+                        let innerTime = available[i].time;
+                        let innerDate = available[i].date;
+
+                        let onlyDate = new Date(Number.parseInt(date, 10));
+                        let initialDate = new Date(Date.UTC(onlyDate.getFullYear(), onlyDate.getMonth(), onlyDate.getDate(), 0, 0, 0));
+                        let dateMillis = initialDate.getTime();
+
+                        if(innerDate.toString() === dateMillis.toString())
+                        {
+                            dateFound = true;
+
+                            if(innerTime.toString() === date.toString())
+                            {
+                                timefound = true;
+
+                                available[i].status = 'pending';
+                                break;
+                            }
+                        }
+                    }                 
+                }
+
+                if(dateFound)
+                {
+                    if(!timefound)
+                    {
+                        let onlyDate = new Date(Number.parseInt(date, 10));
+                        let initialDate = new Date(Date.UTC(onlyDate.getFullYear(), onlyDate.getMonth(), onlyDate.getDate(), 0, 0, 0));
+                        let initial = initialDate.getTime();
+                        let newDate = new Date(Number.parseInt(date, 10));
+                        let nextHourDate = new Date(Number.parseInt(date, 10) + 3600000);
+            
+                        let currentHour = newDate.getUTCHours();
+                        let nextHour = nextHourDate.getUTCHours();
+
+                        available.push({"time": newDate.getTime(), "date": initial, "status": "pending", "showAbleTime": currentHour+".00 to "+nextHour+".00 UTC"});
+                    }
+                }
+                else
+                {
+                    let onlyDate = new Date(Number.parseInt(date, 10));
+                    let initialDate = new Date(Date.UTC(onlyDate.getFullYear(), onlyDate.getMonth(), onlyDate.getDate(), 0, 0, 0));
+                    let initial = initialDate.getTime();
+
+                    for(let i = 0; i < 24; i++)
+                    {
+                        let newDate = new Date(initial + (3600000 * i));
+                        let nextHourDate = new Date(initial + (3600000 * i) + 3600000);
+            
+                        let currentHour = newDate.getUTCHours();
+                        let nextHour = nextHourDate.getUTCHours();
+            
+                        if(Number.parseInt(newDate.getTime(), 10) === Number.parseInt(date, 10))
+                        {
+                            available.push({"time": newDate.getTime(), "date": date, "status": "pending", "showAbleTime": currentHour+".00 to "+nextHour+".00 UTC"});
+                        }
+                        else    
+                            available.push({"time": newDate.getTime(), "date": date, "status": "available", "showAbleTime": currentHour+".00 to "+nextHour+".00 UTC"});
+                    }
+                }
+            }
+        }).catch((err) => {console.log(err)});
+
+        if(available.length > 0)
+        {
+            yield firestore().collection('Users').doc(instructor.uuid).update({
+                availableSlots: available,
+            }).then((doc) => {
+                success = true;
+            }).catch((err) => {console.log(err)});
+        }
+    }
+
     return message;
 }
 
@@ -562,8 +641,9 @@ function* declineStudentInner(date, student) {
                 {
                     if(newReservations[i].uuid.toString() === student.uuid.toString() && newReservations[i].date.toString() === student.date.toString())
                     {
+                        console.log('inside pending')
                         newReservations.splice(i, 1);
-                        break;
+                        i--;
                     }
                 }
             }
@@ -573,6 +653,58 @@ function* declineStudentInner(date, student) {
     yield firestore().collection('Reservations').doc(currentuid).set({"Reservations" :newReservations}).then(
         () => {success = true}
     ).catch((err) => console.log(err));
+
+    if(success)
+    {
+        let available = [];
+        let dateFound = false;
+        let timefound = false;
+
+        yield firestore().collection('Users').doc(currentuid).get().
+        then((doc) => {
+            if(doc.data())
+            {
+                let data = doc.data().availableSlots;
+
+                if(data && data.length > 0)
+                {
+                    available = data;
+
+                    for(let i = 0; i < available.length; i++)
+                    {
+                        let innerTime = available[i].time;
+                        let innerDate = available[i].date;
+
+                        let onlyDate = new Date(Number.parseInt(student.date, 10));
+                        let initialDate = new Date(Date.UTC(onlyDate.getFullYear(), onlyDate.getMonth(), onlyDate.getDate(), 0, 0, 0));
+                        let dateMillis = initialDate.getTime();
+
+                        if(innerDate.toString() === dateMillis.toString())
+                        {
+                            dateFound = true;
+
+                            if(innerTime.toString() === student.date.toString())
+                            {
+                                timefound = true;
+
+                                available[i].status = 'available';
+                                break;
+                            }
+                        }
+                    }                 
+                }
+            }
+        }).catch((err) => {console.log(err)});
+
+        if(available.length > 0)
+        {
+            yield firestore().collection('Users').doc(currentuid).update({
+                availableSlots: available,
+            }).then((doc) => {
+                success = true;
+            }).catch((err) => {console.log(err)});
+        }
+    }
 
     return success;
 }
@@ -623,6 +755,58 @@ function* confirmStudentInner(date, student) {
     yield firestore().collection('Reservations').doc(currentuid).set({"Reservations" :newReservations}).then(
         () => {success = true}
     ).catch((err) => console.log(err));
+
+    if(success)
+    {
+        let available = [];
+        let dateFound = false;
+        let timefound = false;
+
+        yield firestore().collection('Users').doc(currentuid).get().
+        then((doc) => {
+            if(doc.data())
+            {
+                let data = doc.data().availableSlots;
+
+                if(data && data.length > 0)
+                {
+                    available = data;
+
+                    for(let i = 0; i < available.length; i++)
+                    {
+                        let innerTime = available[i].time;
+                        let innerDate = available[i].date;
+
+                        let onlyDate = new Date(Number.parseInt(student.date, 10));
+                        let initialDate = new Date(Date.UTC(onlyDate.getFullYear(), onlyDate.getMonth(), onlyDate.getDate(), 0, 0, 0));
+                        let dateMillis = initialDate.getTime();
+
+                        if(innerDate.toString() === dateMillis.toString())
+                        {
+                            dateFound = true;
+
+                            if(innerTime.toString() === student.date.toString())
+                            {
+                                timefound = true;
+
+                                available[i].status = 'confirmed';
+                                break;
+                            }
+                        }
+                    }                 
+                }
+            }
+        }).catch((err) => {console.log(err)});
+
+        if(available.length > 0)
+        {
+            yield firestore().collection('Users').doc(currentuid).update({
+                availableSlots: available,
+            }).then((doc) => {
+                success = true;
+            }).catch((err) => {console.log(err)});
+        }
+    }
 
     return success;
 }
@@ -726,14 +910,15 @@ function* loadTimeSlotsInner(date) {
 
             if(data && data.length > 0)
             {
-                available = [];
-                
                 for(let i = 0; i < data.length; i++)
                 {
                     let innerDate = data[i].date;
 
                     if(innerDate.toString() === date.toString())
                     {
+                        if(!available)
+                            available = [];
+
                         available.push(data[i]);
                     }
                 }

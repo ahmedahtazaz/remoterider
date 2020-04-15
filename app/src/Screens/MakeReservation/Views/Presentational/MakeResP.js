@@ -5,6 +5,7 @@ import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-nativ
 import { getBoldFont, getRegularFont } from '../../../../Commons/Fonts';
 import Calendar from '../../../Calendar/Calendar';
 import Dialog from '../../../../Commons/Dialogue/Dialogue';
+import { ScrollView } from 'react-native-gesture-handler';
 
 export default class MakeResP extends Component {
 
@@ -14,6 +15,7 @@ export default class MakeResP extends Component {
     
     return (
       <LinearGradient colors={['#006b31', '#00652e', '#005e2b' , '#005326', '#004b22', '#00411e', '#003a1b', '#003619']} style={{flex: 1}}>      
+        <ScrollView style={{flex: 1}}>
         <View style={styles.background}>
           <View style={styles.topBarContainer}>
             <TouchableOpacity style={{marginLeft: wp(2), height: hp(2.8), width: wp(7.8) , backgroundColor: 'transparent', alignSelf: 'center'}} onPress={this.props.backButton}>
@@ -65,13 +67,13 @@ export default class MakeResP extends Component {
                  <View style={{borderRadius: hp(2),  alignItems: 'center', justifyContent: 'center', backgroundColor: '#5a9c79', flexDirection: 'row', width: wp(40), height: hp(5)}}>
                  <Text 
                      numberOfLines={1} style={{width: wp(40), marginLeft: wp(1), fontSize: hp(1.8),fontWeight: '400',textAlign: 'center',color: '#ffffff',fontFamily: getRegularFont()}}>
-                         {item.time}
+                         {item.showAbleTime}
                  </Text> 
              </View> :
              <View style={{borderRadius: hp(2),  alignItems: 'center', justifyContent: 'center', backgroundColor: '#006b31', flexDirection: 'row', width: wp(40), height: hp(5)}}>
                 <Text 
                     numberOfLines={1} style={{width: wp(40), marginLeft: wp(1), fontSize: hp(1.8),fontWeight: '400',textAlign: 'center',color: '#ffffff',fontFamily: getRegularFont()}}>
-                        {item.time}
+                        {item.showAbleTime}
                 </Text> 
             </View>}
                 </TouchableOpacity>
@@ -99,6 +101,7 @@ export default class MakeResP extends Component {
           null}
           <Dialog/>
         </View>
+        </ScrollView>
       </LinearGradient>);
   }
 }
