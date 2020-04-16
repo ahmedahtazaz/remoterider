@@ -4,6 +4,7 @@ import { RtcEngine, AgoraView } from 'react-native-agora';
 import LinearGradient from 'react-native-linear-gradient';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import { getRegularFont, getBoldFont } from '../../../../Commons/Fonts';
+import requestCameraAndAudioPermission from './permission'; 
 
 const { Agora } = NativeModules;
 
@@ -85,6 +86,7 @@ export default class CallP extends Component {
           joinSucceed: false,
         });
 
+        RtcEngine.destroy();
         this.props.endCall();
       }
       /**
@@ -106,7 +108,7 @@ export default class CallP extends Component {
                 </View>
                 {
                   !this.state.joinSucceed ?
-                    <View />
+                    <View style={{flex: 1}}></View>
                     :
                     <View style={styles.fullView}>
                       {
@@ -148,7 +150,7 @@ export default class CallP extends Component {
                               : this.state.peerIds.length > 0                   //view for videostream
                                 ? <AgoraView style={styles.full}
                                   remoteUid={this.state.peerIds[0]} mode={1} />
-                                : <View>
+                                : <View style={{flex: 1}}>
                                   <Text style={styles.noUserText}> No users connected </Text>
                                 </View>
                       }
@@ -162,6 +164,9 @@ export default class CallP extends Component {
         );
       }
       render() {
+        console.log('join succes', this.state.joinSucceed)
+        console.log('peer ids', this.state.peerIds)
+
         return this.videoView();
       }
     }

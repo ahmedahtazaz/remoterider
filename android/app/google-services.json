@@ -30,6 +30,13 @@
             {
               "client_id": "1080230214603-dum1fhgg7tiguv3hoco65fr9t6bv28pb.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "1080230214603-142f7284tc1i8t6jpp5eoq2ns6rhgjnd.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.remoterider"
+              }
             }
           ]
         }

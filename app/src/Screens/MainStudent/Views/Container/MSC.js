@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import MSP from '../Presentational/MSP'
 import { connect } from 'react-redux';
-import {profilePressedAction, menuPresedAction, loadPhotoAction, loadSlidingImagesAction, loadReservationsAction, loadCategoriesAction} from '../../Actions/MSA';
+import {setInstructorForDeliveryAction, profilePressedAction, menuPresedAction, loadPhotoAction, loadSlidingImagesAction, loadReservationsAction, loadCategoriesAction} from '../../Actions/MSA';
 import RNExitApp from 'react-native-exit-app';
 
 class MSC extends Component {
@@ -48,7 +48,8 @@ class MSC extends Component {
 
   onReservationClick(item, index)
   {
-
+    this.props.setInstructorForDelivery(item, this.props.reservations.photos[index]);
+    this.props.navigation.navigate('Lesson Delivery Student');
   }
 
   onCategoriesClick(item, index)
@@ -75,6 +76,7 @@ const mapDispatchToProps = (dispatch) => {
     loadCategories: () => dispatch(loadCategoriesAction()),
     menuPresed: (status) => dispatch(menuPresedAction(status)),
     profilePressed: (status) => dispatch(profilePressedAction(status)),
+    setInstructorForDelivery: (student, photo) => dispatch(setInstructorForDeliveryAction(student, photo)),
   };
 };
 

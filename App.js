@@ -18,6 +18,7 @@ import ResSearchC from './app/src/Screens/MakeReservation/Views/Container/ResSea
 import MakeResC from './app/src/Screens/MakeReservation/Views/Container/MakeResC';
 import ManagaAC from './app/src/Screens/ManageAvailability/Views/Container/ManagaAC';
 import LDC from './app/src/Screens/LessonDelivery/Views/Container/LDC';
+import LDCS from './app/src/Screens/LessonDelivery/Views/Container/LDCS';
 
 const sagaMiddleware = createSagaMiddleware();
 const store = createStore(createRootReducer(), compose(applyMiddleware(sagaMiddleware),),);
@@ -44,6 +45,7 @@ export default class App extends Component {
               <Stack.Screen name="Make Reservation with Instructor" component={MakeResC} options={{ headerShown: false}}/>
               <Stack.Screen name="Manage Availability" component={ManagaAC} options={{ headerShown: false}}/>
               <Stack.Screen name="Lesson Delivery Instructor" component={LDC} options={{ headerShown: false}}/>
+              <Stack.Screen name="Lesson Delivery Student" component={LDCS} options={{ headerShown: false}}/>
             </Stack.Navigator>
           </NavigationContainer>    
       </Provider>
