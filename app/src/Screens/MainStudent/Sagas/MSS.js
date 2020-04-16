@@ -729,6 +729,33 @@ function* declineStudentInner(date, student) {
                 success = true;
             }).catch((err) => {console.log(err)});
         }
+
+        let studentReservations = [];
+
+        yield firestore().collection('Reservations').doc(student.uuid).get().
+        then((doc) => {
+            if(doc && doc.data() && doc.data().Reservations)
+                data = doc.data().Reservations;
+                
+                if(data && data.length > 0)
+                {
+                    studentReservations = data;
+    
+                    for(let i = 0; i < studentReservations.length; i++)
+                    {
+                        if(studentReservations[i].uuid.toString() === currentuid.toString() && studentReservations[i].date.toString() === student.date.toString())
+                        {
+                            studentReservations.splice(i, 1);
+                            i--;
+                        }
+                    }
+                }
+    
+            }).catch((err) => {console.log(err)});
+    
+        yield firestore().collection('Reservations').doc(student.uuid).set({"Reservations" :studentReservations}).then(
+            () => {success = true}
+        ).catch((err) => console.log(err));
     }
 
     return success;
