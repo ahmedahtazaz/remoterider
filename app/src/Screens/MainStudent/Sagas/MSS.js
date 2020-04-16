@@ -461,10 +461,8 @@ function* loadAvailableTimeSlotsInner(date, uuid) {
                 {
                     let innerDate = data[i].date;
 
-                    console.log('inner date', innerDate, 'date',  date);
                     if(innerDate.toString() === date.toString())
                     {
-                        console.log('inner date equal');
                         if(!available)
                             available = [];
 

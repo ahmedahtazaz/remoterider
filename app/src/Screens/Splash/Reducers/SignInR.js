@@ -12,7 +12,6 @@ const INITIAL_STATE = {
 
 export default function signInReducer() {
     return function reducer(state = INITIAL_STATE, action) {
-      console.log(action)
       switch (action.type) {
 
         case SIGN_IN_SUCCESS:

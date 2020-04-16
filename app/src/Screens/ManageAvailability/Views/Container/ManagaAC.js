@@ -116,7 +116,6 @@ class ManageAC extends Component {
         this.Cancel();
     }
 
-    console.log('student', this.props.student)
 
     if(this.props.student)
     {

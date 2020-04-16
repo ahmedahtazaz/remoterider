@@ -7,7 +7,6 @@ import { getRegularFont, getBoldFont } from '../../../../Commons/Fonts';
 export default class LDPS extends Component {
 
   render() {
-    console.log(this.props.student)
     const backArrow = require('../../../../assets/backArrow.png');
     return (
       <LinearGradient colors={['#006b31', '#00652e', '#005e2b' , '#005326', '#004b22', '#00411e', '#003a1b', '#003619']} style={{flex: 1}}>      

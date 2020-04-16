@@ -41,7 +41,6 @@ export default class CallP extends Component {
         };
         if (Platform.OS === 'android') {                    //Request required permissions from Android
           requestCameraAndAudioPermission().then(_ => {
-            console.log('requested!');
           });
         }
       }
@@ -164,8 +163,6 @@ export default class CallP extends Component {
         );
       }
       render() {
-        console.log('join succes', this.state.joinSucceed)
-        console.log('peer ids', this.state.peerIds)
 
         return this.videoView();
       }

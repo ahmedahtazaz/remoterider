@@ -49,7 +49,6 @@ class LDC extends Component {
         this.backButton();
     }
 
-    console.log('calling', this.props.calling);
     if(this.props.calling)
       return(<CallP endCall={this.endCall}></CallP>);
     else
