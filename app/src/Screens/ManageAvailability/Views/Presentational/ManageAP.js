@@ -36,7 +36,7 @@ export default class ManageAP extends Component {
                 </Text> 
             </TouchableOpacity>);
             case "confirmed":
-            return (<TouchableOpacity style={{alignItems: 'center', justifyContent: 'center', borderRadius: hp(1), backgroundColor: 'green', height: hp(4), width: wp(30)}} onPress={() => {this.props.onTimeSlotClick(item, index)}}>
+            return (<TouchableOpacity style={{alignItems: 'center', justifyContent: 'center', borderRadius: hp(1), backgroundColor: 'green', height: hp(4), width: wp(30)}} onPress={() => {}}>
                 <Text 
                 numberOfLines={1} style={{marginTop: hp(.8), alignSelf: 'center', width: wp(35), fontSize: hp(1.8),fontWeight: '400',textAlign: 'center',color: '#ffffff',fontFamily: getRegularFont()}}>
                     {'Confirmed'}

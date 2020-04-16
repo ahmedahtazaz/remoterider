@@ -1,4 +1,4 @@
-import {LOAD_PHOTO, LOAD_SLIDING_IMAGES, LOAD_SCHEDULED_LESSONS, LOAD_PENDING_LESSONS, SET_MENU_VISIBILITY, SET_PROFILE_VISIBILITY, SET_CONFIRMATION_DIALOGUE, DECLINE_STUDENT, CONFIRM_STUDENT} from '../../../Commons/Constants'
+import {SET_STUDENT_FOR_DELIVERY, LOAD_PHOTO, LOAD_SLIDING_IMAGES, LOAD_SCHEDULED_LESSONS, LOAD_PENDING_LESSONS, SET_MENU_VISIBILITY, SET_PROFILE_VISIBILITY, SET_CONFIRMATION_DIALOGUE, DECLINE_STUDENT, CONFIRM_STUDENT} from '../../../Commons/Constants'
 
 export const loadPhotoAction = () => {
     return {
@@ -75,5 +75,13 @@ export const loadPhotoAction = () => {
     return {
       type:`${CONFIRM_STUDENT}`,
       student: student,
+    }
+  };
+
+  export const setStudentForDeliveryAction = (student, photo) => {
+    return {
+      type:`${SET_STUDENT_FOR_DELIVERY}`,
+      student: student,
+      studentPhoto: photo
     }
   };

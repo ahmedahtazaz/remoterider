@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import MSIP from '../Presentational/MSIP'
 import { connect } from 'react-redux';
-import {confirmStudentAction, declineStudentAction, resetConfirmationDialogueAction, showConfirmationDialogueAction, profilePressedAction, menuPresedAction, loadPhotoAction, loadSlidingImagesAction, loadScheduledLessonsAction, loadPendingLessonsAction} from '../../Actions/MSIA';
+import {setStudentForDeliveryAction, confirmStudentAction, declineStudentAction, resetConfirmationDialogueAction, showConfirmationDialogueAction, profilePressedAction, menuPresedAction, loadPhotoAction, loadSlidingImagesAction, loadScheduledLessonsAction, loadPendingLessonsAction} from '../../Actions/MSIA';
 import RNExitApp from 'react-native-exit-app';
 import { DECLINE_STUDENT_FAILURE, LOAD_CURRENT_USER } from '../../../../Commons/Constants';
 
@@ -18,6 +18,7 @@ class MSIC extends Component {
       this.onPendingClick = this.onPendingClick.bind(this);
       this.negativePressed = this.negativePressed.bind(this);
       this.positivePressed = this.positivePressed.bind(this);
+      this.onScheduledLessonsClick = this.onScheduledLessonsClick.bind(this);
   }
 
   componentWillUnmount()
@@ -72,9 +73,10 @@ class MSIC extends Component {
     this.props.navigation.navigate('Manage Availability'); 
   }
 
-  onpendingLessonsClick(item, index)
+  onScheduledLessonsClick(item, index)
   {
-
+    this.props.setStudentForDelivery(item, this.props.scheduled.photos[index]);
+    this.props.navigation.navigate('Lesson Delivery Instructor'); 
   }
 
   render() {
@@ -88,7 +90,7 @@ class MSIC extends Component {
       this.props.loadPendingLessons();
     }
 
-    return (<MSIP onPendingClick={this.onPendingClick} pending={this.props.pending} availabilityPress={this.availabilityPress} scheduled={this.props.scheduled} images={this.props.slidingImages} backButton={this.backButtonPress} menuPress = {this.menuPress} photo = {this.props.photo} profilePress={this.profilePress}/>);
+    return (<MSIP onScheduledLessonsClick={this.onScheduledLessonsClick} onPendingClick={this.onPendingClick} pending={this.props.pending} availabilityPress={this.availabilityPress} scheduled={this.props.scheduled} images={this.props.slidingImages} backButton={this.backButtonPress} menuPress = {this.menuPress} photo = {this.props.photo} profilePress={this.profilePress}/>);
   }
 }
 
@@ -107,6 +109,7 @@ const mapDispatchToProps = (dispatch) => {
     confirmStudent: (student) => dispatch(confirmStudentAction(student)),
     resetReload: () => dispatch({"type": DECLINE_STUDENT_FAILURE}),
     loadCurrentUser: () => dispatch({"type": LOAD_CURRENT_USER}),
+    setStudentForDelivery: (student, photo) => dispatch(setStudentForDeliveryAction(student, photo)),
   };
 };
 

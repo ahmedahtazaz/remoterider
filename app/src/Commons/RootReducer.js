@@ -8,6 +8,7 @@ import signUpReducer from './SignUpReducer';
 import mscReducer from '../Screens/MainStudent/Reducer/MSR';
 import menudialogueReducer from '../Commons/MenuDialogue/MenuDialogueReducer';
 import profiledialogueReducer from '../Commons/ProfileDialogue/ProfileDialogueReducer';
+import ldrReducer from '../Screens/LessonDelivery/Reducer/LDR';
 
 const createRootReducer  = () => combineReducers({
     signInReducer: signInReducer(),
@@ -19,6 +20,7 @@ const createRootReducer  = () => combineReducers({
     mscreducer: mscReducer(),
     menudialogueReducer: menudialogueReducer(),
     profiledialogueReducer: profiledialogueReducer(),
+    ldrReducer: ldrReducer(),
 });
 
 export default createRootReducer ;
