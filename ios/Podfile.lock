@@ -158,6 +158,7 @@ PODS:
     - abseil/base/base_internal
     - abseil/base/config
     - abseil/meta/type_traits
+  - AgoraRtcEngine_iOS (2.9.1)
   - boost-for-react-native (1.63.0)
   - BoringSSL-GRPC (0.0.3):
     - BoringSSL-GRPC/Implementation (= 0.0.3)
@@ -463,6 +464,9 @@ PODS:
     - React-cxxreact (= 0.61.5)
     - React-jsi (= 0.61.5)
   - React-jsinspector (0.61.5)
+  - react-native-agora (2.9.1-alpha.3):
+    - AgoraRtcEngine_iOS (= 2.9.1)
+    - React
   - react-native-checkbox (0.3.0):
     - React
   - react-native-image-picker (0.28.0):
@@ -566,6 +570,7 @@ DEPENDENCIES:
   - React-jsi (from `../node_modules/react-native/ReactCommon/jsi`)
   - React-jsiexecutor (from `../node_modules/react-native/ReactCommon/jsiexecutor`)
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
+  - react-native-agora (from `../node_modules/react-native-agora`)
   - "react-native-checkbox (from `../node_modules/@react-native-community/checkbox`)"
   - react-native-image-picker (from `../node_modules/react-native-image-picker`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
@@ -597,6 +602,7 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - abseil
+    - AgoraRtcEngine_iOS
     - boost-for-react-native
     - BoringSSL-GRPC
     - Firebase
@@ -651,6 +657,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/jsiexecutor"
   React-jsinspector:
     :path: "../node_modules/react-native/ReactCommon/jsinspector"
+  react-native-agora:
+    :path: "../node_modules/react-native-agora"
   react-native-checkbox:
     :path: "../node_modules/@react-native-community/checkbox"
   react-native-image-picker:
@@ -706,6 +714,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   abseil: 18063d773f5366ff8736a050fe035a28f635fd27
+  AgoraRtcEngine_iOS: b2eedd8f9ab47b71163f3285e836bd23feb43fff
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
   BoringSSL-GRPC: db8764df3204ccea016e1c8dd15d9a9ad63ff318
   BVLinearGradient: e3aad03778a456d77928f594a649e96995f1c872
@@ -742,6 +751,7 @@ SPEC CHECKSUMS:
   React-jsi: cb2cd74d7ccf4cffb071a46833613edc79cdf8f7
   React-jsiexecutor: d5525f9ed5f782fdbacb64b9b01a43a9323d2386
   React-jsinspector: fa0ecc501688c3c4c34f28834a76302233e29dc0
+  react-native-agora: 701d3d6ec5dc7142d3fa7855baed71d0b834a891
   react-native-checkbox: f25a53683bf992d14df6c3cf5b590865f293b2d8
   react-native-image-picker: e6e06d4315e3c85bad17e4b2002cd29f11d202c8
   react-native-safe-area-context: e200d4433aba6b7e60b52da5f37af11f7a0b0392
@@ -770,6 +780,6 @@ SPEC CHECKSUMS:
   RSKImageCropper: a446db0e8444a036b34f3c43db01b2373baa4b2a
   Yoga: f2a7cd4280bfe2cca5a7aed98ba0eb3d1310f18b
 
-PODFILE CHECKSUM: 8de9f5d59433159c68b13f002bb8ce690635ad94
+PODFILE CHECKSUM: f020762eaf1b8a4f37be983e69e5b1c497d2fa25
 
 COCOAPODS: 1.9.1

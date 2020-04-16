@@ -5971,6 +5971,13 @@ react-is@^16.12.0, react-is@^16.13.0, react-is@^16.7.0, react-is@^16.8.1, react-
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
 
+react-native-agora@^2.9.1-alpha.3:
+  version "2.9.1-alpha.3"
+  resolved "https://registry.yarnpkg.com/react-native-agora/-/react-native-agora-2.9.1-alpha.3.tgz#beb5e6853dba70bfffac0bc1d93ba4b7eca59302"
+  integrity sha512-RFJUQEJYSgTJ9RNMf0bs02G6gHU8ib1RqyqVBZfcvHbi4ZJ0Tg21nXDOfm7+P6Tkj2hywXVAOQIIiEm6oq0cjQ==
+  dependencies:
+    tslib "^1.9.3"
+
 react-native-calendar-picker@^6.0.6:
   version "6.0.6"
   resolved "https://registry.yarnpkg.com/react-native-calendar-picker/-/react-native-calendar-picker-6.0.6.tgz#d9273616b0fd7cb0450f8833e315f1b032a0266b"
@@ -7246,7 +7253,7 @@ trim-right@^1.0.1:
   resolved "https://registry.yarnpkg.com/trim-right/-/trim-right-1.0.1.tgz#cb2e1203067e0c8de1f614094b9fe45704ea6003"
   integrity sha1-yy4SAwZ+DI3h9hQJS5/kVwTqYAM=
 
-tslib@^1.8.1, tslib@^1.9.0:
+tslib@^1.8.1, tslib@^1.9.0, tslib@^1.9.3:
   version "1.11.1"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.11.1.tgz#eb15d128827fbee2841549e171f45ed338ac7e35"
   integrity sha512-aZW88SY8kQbU7gpV19lN24LtXh/yD4ZZg6qieAJDDg+YBsJcSmLGK9QpnUjAKVG/xefmvJGd1WUmfpT/g6AJGA==

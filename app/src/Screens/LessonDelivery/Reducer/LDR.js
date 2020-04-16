@@ -1,8 +1,9 @@
-import { SET_STUDENT_FOR_DELIVERY } from "../../../Commons/Constants";
+import { SET_STUDENT_FOR_DELIVERY, SET_CALLING } from "../../../Commons/Constants";
 
 const INITIAL_STATE = {
     student: undefined,
-    studentPhoto: undefined
+    studentPhoto: undefined,
+    calling: false,
   };
 
 export default function ldrReducer() {
@@ -14,6 +15,12 @@ export default function ldrReducer() {
             ...state,
             student: action.student,
             studentPhoto: action.studentPhoto
+          };
+
+          case SET_CALLING:
+          return {
+            ...state,
+            calling: action.status,
           };
 
         default:
