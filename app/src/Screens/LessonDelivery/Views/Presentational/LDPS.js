@@ -7,6 +7,7 @@ import { getRegularFont, getBoldFont } from '../../../../Commons/Fonts';
 export default class LDPS extends Component {
 
   render() {
+    console.log(this.props.student)
     const backArrow = require('../../../../assets/backArrow.png');
     return (
       <LinearGradient colors={['#006b31', '#00652e', '#005e2b' , '#005326', '#004b22', '#00411e', '#003a1b', '#003619']} style={{flex: 1}}>      
@@ -36,7 +37,7 @@ export default class LDPS extends Component {
                       </Text> 
                       <Text 
                           numberOfLines={1} style={{marginLeft: wp(1), fontSize: hp(1.8),fontWeight: '400',textAlign: 'center',color: '#ffffff',fontFamily: getRegularFont()}}>
-                              {this.props.student.showableDate}
+                              {this.props.student.showAbleDate}
                       </Text> 
                     </View>
                     <View style={{alignItems: 'center', justifyContent: 'center', backgroundColor: 'transparent', flexDirection: 'row', width: wp(50), height: hp(3)}}>
@@ -46,7 +47,7 @@ export default class LDPS extends Component {
                       </Text> 
                       <Text 
                           numberOfLines={1} style={{marginLeft: wp(1), fontSize: hp(1.8),fontWeight: '400',textAlign: 'center',color: '#ffffff',fontFamily: getRegularFont()}}>
-                              {this.props.student.showableTime}
+                              {this.props.student.showAbleTime}
                       </Text> 
                     </View>
                   </View>

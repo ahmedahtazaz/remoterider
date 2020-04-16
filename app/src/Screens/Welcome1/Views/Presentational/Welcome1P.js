@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {TouchableOpacity, Text, Image, View, StyleSheet} from 'react-native';
+import {ScrollView, TouchableOpacity, Text, Image, View, StyleSheet} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import { getBoldFont, getRegularFont } from '../../../../Commons/Fonts';
@@ -14,7 +14,7 @@ export default class App extends Component {
 
     return (
       <LinearGradient colors={['#006b31', '#00652e', '#005e2b' , '#005326', '#004b22', '#00411e', '#003a1b', '#003619']} style={{flex: 1}}>      
-        
+        <ScrollView>
             <View style={styles.topBarContainer}>
               <TouchableOpacity style={{zIndex: 1000, position: "absolute", left: 0, marginLeft: wp(2), height: hp(2.8), width: wp(7.8) , backgroundColor: 'transparent', alignSelf: 'center'}} onPress={this.props.backButton}>
                 <Image source={backArrow} style={{height: hp(2.8), width: wp(7.8), resizeMode: 'contain'}}></Image>
@@ -75,6 +75,7 @@ export default class App extends Component {
           </TouchableOpacity>
             </View>
         </View>
+        </ScrollView>
       </LinearGradient>);
   }
 }
@@ -112,7 +113,7 @@ const styles = StyleSheet.create({
   midSectionText1: {
     color: '#ffffff',
     fontFamily: getBoldFont(),
-    fontSize: hp(2),
+    fontSize: hp(1.8),
     fontWeight: '700',
     textAlign: 'center',
   },
@@ -120,7 +121,7 @@ const styles = StyleSheet.create({
     color: '#ffffff',
     width: wp(75.6),
     fontFamily: getRegularFont(),
-    fontSize: hp(2),
+    fontSize: hp(1.8),
     fontWeight: '400',
     textAlign: 'center',
     marginTop: hp(1)
@@ -129,7 +130,7 @@ const styles = StyleSheet.create({
     color: '#ffffff',
     width: wp(75),
     fontFamily: getRegularFont(),
-    fontSize: hp(2),
+    fontSize: hp(1.8),
     fontWeight: '400',
     textAlign: 'center'
   },
@@ -137,7 +138,7 @@ const styles = StyleSheet.create({
     color: '#ffffff',
     width: wp(75),
     fontFamily: getRegularFont(),
-    fontSize: hp(2),
+    fontSize: hp(1.8),
     fontWeight: '400',
     textAlign: 'center'
   },
@@ -151,7 +152,7 @@ const styles = StyleSheet.create({
     color: '#ffffff',
     width: wp(77.5),
     fontFamily: getRegularFont(),
-    fontSize: hp(2),
+    fontSize: hp(1.6),
     height: hp(14),
     fontWeight: '400',
     textAlign: 'center',
@@ -164,7 +165,7 @@ const styles = StyleSheet.create({
     width: wp(77.5),
     height: hp(6),
     fontFamily: getRegularFont(),
-    fontSize: hp(1.8),
+    fontSize: hp(1.6),
     fontWeight: '400',
     textAlign: 'center',
     marginLeft: wp(11),
@@ -200,7 +201,7 @@ const styles = StyleSheet.create({
   text1: {
     color: '#ffffff',
     fontFamily: getRegularFont(),
-    fontSize: hp(2),
+    fontSize: hp(1.8),
     fontWeight: '400',
     textAlign: 'center'
   },

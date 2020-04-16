@@ -154,28 +154,28 @@ const styles = StyleSheet.create({
       },
     fieldMaincontainerStyle:{
         flexDirection: 'row',
-        height: hp(4),
+        height: hp(6),
         width: wp(67.6),
         alignSelf: 'center',
         marginTop: hp(2)
     },
     nameImage: {
-        height: hp(4),
+        height: hp(6),
         width: wp(6),
         resizeMode: 'contain'
     },
     emailImage: {
-        height: hp(4),
+        height: hp(6),
         width: wp(6),
         resizeMode: 'contain'
     },
     passImage: {
-        height: hp(4),
+        height: hp(6),
         width: wp(6),
         resizeMode: 'contain'
     },
     plusImage: {
-        height: hp(4),
+        height: hp(6),
         width: wp(6),
         resizeMode: 'contain'
     },
