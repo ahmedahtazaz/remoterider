@@ -16,9 +16,6 @@ export default class App extends Component {
       <LinearGradient colors={['#006b31', '#00652e', '#005e2b' , '#005326', '#004b22', '#00411e', '#003a1b', '#003619']} style={{flex: 1}}>      
         <ScrollView>
             <View style={styles.topBarContainer}>
-              <TouchableOpacity style={{zIndex: 1000, position: "absolute", left: 0, marginLeft: wp(2), height: hp(2.8), width: wp(7.8) , backgroundColor: 'transparent', alignSelf: 'center'}} onPress={this.props.backButton}>
-                <Image source={backArrow} style={{height: hp(2.8), width: wp(7.8), resizeMode: 'contain'}}></Image>
-              </TouchableOpacity>
               <View style={styles.riderTextContainer}> 
                 <Text 
                   numberOfLines={1} style={styles.riderText}>
