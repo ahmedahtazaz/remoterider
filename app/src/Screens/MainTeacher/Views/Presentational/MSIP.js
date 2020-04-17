@@ -32,6 +32,10 @@ export default class MSIP extends Component {
             </TouchableOpacity>
           </View>
           <Slideshow dataSource = {this.props.images ? this.props.images : []} height = {hp(26.5)} width = {wp(100)}/>
+          <Text 
+                  numberOfLines={1} style={{marginTop: hp(1), fontSize: hp(3),fontWeight: '700',textAlign: 'center',color: '#ffffff',fontFamily: getBoldFont()}}>
+                      {this.props.currentUser.name}
+          </Text> 
           <View style={styles.reservationsContainer}>
 
             <Text 
@@ -174,7 +178,7 @@ const styles = StyleSheet.create({
     height: hp(22),
     flexDirection:'column',
     backgroundColor: 'transparent',
-    marginTop: hp(6.8)
+    marginTop: hp(2.5)
   },
   categoriesContainer: {
     width: wp(100),

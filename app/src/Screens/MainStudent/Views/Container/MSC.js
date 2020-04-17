@@ -3,6 +3,7 @@ import MSP from '../Presentational/MSP'
 import { connect } from 'react-redux';
 import {setInstructorForDeliveryAction, profilePressedAction, menuPresedAction, loadPhotoAction, loadSlidingImagesAction, loadReservationsAction, loadCategoriesAction} from '../../Actions/MSA';
 import RNExitApp from 'react-native-exit-app';
+import { LOAD_CURRENT_USER } from '../../../../Commons/Constants';
 
 class MSC extends Component {
 
@@ -29,6 +30,7 @@ class MSC extends Component {
     this.props.loadSlidingImages();
     this.props.loadReservations();
     this.props.loadCategories();
+    this.props.loadCurrentUser();
   }
 
   backButtonPress()
@@ -63,7 +65,7 @@ class MSC extends Component {
   }
 
   render() {
-        return (<MSP reservationPress={this.makeReservationsHandler} showmenu={this.props.showmenu} onCategoriesClick={this.onCategoriesClick} categories={this.props.categories} onReservationClick={this.onReservationClick} reservations={this.props.reservations} images={this.props.slidingImages} backButton={this.backButtonPress} menuPress = {this.menuPress} photo = {this.props.photo} profilePress={this.profilePress}/>);
+        return (<MSP currentUser={this.props.currentUser} reservationPress={this.makeReservationsHandler} showmenu={this.props.showmenu} onCategoriesClick={this.onCategoriesClick} categories={this.props.categories} onReservationClick={this.onReservationClick} reservations={this.props.reservations} images={this.props.slidingImages} backButton={this.backButtonPress} menuPress = {this.menuPress} photo = {this.props.photo} profilePress={this.profilePress}/>);
   }
 }
 
@@ -76,6 +78,7 @@ const mapDispatchToProps = (dispatch) => {
     loadCategories: () => dispatch(loadCategoriesAction()),
     menuPresed: (status) => dispatch(menuPresedAction(status)),
     profilePressed: (status) => dispatch(profilePressedAction(status)),
+    loadCurrentUser: () => dispatch({"type": LOAD_CURRENT_USER}),
     setInstructorForDelivery: (student, photo) => dispatch(setInstructorForDeliveryAction(student, photo)),
   };
 };
@@ -86,6 +89,7 @@ const mapStateToProps = (state) => {
       categories: state.mscreducer.categories,
       photo: state.mscreducer.photo,
       slidingImages: state.mscreducer.slidingImages,
+      currentUser: state.mscreducer.currentUser,
   };
 };
 

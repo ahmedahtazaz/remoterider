@@ -90,7 +90,7 @@ class MSIC extends Component {
       this.props.loadPendingLessons();
     }
 
-    return (<MSIP onScheduledLessonsClick={this.onScheduledLessonsClick} onPendingClick={this.onPendingClick} pending={this.props.pending} availabilityPress={this.availabilityPress} scheduled={this.props.scheduled} images={this.props.slidingImages} backButton={this.backButtonPress} menuPress = {this.menuPress} photo = {this.props.photo} profilePress={this.profilePress}/>);
+    return (<MSIP currentUser={this.props.currentUser} onScheduledLessonsClick={this.onScheduledLessonsClick} onPendingClick={this.onPendingClick} pending={this.props.pending} availabilityPress={this.availabilityPress} scheduled={this.props.scheduled} images={this.props.slidingImages} backButton={this.backButtonPress} menuPress = {this.menuPress} photo = {this.props.photo} profilePress={this.profilePress}/>);
   }
 }
 
@@ -120,6 +120,7 @@ const mapStateToProps = (state) => {
       photo: state.mscreducer.photo,
       slidingImages: state.mscreducer.slidingImages,
       reload: state.mscreducer.reload,
+      currentUser: state.mscreducer.currentUser,
   };
 };
 
