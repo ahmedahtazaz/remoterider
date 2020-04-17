@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import SplashP from '../Presentational/SplashP'
 import { connect } from 'react-redux';
 import auth from '@react-native-firebase/auth';
-import { signOutUserAction, signInUserAction, moveToWelcome1Action, signInSuccessAction, signInFailureAction, checkUserTypeAction, moveToMSAction, moveToMIAction } from '../../Actions/SignInA';
+import { AppState} from "react-native";
+import { signOutUserAction, signInUserAction, moveToWelcome1Action, signInSuccessAction, signInFailureAction, checkUserTypeAction, moveToMSAction, moveToMIAction} from '../../Actions/SignInA';
 
 class SplashC extends Component {
 
@@ -14,11 +15,19 @@ class SplashC extends Component {
       this.signInSuccess = this.signInSuccess.bind(this);
       this.signInFailure = this.signInFailure.bind(this);
       this.signInCallBack = this.signInCallBack.bind(this);
+      this.handleAppStateChange = this.handleAppStateChange.bind(this);
   }
 
   componentDidMount()
   {
+    AppState.addEventListener("change", this.handleAppStateChange);
     auth().onAuthStateChanged(this.signInCallBack);
+  }
+
+  handleAppStateChange(riderState)
+  {
+    if(riderState === 'background')
+      this.props.signOutUser();
   }
 
   signInCallBack(user)

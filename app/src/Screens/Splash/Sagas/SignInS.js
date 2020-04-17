@@ -1,4 +1,4 @@
-import { SIGN_IN_USER, SIGN_IN_FAILURE, SIGN_IN_SUCCESS, CHECK_USER_TYPE, CHECK_USER_SUCCESS, CHECK_USER_FAILURE, SIGN_OUT_USER, FORGOT_PASSWORD, FORGOT_PASSWORD_SUCCESS, FORGOT_PASSWORD_FAILURE } from "../../../Commons/Constants";
+import { SIGN_IN_USER, SIGN_IN_FAILURE, SIGN_IN_SUCCESS, CHECK_USER_TYPE, CHECK_USER_SUCCESS, CHECK_USER_FAILURE, SIGN_OUT_USER, FORGOT_PASSWORD, FORGOT_PASSWORD_SUCCESS, FORGOT_PASSWORD_FAILURE, SET_CURRENT_STATE } from "../../../Commons/Constants";
 import {put, takeLatest} from 'redux-saga/effects';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
@@ -45,7 +45,7 @@ function* signOutUser(action) {
     if(success)
         yield put({type: SIGN_IN_FAILURE});
     else
-        yield put({type: SIGN_IN_SUCCESS});
+        yield put({type: SIGN_IN_FAILURE});
 }
 
 function* forgotPassword(action) {
