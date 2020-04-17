@@ -31,17 +31,10 @@ class SignInC extends Component {
   signInButtonHandler()
   {
       if(this.user.email && this.user.password)
-      {
-        if(this.user.password !== this.user.confirmPassword)
-        {
-          this.props.showErrorDialogue(this.negativePressed, 'Passwords do not match.');
-        }
-        else
-        {
+      {    
           this.props.showLoader();
     
           this.props.signInUser(this.user.email, this.user.password);
-        }
       }
       else
         this.props.showErrorDialogue(this.negativePressed, 'Please Enter Email and Password.');

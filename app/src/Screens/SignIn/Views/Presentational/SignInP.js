@@ -47,13 +47,6 @@ export default class SignInP extends Component {
             </View>
         </View>
 
-        <View style={styles.fieldMaincontainerStyle}> 
-            <Image source={passImage} style={styles.passImage}/>
-            <View style={styles.fieldInnercontainerStyle}> 
-                <TextInput secureTextEntry={true} onChangeText={this.props.confirmPasswordHandler} style={styles.inputStyle} autoCorrect={false} placeholder={'Confirm Password'} placeholderTextColor = "#598a6f" />
-            </View>
-        </View>
-
         <TouchableOpacity style={styles.forgotPasswordContainer} onPress={this.props.forgotPasswordHandler}>
             <Text 
                 numberOfLines={1} style={styles.forgotText}>
