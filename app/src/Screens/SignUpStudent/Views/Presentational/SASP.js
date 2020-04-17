@@ -21,6 +21,7 @@ export default class App extends Component {
     return (
         <KeyboardAwareScrollView
       contentContainerStyle={{flexGrow: 1}}
+      keyboardShouldPersistTaps="always"
     >
       <LinearGradient colors={['#006b31', '#00652e', '#005e2b' , '#005326', '#004b22', '#00411e', '#003a1b', '#003619']} style={{flex: 1}}>      
         
