@@ -775,6 +775,7 @@ function* declineStudentInner(declineMessage, date, student) {
                         if(studentReservations[i].uuid.toString() === currentuid.toString() && studentReservations[i].date.toString() === student.date.toString())
                         {
                             studentReservations[i].declined = true;
+                            studentReservations[i].confirmed = false;
                             studentReservations[i].declineMessage = declineMessage;
                         }
                     }
