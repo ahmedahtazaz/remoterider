@@ -16,6 +16,16 @@ class MSC extends Component {
       this.profilePress = this.profilePress.bind(this);
       this.onReservationClick = this.onReservationClick.bind(this);
       this.makeReservationsHandler = this.makeReservationsHandler.bind(this);
+      this.apiCall = this.apiCall.bind(this);
+  }
+
+  apiCall()
+  {
+    this.props.loadPhoto();
+    this.props.loadSlidingImages();
+    this.props.loadReservations();
+    this.props.loadCategories();
+    this.props.loadCurrentUser();
   }
 
   componentWillUnmount()
@@ -26,11 +36,9 @@ class MSC extends Component {
 
   componentDidMount()
   {
-    this.props.loadPhoto();
-    this.props.loadSlidingImages();
-    this.props.loadReservations();
-    this.props.loadCategories();
-    this.props.loadCurrentUser();
+    this.focusListener = this.props.navigation.addListener('focus', () => {
+      this.apiCall();
+    })
   }
 
   backButtonPress()
