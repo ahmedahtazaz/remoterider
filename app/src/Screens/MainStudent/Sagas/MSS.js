@@ -91,11 +91,11 @@ function* loadReservationsInner() {
                             let newDate = new Date(Number.parseInt(reservations[i].date, 10));
                             let nextHourDate = new Date(Number.parseInt(reservations[i].date, 10) + 3600000);
                 
-                            let currentHour = newDate.getUTCHours();
-                            let nextHour = nextHourDate.getUTCHours();
+                            let currentHour = newDate.getHours();
+                            let nextHour = nextHourDate.getHours();
 
-                            reservations[i].showAbleTime = currentHour+".00 to "+nextHour+".00 UTC";
-                            reservations[i].showAbleDate = onlyDate.getUTCDate()+"/"+onlyDate.getUTCMonth()+"/"+onlyDate.getUTCFullYear();
+                            reservations[i].showAbleTime = currentHour+".00 to "+nextHour+".00";
+                            reservations[i].showAbleDate = onlyDate.getDate()+"/"+onlyDate.getMonth()+"/"+onlyDate.getFullYear();
                         }
                     }).catch();
                 }
@@ -188,8 +188,8 @@ function* loadScheduledLessonsInner() {
                         let newDate = new Date(Number.parseInt(reservations[i].date, 10));
                         let nextHour = new Date(Number.parseInt(reservations[i].date, 10) + 3600000);
 
-                        let showableDate = newDate.getUTCDate()+'/'+newDate.getUTCMonth()+'/'+newDate.getUTCFullYear();
-                        let time = newDate.getUTCHours()+'.00 to '+nextHour.getUTCHours()+'.00 UTC';
+                        let showableDate = newDate.getDate()+'/'+newDate.getMonth()+'/'+newDate.getFullYear();
+                        let time = newDate.getHours()+'.00 to '+nextHour.getHours()+'.00';
 
                         reservations[i].showableDate = showableDate;
                         reservations[i].time = time;
@@ -266,8 +266,8 @@ function* loadPendingLessonsInner() {
                         let newDate = new Date(Number.parseInt(reservations[i].date, 10));
                         let nextHour = new Date(Number.parseInt(reservations[i].date, 10) + 3600000);
 
-                        let showableDate = newDate.getUTCDate()+'/'+newDate.getUTCMonth()+'/'+newDate.getUTCFullYear();
-                        let time = newDate.getUTCHours()+'.00 to '+nextHour.getUTCHours()+'.00 UTC';
+                        let showableDate = newDate.getDate()+'/'+newDate.getMonth()+'/'+newDate.getFullYear();
+                        let time = newDate.getHours()+'.00 to '+nextHour.getHours()+'.00';
 
                         reservations[i].showableDate = showableDate;
                         reservations[i].time = time;
@@ -485,10 +485,10 @@ function* loadAvailableTimeSlotsInner(date, uuid) {
             let newDate = new Date(initial + (3600000 * i));
             let nextHourDate = new Date(initial + (3600000 * i) + 3600000);
 
-            let currentHour = newDate.getUTCHours();
-            let nextHour = nextHourDate.getUTCHours();
+            let currentHour = newDate.getHours();
+            let nextHour = nextHourDate.getHours();
 
-            available.push({"time": newDate.getTime(), "date": date, "status": "available", "showAbleTime": currentHour+".00 to "+nextHour+".00 UTC"});
+            available.push({"time": newDate.getTime(), "date": date, "status": "available", "showAbleTime": currentHour+".00 to "+nextHour+".00"});
         }
     }
 
@@ -588,10 +588,10 @@ function* makeReservationInner(date, instructor) {
                         let newDate = new Date(Number.parseInt(date, 10));
                         let nextHourDate = new Date(Number.parseInt(date, 10) + 3600000);
             
-                        let currentHour = newDate.getUTCHours();
-                        let nextHour = nextHourDate.getUTCHours();
+                        let currentHour = newDate.getHours();
+                        let nextHour = nextHourDate.getHours();
 
-                        available.push({"time": newDate.getTime(), "date": initial, "status": "pending", "showAbleTime": currentHour+".00 to "+nextHour+".00 UTC"});
+                        available.push({"time": newDate.getTime(), "date": initial, "status": "pending", "showAbleTime": currentHour+".00 to "+nextHour+".00"});
                     }
                 }
                 else
@@ -605,15 +605,15 @@ function* makeReservationInner(date, instructor) {
                         let newDate = new Date(initial + (3600000 * i));
                         let nextHourDate = new Date(initial + (3600000 * i) + 3600000);
             
-                        let currentHour = newDate.getUTCHours();
-                        let nextHour = nextHourDate.getUTCHours();
+                        let currentHour = newDate.getHours();
+                        let nextHour = nextHourDate.getHours();
             
                         if(Number.parseInt(newDate.getTime(), 10) === Number.parseInt(date, 10))
                         {
-                            available.push({"time": newDate.getTime(), "date": initial, "status": "pending", "showAbleTime": currentHour+".00 to "+nextHour+".00 UTC"});
+                            available.push({"time": newDate.getTime(), "date": initial, "status": "pending", "showAbleTime": currentHour+".00 to "+nextHour+".00"});
                         }
                         else    
-                            available.push({"time": newDate.getTime(), "date": initial, "status": "available", "showAbleTime": currentHour+".00 to "+nextHour+".00 UTC"});
+                            available.push({"time": newDate.getTime(), "date": initial, "status": "available", "showAbleTime": currentHour+".00 to "+nextHour+".00"});
                     }
                 }
             }
@@ -1056,10 +1056,10 @@ function* loadTimeSlotsInner(date) {
             let newDate = new Date(initial + (3600000 * i));
             let nextHourDate = new Date(initial + (3600000 * i) + 3600000);
 
-            let currentHour = newDate.getUTCHours();
-            let nextHour = nextHourDate.getUTCHours();
+            let currentHour = newDate.getHours();
+            let nextHour = nextHourDate.getHours();
 
-            available.push({"time": newDate.getTime(), "date": date, "status": "available", "showAbleTime": currentHour+".00 to "+nextHour+".00 UTC"});
+            available.push({"time": newDate.getTime(), "date": date, "status": "available", "showAbleTime": currentHour+".00 to "+nextHour+".00"});
         }
     }
 
@@ -1150,8 +1150,8 @@ function* loadPendingSlotDataInner(slot) {
                 let newDate = new Date(Number.parseInt(slot.time, 10));
                 let nextHour = new Date(Number.parseInt(slot.time, 10) + 3600000);
 
-                let showableDate = newDate.getUTCDate()+'/'+newDate.getUTCMonth()+'/'+newDate.getUTCFullYear();
-                let time = newDate.getUTCHours()+'.00 to '+nextHour.getUTCHours()+'.00 UTC';
+                let showableDate = newDate.getDate()+'/'+newDate.getMonth()+'/'+newDate.getFullYear();
+                let time = newDate.getHours()+'.00 to '+nextHour.getHours()+'.00';
 
                 student.date = slot.time;
                 student.showableDate = showableDate;
