@@ -58,8 +58,11 @@ class MSC extends Component {
 
   onReservationClick(item, index)
   {
-    this.props.setInstructorForDelivery(item, this.props.reservations.photos[index]);
-    this.props.navigation.navigate('Lesson Delivery Student');
+    if(item.confirmed.toString() === 'true')
+    {
+      this.props.setInstructorForDelivery(item, this.props.reservations.photos[index]);
+      this.props.navigation.navigate('Lesson Delivery Student');
+    }
   }
 
   onCategoriesClick(item, index)
