@@ -38,6 +38,7 @@ function* signUpInner(action)
                 profile: action.user.profile,
                 isInstructor: true,
                 uuid: currentUser.uid,
+                email: action.user.email,
                 }).then(success = true).catch((err) => {success = false, error = err.message});
         }
         else{
@@ -45,6 +46,7 @@ function* signUpInner(action)
                 name: action.user.name,
                 isInstructor: false,
                 uuid: currentUser.uid,
+                email: action.user.email,
                 }).then(success = true).catch((err) => {success = false, error = err.message});
         }
 

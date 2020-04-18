@@ -508,7 +508,7 @@ PODS:
     - React-cxxreact (= 0.61.5)
     - React-jsi (= 0.61.5)
     - ReactCommon/jscallinvoker (= 0.61.5)
-  - RNCMaskedView (0.1.7):
+  - RNCMaskedView (0.1.9):
     - React
   - RNExitApp (1.1.0):
     - React
@@ -765,7 +765,7 @@ SPEC CHECKSUMS:
   React-RCTText: 9ccc88273e9a3aacff5094d2175a605efa854dbe
   React-RCTVibration: a49a1f42bf8f5acf1c3e297097517c6b3af377ad
   ReactCommon: 198c7c8d3591f975e5431bec1b0b3b581aa1c5dd
-  RNCMaskedView: 76c40a1d41c3e2535df09246a2b5487f04de0814
+  RNCMaskedView: 71fc32d971f03b7f03d6ab6b86b730c4ee64f5b6
   RNExitApp: c4e052df2568b43bec8a37c7cd61194d4cfee2c3
   RNFBApp: 69781cf10ce41f6f6db789e6264dd80119ef2fb7
   RNFBAuth: 50fcc7826344dc96caad8bc4f5b40a64904297b8
@@ -780,6 +780,6 @@ SPEC CHECKSUMS:
   RSKImageCropper: a446db0e8444a036b34f3c43db01b2373baa4b2a
   Yoga: f2a7cd4280bfe2cca5a7aed98ba0eb3d1310f18b
 
-PODFILE CHECKSUM: f020762eaf1b8a4f37be983e69e5b1c497d2fa25
+PODFILE CHECKSUM: 8de9f5d59433159c68b13f002bb8ce690635ad94
 
 COCOAPODS: 1.9.1
