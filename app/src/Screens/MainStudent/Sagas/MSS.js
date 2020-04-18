@@ -66,7 +66,7 @@ function* loadReservationsInner() {
 
     if(data)
     {
-        reservations = data.map( (s) => {if(s.confirmed) return s});
+        reservations = data.map( (s) => {return s});
 
         if(reservations)
         {
@@ -536,6 +536,8 @@ function* makeReservationInner(date, instructor) {
         ).catch((err) => console.log(err));
     }
 
+    yield* makeReservationInnerStudent(date, instructor);
+
     if(message)
     {
         let available = [];
@@ -630,9 +632,38 @@ function* makeReservationInner(date, instructor) {
     return message;
 }
 
+function* makeReservationInnerStudent(date, instructor) {
+
+    let data = undefined;
+    var currentUser = auth().currentUser;
+    let currentUid = currentUser.uid;
+    let newReservations = [];
+
+    yield firestore().collection('Reservations').doc(currentUid).get().
+    then((doc) => {
+        if(doc && doc.data() && doc.data().Reservations)
+            data = doc.data().Reservations;
+            
+            if(data && data.length > 0)
+            {
+                newReservations = data;
+            }
+
+            newReservations.push({"uuid" : instructor.uuid, "confirmed" : "false", date: date});
+
+        }).catch((err) => {console.log(err)});
+
+    if(newReservations && newReservations.length > 0)
+    {
+        yield firestore().collection('Reservations').doc(currentUid).set({"Reservations" :newReservations}).then(
+            () => {}
+        ).catch((err) => console.log(err));
+    }
+}
+
 function* declineStudent(action) {
 
-    let success = yield* declineStudentInner(action.date, action.student);
+    let success = yield* declineStudentInner(action.declineMessage, action.date, action.student);
 
     if(success)
     {
@@ -642,7 +673,7 @@ function* declineStudent(action) {
         yield put({type: DECLINE_STUDENT_FAILURE});
 }
 
-function* declineStudentInner(date, student) {
+function* declineStudentInner(declineMessage, date, student) {
 
     let data = undefined;
     var currentUser = auth().currentUser;
@@ -743,8 +774,8 @@ function* declineStudentInner(date, student) {
                     {
                         if(studentReservations[i].uuid.toString() === currentuid.toString() && studentReservations[i].date.toString() === student.date.toString())
                         {
-                            studentReservations.splice(i, 1);
-                            i--;
+                            studentReservations[i].declined = true;
+                            studentReservations[i].declineMessage = declineMessage;
                         }
                     }
                 }

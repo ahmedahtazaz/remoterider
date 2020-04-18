@@ -46,9 +46,9 @@ class MSIC extends Component {
     this.props.showConfirmationDialogue(this.negativePressed, this.positivePressed, pending, this.props.pending.photos[index]);
   }
 
-  negativePressed(pending)
+  negativePressed(message, pending)
   {
-    this.props.declineStudent(pending);
+    this.props.declineStudent(message, pending);
     this.props.resetConfirmationDialogue();
   }
 
@@ -105,7 +105,7 @@ const mapDispatchToProps = (dispatch) => {
     profilePressed: (status) => dispatch(profilePressedAction(status)),
     showConfirmationDialogue: (negativepressed, positvepressed, student, studentphoto) => dispatch(showConfirmationDialogueAction(negativepressed, positvepressed, student, studentphoto)),
     resetConfirmationDialogue: () => dispatch(resetConfirmationDialogueAction()),
-    declineStudent: (student) => dispatch(declineStudentAction(student)),
+    declineStudent: (message, student) => dispatch(declineStudentAction(message, student)),
     confirmStudent: (student) => dispatch(confirmStudentAction(student)),
     resetReload: () => dispatch({"type": DECLINE_STUDENT_FAILURE}),
     loadCurrentUser: () => dispatch({"type": LOAD_CURRENT_USER}),

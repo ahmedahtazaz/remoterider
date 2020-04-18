@@ -119,7 +119,7 @@ class ManageAC extends Component {
 
     if(this.props.student)
     {
-      this.props.showConfirmationDialogue((student) => {this.props.declineStudent(student), this.props.resetConfirmationDialogue(), this.Cancel()}, (student) => {this.props.confirmStudent(student), this.props.resetConfirmationDialogue(), this.Cancel()}, this.props.student, this.props.studentPhoto);
+      this.props.showConfirmationDialogue((message, student) => {this.props.declineStudent(message, student), this.props.resetConfirmationDialogue(), this.Cancel()}, (student) => {this.props.confirmStudent(student), this.props.resetConfirmationDialogue(), this.Cancel()}, this.props.student, this.props.studentPhoto);
       this.props.resetPendingSlotData();
     }
 
@@ -145,7 +145,7 @@ const mapDispatchToProps = (dispatch) => {
     resetPendingSlotData: () => dispatch({"type": LOAD_PENDING_SLOT_DATA_FAILURE}),
     showConfirmationDialogue: (negativepressed, positvepressed, student, studentphoto) => dispatch(showConfirmationDialogueAction(negativepressed, positvepressed, student, studentphoto)),
     resetConfirmationDialogue: () => dispatch(resetConfirmationDialogueAction()),
-    declineStudent: (student) => dispatch(declineStudentAction(student)),
+    declineStudent: (message, student) => dispatch(declineStudentAction(message, student)),
     confirmStudent: (student) => dispatch(confirmStudentAction(student)),
   };
 };

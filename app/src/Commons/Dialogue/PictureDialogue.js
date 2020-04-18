@@ -1,10 +1,22 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import {Image, View, Modal, Text, TouchableOpacity, StyleSheet} from 'react-native';
+import {TextInput, Image, View, Modal, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import {getRegularFont, getBoldFont} from '../Fonts';
 
 class PictureDialogue extends React.PureComponent {
+
+    constructor(props)
+    {
+        super(props);
+
+        this.declineMessageHandler = this.declineMessageHandler.bind(this);
+    }
+
+    declineMessageHandler(message)
+    {
+        this.declineMessage = message;
+    }
 
     render(){
 
@@ -52,8 +64,13 @@ class PictureDialogue extends React.PureComponent {
                                     </View>
                                 </View>
                             </View>
+                            <View style={styles.fieldMaincontainerStyle}> 
+                                <View style={styles.fieldInnercontainerStyle}> 
+                                    <TextInput onChangeText={this.declineMessageHandler} style={styles.inputStyle} autoCorrect={false} placeholder={'If Decline, Please Add Reason'} placeholderTextColor = "#598a6f" />
+                                </View>
+                            </View>
                             {(this.props.negative && !this.props.positive) ?
-                            <TouchableOpacity style={styles.ngativeBittonStyle} onPress={() => this.props.negativePressed(this.props.student)}>
+                            <TouchableOpacity style={styles.ngativeBittonStyle} onPress={() => this.props.negativePressed(this.declineMessage, this.props.student)}>
                                 <Text style={styles.buttonText}>{this.props.negative}</Text>
                             </TouchableOpacity> : 
                             (this.props.positive && this.props.negative) ? 
@@ -61,7 +78,7 @@ class PictureDialogue extends React.PureComponent {
                                 <TouchableOpacity style={styles.positiveBittonStyle} onPress={() => this.props.positivePressed(this.props.student)}>
                                     <Text style={styles.buttonText}>{this.props.positive}</Text>
                                 </TouchableOpacity>
-                                <TouchableOpacity style={styles.ngativeBittonStyle}  onPress={() => this.props.negativePressed(this.props.student)}>
+                                <TouchableOpacity style={styles.ngativeBittonStyle}  onPress={() => this.props.negativePressed(this.declineMessage, this.props.student)}>
                                     <Text style={styles.buttonText}>{this.props.negative}</Text>
                                 </TouchableOpacity>
                             </View> : null}
@@ -136,7 +153,24 @@ const styles = StyleSheet.create({
         backgroundColor: 'transparent',
         height: hp(8),
         marginTop: hp(1)
-    }
+    },
+    fieldMaincontainerStyle:{
+        height: hp(4),
+        width: wp(67.6),
+        alignSelf: 'center',
+        marginTop: hp(1)
+        },
+        fieldInnercontainerStyle:{
+            width: wp(67.6)
+        },
+        inputStyle: {
+            fontSize: hp(2.5),
+            color: 'white',
+            fontFamily: getRegularFont(),
+            fontWeight: '200',
+            borderBottomWidth: hp(.1),
+            borderBottomColor: '#598a6f',
+        },
   });
 
 const mapStateToProps = (state) => {

@@ -96,10 +96,11 @@ export const loadTimeSlotsAction = (date) => {
     }
   };
 
-  export const declineStudentAction = (student) => {
+  export const declineStudentAction = (message, student) => {
     return {
       type:`${DECLINE_STUDENT}`,
       student: student,
+      declineMessage: message,
     }
   };
 
