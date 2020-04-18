@@ -19,6 +19,16 @@ class MSIC extends Component {
       this.negativePressed = this.negativePressed.bind(this);
       this.positivePressed = this.positivePressed.bind(this);
       this.onScheduledLessonsClick = this.onScheduledLessonsClick.bind(this);
+      this.apiCall = this.apiCall.bind(this);
+  }
+
+  apiCall()
+  {
+    this.props.loadPhoto();
+    this.props.loadSlidingImages();
+    this.props.loadScheduledLessons();
+    this.props.loadPendingLessons();
+    this.props.loadCurrentUser();
   }
 
   componentWillUnmount()
@@ -29,11 +39,9 @@ class MSIC extends Component {
 
   componentDidMount()
   {
-    this.props.loadPhoto();
-    this.props.loadSlidingImages();
-    this.props.loadScheduledLessons();
-    this.props.loadPendingLessons();
-    this.props.loadCurrentUser();
+    this.focusListener = this.props.navigation.addListener('focus', () => {
+      this.apiCall();
+    })
   }
 
   backButtonPress()

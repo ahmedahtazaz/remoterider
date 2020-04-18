@@ -52,12 +52,12 @@ export default class LDP extends Component {
                   </View>
             </View>
             <View style={{marginTop: hp(10), alignSelf: 'center', flexDirection: 'row'}}>
-                <TouchableOpacity style={{alignItems: 'center', justifyContent: 'center', borderRadius: hp(40/2), marginRight: wp(3), backgroundColor: '#006b31', height: hp(18), width: wp(40)}} onPress={() => {this.props.callnow()}}>
+                {(this.props.student && this.props.student.date && this.props.student.date.toString() <= Date.now().toString()) ? <TouchableOpacity style={{alignItems: 'center', justifyContent: 'center', borderRadius: hp(40/2), marginRight: wp(3), backgroundColor: '#006b31', height: hp(18), width: wp(40)}} onPress={() => {this.props.callnow()}}>
                  <Text 
                     numberOfLines={1} style={{alignSelf: 'center', width: wp(40), fontSize: hp(2),fontWeight: '400',textAlign: 'center',color: '#ffffff',fontFamily: getRegularFont()}}>
                         {'Call Now'}
                 </Text> 
-                </TouchableOpacity>
+                </TouchableOpacity> : null}
                 <TouchableOpacity style={{alignItems: 'center', justifyContent: 'center', borderRadius: hp(40/2), backgroundColor: 'red', height: hp(18), width: wp(40)}} onPress={() => {this.props.cancelReservation()}}>
                 <Text 
                     numberOfLines={1} style={{alignSelf: 'center', width: wp(40), fontSize: hp(2),fontWeight: '400',textAlign: 'center',color: '#ffffff',fontFamily: getRegularFont()}}>

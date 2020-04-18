@@ -842,19 +842,41 @@ function* confirmStudentInner(date, student) {
         let studentReservations = [];
         let studentError = undefined;
 
-        let reservation = {"uuid":currentuid, "date": student.date, "confirmed": true};
-        studentReservations.push(reservation);
-        yield firestore().collection('Reservations').doc(student.uuid).update({"Reservations" :studentReservations}).then(
-            () => {success = true}
-        ).catch((err) => {studentError = true, console.log(err)});  
+        yield firestore().collection('Reservations').doc(student.uuid).get().
+        then((doc) => {
+        if(doc && doc.data() && doc.data().Reservations)
+            data = doc.data().Reservations;
+            
+            if(data && data.length > 0)
+            {
+                studentReservations = data;
 
-        if(studentError)
-        {
-            yield firestore().collection('Reservations').doc(student.uuid).set({"Reservations" :studentReservations}).then(
+                for(let i = 0; i < studentReservations.length; i++)
+                {
+                    if(studentReservations[i].uuid.toString() === currentuid.toString() && studentReservations[i].date.toString() === student.date.toString())
+                    {
+                        studentReservations[i].confirmed = "true";
+                        break;
+                    }
+                }
+            }
+
+        }).catch((err) => {console.log(err)});
+
+        if(studentReservations.length > 0)
+        { 
+            yield firestore().collection('Reservations').doc(student.uuid).update({"Reservations" :studentReservations}).then(
                 () => {success = true}
             ).catch((err) => {studentError = true, console.log(err)});  
+    
+            if(studentError)
+            {
+                yield firestore().collection('Reservations').doc(student.uuid).set({"Reservations" :studentReservations}).then(
+                    () => {success = true}
+                ).catch((err) => {studentError = true, console.log(err)});  
+            }
         }
-
+        
         let available = [];
         let dateFound = false;
         let timefound = false;
