@@ -4,8 +4,6 @@ import PVP from '../Presentational/PVP';
 import { USE_APP_STATE, SHOW_PROFILE_VIEW } from '../../../../Commons/Constants';
 import {Linking} from 'react-native';
 
-let interval = undefined;
-
 class PVC extends Component {
 
     constructor(props)
@@ -23,32 +21,14 @@ class PVC extends Component {
       this.props.navigation.navigate('Main Instructor Screen'); 
     }
 
-    componentWillUnmount()
-    {
-        if(interval)
-        {
-            clearInterval(interval);
-            interval = undefined;
-        }
-    }
-
     creditHandler()
     {
-      this.props.setUseAppState(false);
-
-      if(!interval)
-        interval = setInterval(this.openCredit(), 700);      
+      this.openCredit();   
+      this.backButton();
     }
 
     openCredit()
     {
-        if(interval)
-        {
-            clearInterval(interval);
-            interval = undefined;
-        }
-
-        console.log('lesson url', this.props.lessonCreditUrl);
         Linking.openURL(this.props.lessonCreditUrl ? this.props.lessonCreditUrl : 'https://www.google.com');
     }
   

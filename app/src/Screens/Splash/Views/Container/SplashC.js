@@ -27,15 +27,8 @@ class SplashC extends Component {
 
   handleAppStateChange(riderState)
   {
-    if(this.props.useAppState.toString() === 'true' && riderState === 'background')
-    {
-      this.props.signOutUser();
-      this.props.resetReducers();
-    }
-
     if(riderState === 'active')
     {
-      this.props.setUseAppState(true);
       this.props.resetReload();
     }
   }
@@ -113,7 +106,6 @@ const mapStateToProps = (state) => {
     signInAttempted: state.signInReducer.signInAttempted,
     isStudent: state.signInReducer.isStudent,
     isInstructor: state.signInReducer.isInstructor,
-    useAppState: state.signInReducer.useAppState,
   };
 };
 

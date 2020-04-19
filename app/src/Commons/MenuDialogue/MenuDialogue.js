@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import {Text, View, Modal, Image, TouchableOpacity, StyleSheet} from 'react-native';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import {getRegularFont, getBoldFont} from '../Fonts';
-import { SET_MENU_VISIBILITY } from '../Constants';
+import { SIGN_OUT_USER, RESET_REDUCERS, SET_MENU_VISIBILITY } from '../Constants';
 import Share from 'react-native-share';
 
 class MenuDialogue extends React.PureComponent {
@@ -14,11 +14,20 @@ class MenuDialogue extends React.PureComponent {
 
         this.backButton = this.backButton.bind(this);
         this.shareUs = this.shareUs.bind(this);
+        this.signOut = this.signOut.bind(this);
     }
 
     backButton()
     {
         this.props.hideMenu(true);
+    }
+
+    signOut()
+    {
+        this.props.signOut();
+        this.props.hideMenu(true);
+        this.props.resetReducers();
+        
     }
 
     shareUs()
@@ -50,6 +59,9 @@ class MenuDialogue extends React.PureComponent {
                             </TouchableOpacity>
                             <TouchableOpacity style={styles.button} onPress={this.shareUs}>
                                 <Text style={styles.buttonText}>{"Share Us"}</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.button} onPress={this.signOut}>
+                                <Text style={styles.buttonText}>{"Sign Out"}</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -113,6 +125,8 @@ const styles = StyleSheet.create({
   const mapDispatchToProps = (dispatch) => {
     return {
       hideMenu: (status) => dispatch({type: SET_MENU_VISIBILITY, showmenu: status}),
+      signOut: () => dispatch({type:`${SIGN_OUT_USER}`}),
+      resetReducers: () => dispatch({"type": RESET_REDUCERS}),
     };
   };
 
