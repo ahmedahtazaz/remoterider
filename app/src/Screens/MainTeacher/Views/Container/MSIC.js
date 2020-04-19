@@ -3,7 +3,7 @@ import MSIP from '../Presentational/MSIP';
 import MSIPP from '../Presentational/MSIPP';
 
 import { connect } from 'react-redux';
-import {setStudentForDeliveryAction, confirmStudentAction, declineStudentAction, resetConfirmationDialogueAction, showConfirmationDialogueAction, profilePressedAction, menuPresedAction, loadPhotoAction, loadSlidingImagesAction, loadScheduledLessonsAction, loadPendingLessonsAction} from '../../Actions/MSIA';
+import {negativeAction, errorDialogueAction, setStudentForDeliveryAction, confirmStudentAction, declineStudentAction, resetConfirmationDialogueAction, showConfirmationDialogueAction, profilePressedAction, menuPresedAction, loadPhotoAction, loadSlidingImagesAction, loadScheduledLessonsAction, loadPendingLessonsAction} from '../../Actions/MSIA';
 import RNExitApp from 'react-native-exit-app';
 import { DECLINE_STUDENT_FAILURE, LOAD_CURRENT_USER } from '../../../../Commons/Constants';
 
@@ -23,6 +23,7 @@ class MSIC extends Component {
       this.onScheduledLessonsClick = this.onScheduledLessonsClick.bind(this);
       this.apiCall = this.apiCall.bind(this);
       this.updateCredit = this.updateCredit.bind(this);
+      this.canConfirm = this.canConfirm.bind(this);
   }
 
   apiCall()
@@ -65,8 +66,19 @@ class MSIC extends Component {
 
   positivePressed(pending)
   {
-    this.props.confirmStudent(pending);
     this.props.resetConfirmationDialogue();
+
+    if(this.canConfirm())
+      this.props.confirmStudent(pending);
+    else
+      this.props.showErrorDialogue(() => {this.props.negativeButtonPressed()}, 'You need to update your Lesson Credits to confirm.');
+  }
+
+  canConfirm()
+  {
+    if(!this.props.scheduled)
+      return true;
+    else return this.props.scheduled.length < this.props.currentUser.lessonCredit;
   }
 
   menuPress()
@@ -130,6 +142,8 @@ const mapDispatchToProps = (dispatch) => {
     resetReload: () => dispatch({"type": DECLINE_STUDENT_FAILURE}),
     loadCurrentUser: () => dispatch({"type": LOAD_CURRENT_USER}),
     setStudentForDelivery: (student, photo) => dispatch(setStudentForDeliveryAction(student, photo)),
+    showErrorDialogue: (negativeButtonPressed, message) => dispatch(errorDialogueAction(negativeButtonPressed, message)),
+    negativeButtonPressed: () => dispatch(negativeAction()),
   };
 };
 

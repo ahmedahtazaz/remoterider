@@ -20,6 +20,8 @@ class ManageAC extends Component {
       this.onCostConfirm = this.onCostConfirm.bind(this);
       this.onAvailabilityConfirm = this.onAvailabilityConfirm.bind(this);
       this.onPendingTimeSlotClick = this.onPendingTimeSlotClick.bind(this);
+      this.confirmStudent = this.confirmStudent.bind(this);
+      this.canConfirm = this.canConfirm.bind(this);
   }
 
   componentWillMount()
@@ -107,6 +109,24 @@ class ManageAC extends Component {
     this.props.loadPendingSlotData(slot);
   }
 
+  confirmStudent(pending)
+  {
+    this.props.resetConfirmationDialogue();
+    this.Cancel();
+
+    if(this.canConfirm())
+      this.props.confirmStudent(pending);
+    else
+      this.props.showDialogue(() => {this.props.dialogueOkPressed()}, 'You need to update your Lesson Credits to confirm.');
+  }
+
+  canConfirm()
+  {
+    if(!this.props.scheduled)
+      return true;
+    else return this.props.scheduled.length < this.props.currentUser.lessonCredit;
+  }
+
   render() {
 
     if(this.props.reload)
@@ -119,7 +139,7 @@ class ManageAC extends Component {
 
     if(this.props.student)
     {
-      this.props.showConfirmationDialogue((message, student) => {this.props.declineStudent(message, student), this.props.resetConfirmationDialogue(), this.Cancel()}, (student) => {this.props.confirmStudent(student), this.props.resetConfirmationDialogue(), this.Cancel()}, this.props.student, this.props.studentPhoto);
+      this.props.showConfirmationDialogue((message, student) => {this.props.declineStudent(message, student), this.props.resetConfirmationDialogue(), this.Cancel()}, (student) => {this.confirmStudent(student)}, this.props.student, this.props.studentPhoto);
       this.props.resetPendingSlotData();
     }
 
@@ -159,6 +179,7 @@ const mapStateToProps = (state) => {
     reload: state.mscreducer.reloadaAvailability,
     student: state.mscreducer.student,
     studentPhoto: state.mscreducer.studentPhoto,
+    scheduled: state.mscreducer.scheduled,
   };
 };
 

@@ -7,6 +7,7 @@ import { getBoldFont, getRegularFont } from '../../../../Commons/Fonts';
 import MenuDialogue from '../../../../Commons/MenuDialogue/MenuDialogue';
 import ProfileDialogue from '../../../../Commons/ProfileDialogue/ProfileDialogue';
 import PictureDialogue from '../../../../Commons/Dialogue/PictureDialogue';
+import Dialogue from '../../../../Commons/Dialogue/Dialogue';
 
 export default class MSIP extends Component {
 
@@ -160,6 +161,7 @@ export default class MSIP extends Component {
           <MenuDialogue/>
           <ProfileDialogue/>
           <PictureDialogue/>
+          <Dialogue/>
         </View>
       </LinearGradient>);
   }
