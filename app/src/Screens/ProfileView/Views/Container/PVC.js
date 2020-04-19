@@ -48,7 +48,8 @@ class PVC extends Component {
             interval = undefined;
         }
 
-        Linking.openURL('https://www.google.com')
+        console.log('lesson url', this.props.lessonCreditUrl);
+        Linking.openURL(this.props.lessonCreditUrl ? this.props.lessonCreditUrl : 'https://www.google.com');
     }
   
     render() {
@@ -68,6 +69,7 @@ class PVC extends Component {
   const mapStateToProps = (state) => {
     return {
       currentUser: state.mscreducer.currentUser,
+      lessonCreditUrl: state.mscreducer.lessonCreditUrl,
     };
   };
 

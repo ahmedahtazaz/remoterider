@@ -5,7 +5,7 @@ import MSIPP from '../Presentational/MSIPP';
 import { connect } from 'react-redux';
 import {negativeAction, errorDialogueAction, setStudentForDeliveryAction, confirmStudentAction, declineStudentAction, resetConfirmationDialogueAction, showConfirmationDialogueAction, profilePressedAction, menuPresedAction, loadPhotoAction, loadSlidingImagesAction, loadScheduledLessonsAction, loadPendingLessonsAction} from '../../Actions/MSIA';
 import RNExitApp from 'react-native-exit-app';
-import { DECLINE_STUDENT_FAILURE, LOAD_CURRENT_USER } from '../../../../Commons/Constants';
+import { LOAD_LESSON_CREDIT_URL, DECLINE_STUDENT_FAILURE, LOAD_CURRENT_USER } from '../../../../Commons/Constants';
 
 class MSIC extends Component {
 
@@ -33,6 +33,7 @@ class MSIC extends Component {
     this.props.loadScheduledLessons();
     this.props.loadPendingLessons();
     this.props.loadCurrentUser();
+    this.props.loadUpdateLessonCreditURL();
   }
 
   componentWillUnmount()
@@ -117,6 +118,7 @@ class MSIC extends Component {
       this.props.loadScheduledLessons();
       this.props.loadPendingLessons();
       this.props.loadCurrentUser();
+      this.props.loadUpdateLessonCreditURL();
     }
 
     if(this.props.currentUser && this.props.currentUser.verified && this.props.currentUser.verified.toString() === 'true')
@@ -144,6 +146,7 @@ const mapDispatchToProps = (dispatch) => {
     setStudentForDelivery: (student, photo) => dispatch(setStudentForDeliveryAction(student, photo)),
     showErrorDialogue: (negativeButtonPressed, message) => dispatch(errorDialogueAction(negativeButtonPressed, message)),
     negativeButtonPressed: () => dispatch(negativeAction()),
+    loadUpdateLessonCreditURL: () => dispatch({"type": LOAD_LESSON_CREDIT_URL}),
   };
 };
 
