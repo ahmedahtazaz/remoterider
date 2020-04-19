@@ -1,4 +1,4 @@
-import {SET_MENU_VISIBILITY} from '../Constants'
+import {RESET_REDUCERS, SET_MENU_VISIBILITY} from '../Constants'
 
 const INITIAL_STATE = {
     showmenu: false,
@@ -13,6 +13,12 @@ export default function menudialogueReducer() {
                 ...state,
                 showmenu: !action.showmenu,
               };
+
+          case RESET_REDUCERS:
+          return {
+            ...state,
+            showmenu: false,
+          };
 
         default:
           return state;

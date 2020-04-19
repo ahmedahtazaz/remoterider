@@ -1,4 +1,4 @@
-import {SIGN_UP_SUCCESS, SIGN_UP_FAILURE, CLEAR_SIGN_UP_ERROR, HIDE_SIGN_UP_LOADER, SHOW_SIGNUP_LOADER} from './Constants'
+import {SIGN_UP_SUCCESS, SIGN_UP_FAILURE, CLEAR_SIGN_UP_ERROR, HIDE_SIGN_UP_LOADER, SHOW_SIGNUP_LOADER, RESET_REDUCERS} from './Constants'
 const INITIAL_STATE = {
     errMessage: undefined,
     loader: false,
@@ -38,6 +38,13 @@ export default function signUpReducer() {
           return {
             ...state,
             loader: false,
+          };
+
+          case RESET_REDUCERS:
+          return {
+            ...state,
+            errMessage: undefined,
+    loader: false,
           };
 
         default:

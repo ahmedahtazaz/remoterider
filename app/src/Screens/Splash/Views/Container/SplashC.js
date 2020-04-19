@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import auth from '@react-native-firebase/auth';
 import { AppState} from "react-native";
 import { signOutUserAction, signInUserAction, moveToWelcome1Action, signInSuccessAction, signInFailureAction, checkUserTypeAction, moveToMSAction, moveToMIAction} from '../../Actions/SignInA';
-import { USE_APP_STATE, RESET_RELOAD } from '../../../../Commons/Constants';
+import { RESET_REDUCERS, USE_APP_STATE, RESET_RELOAD } from '../../../../Commons/Constants';
 
 class SplashC extends Component {
 
@@ -28,7 +28,10 @@ class SplashC extends Component {
   handleAppStateChange(riderState)
   {
     if(this.props.useAppState.toString() === 'true' && riderState === 'background')
+    {
       this.props.signOutUser();
+      this.props.resetReducers();
+    }
 
     if(riderState === 'active')
     {
@@ -100,6 +103,7 @@ const mapDispatchToProps = (dispatch) => {
       moveToMI: (navigation) => moveToMIAction(navigation),
       setUseAppState: (status) => dispatch({type:`${USE_APP_STATE}`, useAppState: status}),
       resetReload: () => dispatch({"type": RESET_RELOAD}),
+      resetReducers: () => dispatch({"type": RESET_REDUCERS}),
   };
 };
 

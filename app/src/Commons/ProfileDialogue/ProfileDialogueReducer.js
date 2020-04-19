@@ -1,4 +1,4 @@
-import {SET_PROFILE_VISIBILITY} from '../Constants'
+import {RESET_REDUCERS, SET_PROFILE_VISIBILITY} from '../Constants'
 
 const INITIAL_STATE = {
     showprofile: false,
@@ -13,6 +13,12 @@ export default function menudialogueReducer() {
                 ...state,
                 showprofile: !action.showprofile,
               };
+
+          case RESET_REDUCERS:
+          return {
+            ...state,
+            showprofile: false,
+          };
 
         default:
           return state;

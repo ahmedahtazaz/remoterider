@@ -1,4 +1,4 @@
-import {SIGN_IN_SUCCESS, SIGN_IN_FAILURE, CHECK_USER_SUCCESS, CHECK_USER_FAILURE, CLEAR_SIGN_IN_ERROR, SHOW_SIGN_IN_LOADER, HIDE_SIGN_IN_LOADER, FORGOT_PASSWORD_SUCCESS, FORGOT_PASSWORD_FAILURE, CLEAR_FORGOT_PASSWORD_MESSAGE, USE_APP_STATE } from '../../../Commons/Constants'
+import {SIGN_IN_SUCCESS, SIGN_IN_FAILURE, CHECK_USER_SUCCESS, CHECK_USER_FAILURE, CLEAR_SIGN_IN_ERROR, SHOW_SIGN_IN_LOADER, HIDE_SIGN_IN_LOADER, FORGOT_PASSWORD_SUCCESS, FORGOT_PASSWORD_FAILURE, CLEAR_FORGOT_PASSWORD_MESSAGE, USE_APP_STATE, RESET_REDUCERS } from '../../../Commons/Constants'
 
 const INITIAL_STATE = {
     authenticated: false,
@@ -82,6 +82,19 @@ export default function signInReducer() {
           return {
             ...state,
             useAppState: action.useAppState,
+          };
+
+          case RESET_REDUCERS:
+          return {
+            ...state,
+            authenticated: false,
+    signInAttempted: false,
+    isStudent: false,
+    isInstructor: false,
+    loader: false,
+    errMessage: undefined,
+    forGotPasswordResponse: undefined,
+    useAppState: true,
           };
 
         default:

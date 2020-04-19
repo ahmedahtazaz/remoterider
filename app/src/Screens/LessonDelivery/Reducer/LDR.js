@@ -1,4 +1,4 @@
-import { SET_STUDENT_FOR_DELIVERY, SET_CALLING } from "../../../Commons/Constants";
+import { RESET_REDUCERS, SET_STUDENT_FOR_DELIVERY, SET_CALLING } from "../../../Commons/Constants";
 
 const INITIAL_STATE = {
     student: undefined,
@@ -21,6 +21,14 @@ export default function ldrReducer() {
           return {
             ...state,
             calling: action.status,
+          };
+
+          case RESET_REDUCERS:
+          return {
+            ...state,
+            student: undefined,
+            studentPhoto: undefined,
+            calling: false,
           };
 
         default:

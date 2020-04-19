@@ -45,19 +45,19 @@
 			</dict>
 		</dict>
 	</dict>
-	<key>NSFaceIDUsageDescription</key>
-    <string>We use Face ID</string>
 	<key>NSBluetoothAlwaysUsageDescription</key>
-    <string>We use Bluetooth to connect</string>
-	<key>NSMicrophoneUsageDescription</key>
-    <string>We use Microphone for communication</string>
+	<string>We use Bluetooth to connect</string>
 	<key>NSCameraUsageDescription</key>
 	<string>$(PRODUCT_NAME) needs to use camera permissions.</string>
+	<key>NSFaceIDUsageDescription</key>
+	<string>We use Face ID</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>$(PRODUCT_NAME) needs to use location services.</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>$(PRODUCT_NAME) needs to use phot library usage option to access the Gallery's photos based on user's acceptance</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>We use Microphone for communication</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>$(PRODUCT_NAME) needs to use phot library usage option to access the Gallery's photos based on user's acceptance</string>
+	<key>NSPhotoLibraryUsageDescription</key>
 	<string>$(PRODUCT_NAME) needs to use phot library usage option to access the Gallery's photos based on user's acceptance</string>
 	<key>UIAppFonts</key>
 	<array>
