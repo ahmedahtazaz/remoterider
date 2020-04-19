@@ -61,7 +61,9 @@ export default class App extends Component {
             </View>
         </View>
         <View style={styles.fieldMaincontainerStyle}> 
-            <Image source={plusImage} style={styles.plusImage}/>
+            <TouchableOpacity style={{width: wp(6), height: hp(6)}} onPress={this.props.photoHandler}>
+                <Image source={plusImage} style={styles.plusImage}/>
+            </TouchableOpacity>
             <TouchableOpacity style={styles.photoButton} onPress={this.props.photoHandler}>
                 <Text 
                     numberOfLines={1} style={styles.photoButtonText}>
