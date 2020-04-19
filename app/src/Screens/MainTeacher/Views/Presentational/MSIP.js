@@ -21,13 +21,19 @@ export default class MSIP extends Component {
             <TouchableOpacity style={{marginLeft: wp(2), height: hp(2.8), width: wp(7.4) , backgroundColor: 'transparent', alignSelf: 'center'}} onPress={this.props.menuPress}>
               <Image source={menu} style={{height: hp(2.7), width: wp(7.4), resizeMode: 'contain'}}/>
             </TouchableOpacity>
-            <TouchableOpacity style={{borderRadius: wp(12)/2, marginRight: wp(2), height: hp(5.9), width: wp(12) , backgroundColor: 'black', position: 'absolute', right: 0, alignSelf: 'center'}} onPress={this.props.profilePress}>
+            <TouchableOpacity style={{borderRadius: wp(12)/2, marginRight: wp(2), height: hp(5.9), width: wp(12) , backgroundColor: 'black', position: 'absolute', right: 0, alignSelf: 'center'}}>
               <Image source={{uri: this.props.photo}} style={{borderRadius: wp(12)/2, height: hp(5.9), width: wp(12), resizeMode: 'stretch'}}/>
             </TouchableOpacity>
             <TouchableOpacity style={{justifyContent: "center",borderRadius: hp(1), marginRight: wp(17), height: hp(4.5), width: wp(32) , backgroundColor: '#006b31', position: 'absolute', right: 0, alignSelf: 'center'}} onPress={this.props.availabilityPress}>
               <Text 
                   numberOfLines={1} style={{fontSize: hp(1.4),fontWeight: '700',textAlign: 'center',color: '#ffffff',fontFamily: getBoldFont()}}>
                       {'Manage Availability'}
+              </Text> 
+            </TouchableOpacity>
+            <TouchableOpacity style={{justifyContent: "center",borderRadius: hp(1), marginRight: wp(52), height: hp(4.5), width: wp(32) , backgroundColor: '#006b31', position: 'absolute', right: 0, alignSelf: 'center'}} onPress={this.props.updateCredit}>
+              <Text 
+                  numberOfLines={1} style={{fontSize: hp(1.4),fontWeight: '700',textAlign: 'center',color: '#ffffff',fontFamily: getBoldFont()}}>
+                      {'Update Credit'}
               </Text> 
             </TouchableOpacity>
           </View>

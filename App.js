@@ -19,6 +19,8 @@ import MakeResC from './app/src/Screens/MakeReservation/Views/Container/MakeResC
 import ManagaAC from './app/src/Screens/ManageAvailability/Views/Container/ManagaAC';
 import LDC from './app/src/Screens/LessonDelivery/Views/Container/LDC';
 import LDCS from './app/src/Screens/LessonDelivery/Views/Container/LDCS';
+import PVSC from './app/src/Screens/ProfileView/Views/Container/PVSC';
+import PVC from './app/src/Screens/ProfileView/Views/Container/PVC';
 
 const sagaMiddleware = createSagaMiddleware();
 const store = createStore(createRootReducer(), compose(applyMiddleware(sagaMiddleware),),);
@@ -46,6 +48,8 @@ export default class App extends Component {
               <Stack.Screen name="Manage Availability" component={ManagaAC} options={{ headerShown: false}}/>
               <Stack.Screen name="Lesson Delivery Instructor" component={LDC} options={{ headerShown: false}}/>
               <Stack.Screen name="Lesson Delivery Student" component={LDCS} options={{ headerShown: false}}/>
+              <Stack.Screen name="Profile View Student" component={PVSC} options={{ headerShown: false}}/>
+              <Stack.Screen name="Profile View Instructor" component={PVC} options={{ headerShown: false}}/>
             </Stack.Navigator>
           </NavigationContainer>    
       </Provider>

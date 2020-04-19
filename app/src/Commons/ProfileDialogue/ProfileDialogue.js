@@ -2,9 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import {Text, View, Modal, Image, TouchableOpacity, StyleSheet} from 'react-native';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
-import {getRegularFont, getBoldFont} from '../Fonts';
-import { SET_MENU_VISIBILITY, SET_PROFILE_VISIBILITY, SIGN_OUT_USER } from '../Constants';
-import Share from 'react-native-share';
+import {getBoldFont} from '../Fonts';
+import { SET_PROFILE_VISIBILITY, SIGN_OUT_USER, SHOW_PROFILE_VIEW } from '../Constants';
 
 class ProfileDialogue extends React.PureComponent {
 
@@ -14,6 +13,7 @@ class ProfileDialogue extends React.PureComponent {
 
         this.backButton = this.backButton.bind(this);
         this.signOut = this.signOut.bind(this);
+        this.myProfile = this.myProfile.bind(this);
     }
 
     backButton()
@@ -24,6 +24,12 @@ class ProfileDialogue extends React.PureComponent {
     signOut()
     {
         this.props.signOut();
+        this.props.hideMenu(true);
+    }
+
+    myProfile()
+    {
+        this.props.showProfileView();
         this.props.hideMenu(true);
     }
 
@@ -44,7 +50,7 @@ class ProfileDialogue extends React.PureComponent {
                             </TouchableOpacity>
                         </View>
                         <View style={styles.buttonsContainer}>
-                            <TouchableOpacity style={styles.button}>
+                            <TouchableOpacity style={styles.button} onPress={this.myProfile}>
                                 <Text style={styles.buttonText}>{"My Profile"}</Text>
                             </TouchableOpacity>
                             <TouchableOpacity style={styles.button} onPress={this.signOut}>
@@ -113,6 +119,7 @@ const styles = StyleSheet.create({
     return {
       hideMenu: (status) => dispatch({type: SET_PROFILE_VISIBILITY, showprofile: status}),
       signOut: () => dispatch({type:`${SIGN_OUT_USER}`}),
+      showProfileView: () => dispatch({type:`${SHOW_PROFILE_VIEW}`, showProfileView: true}),
     };
   };
 

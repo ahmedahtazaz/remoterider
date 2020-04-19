@@ -22,6 +22,7 @@ class MSIC extends Component {
       this.positivePressed = this.positivePressed.bind(this);
       this.onScheduledLessonsClick = this.onScheduledLessonsClick.bind(this);
       this.apiCall = this.apiCall.bind(this);
+      this.updateCredit = this.updateCredit.bind(this);
   }
 
   apiCall()
@@ -89,6 +90,11 @@ class MSIC extends Component {
     this.props.navigation.navigate('Lesson Delivery Instructor'); 
   }
 
+  updateCredit()
+  {
+    this.props.navigation.navigate('Profile View Instructor'); 
+  }
+
   render() {
 
     if(this.props.reload)
@@ -98,10 +104,11 @@ class MSIC extends Component {
       this.props.loadSlidingImages();
       this.props.loadScheduledLessons();
       this.props.loadPendingLessons();
+      this.props.loadCurrentUser();
     }
 
     if(this.props.currentUser && this.props.currentUser.verified && this.props.currentUser.verified.toString() === 'true')
-      return (<MSIP currentUser={this.props.currentUser} onScheduledLessonsClick={this.onScheduledLessonsClick} onPendingClick={this.onPendingClick} pending={this.props.pending} availabilityPress={this.availabilityPress} scheduled={this.props.scheduled} images={this.props.slidingImages} backButton={this.backButtonPress} menuPress = {this.menuPress} photo = {this.props.photo} profilePress={this.profilePress}/>);
+      return (<MSIP updateCredit={this.updateCredit} currentUser={this.props.currentUser} onScheduledLessonsClick={this.onScheduledLessonsClick} onPendingClick={this.onPendingClick} pending={this.props.pending} availabilityPress={this.availabilityPress} scheduled={this.props.scheduled} images={this.props.slidingImages} backButton={this.backButtonPress} menuPress = {this.menuPress} photo = {this.props.photo} profilePress={this.profilePress}/>);
     else
       return (<MSIPP currentUser={this.props.currentUser} onScheduledLessonsClick={this.onScheduledLessonsClick} onPendingClick={this.onPendingClick} pending={this.props.pending} availabilityPress={this.availabilityPress} scheduled={this.props.scheduled} images={this.props.slidingImages} backButton={this.backButtonPress} menuPress = {this.menuPress} photo = {this.props.photo} profilePress={this.profilePress}/>);
   }

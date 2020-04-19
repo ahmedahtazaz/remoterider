@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import auth from '@react-native-firebase/auth';
 import { AppState} from "react-native";
 import { signOutUserAction, signInUserAction, moveToWelcome1Action, signInSuccessAction, signInFailureAction, checkUserTypeAction, moveToMSAction, moveToMIAction} from '../../Actions/SignInA';
+import { USE_APP_STATE, RESET_RELOAD } from '../../../../Commons/Constants';
 
 class SplashC extends Component {
 
@@ -26,8 +27,14 @@ class SplashC extends Component {
 
   handleAppStateChange(riderState)
   {
-    if(riderState === 'background')
+    if(this.props.useAppState.toString() === 'true' && riderState === 'background')
       this.props.signOutUser();
+
+    if(riderState === 'active')
+    {
+      this.props.setUseAppState(true);
+      this.props.resetReload();
+    }
   }
 
   signInCallBack(user)
@@ -91,6 +98,8 @@ const mapDispatchToProps = (dispatch) => {
       moveToMS: (navigation) => moveToMSAction(navigation),
       signOutUser: () => dispatch(signOutUserAction()),
       moveToMI: (navigation) => moveToMIAction(navigation),
+      setUseAppState: (status) => dispatch({type:`${USE_APP_STATE}`, useAppState: status}),
+      resetReload: () => dispatch({"type": RESET_RELOAD}),
   };
 };
 
@@ -100,6 +109,7 @@ const mapStateToProps = (state) => {
     signInAttempted: state.signInReducer.signInAttempted,
     isStudent: state.signInReducer.isStudent,
     isInstructor: state.signInReducer.isInstructor,
+    useAppState: state.signInReducer.useAppState,
   };
 };
 

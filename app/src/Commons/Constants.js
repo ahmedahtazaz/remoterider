@@ -113,3 +113,9 @@ export const SET_STUDENT_FOR_DELIVERY = 'SET_STUDENT_FOR_DELIVERY';
 
 export const LDR_RESET = 'LDR_RESET';
 export const SET_CALLING = 'SET_CALLING';
+
+export const SHOW_PROFILE_VIEW = 'SHOW_PROFILE_VIEW';
+
+export const USE_APP_STATE = 'USE_APP_STATE';
+
+export const RESET_RELOAD = 'RESET_RELOAD';
