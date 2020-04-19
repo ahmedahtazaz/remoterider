@@ -164,7 +164,7 @@ const styles = StyleSheet.create({
             width: wp(67.6)
         },
         inputStyle: {
-            fontSize: hp(2.5),
+            fontSize: hp(2),
             color: 'white',
             fontFamily: getRegularFont(),
             fontWeight: '200',
