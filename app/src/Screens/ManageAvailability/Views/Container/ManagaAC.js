@@ -22,6 +22,7 @@ class ManageAC extends Component {
       this.onPendingTimeSlotClick = this.onPendingTimeSlotClick.bind(this);
       this.confirmStudent = this.confirmStudent.bind(this);
       this.canConfirm = this.canConfirm.bind(this);
+      this.declineStudent = this.declineStudent.bind(this);
   }
 
   componentWillMount()
@@ -120,6 +121,21 @@ class ManageAC extends Component {
       this.props.showDialogue(() => {this.props.dialogueOkPressed()}, 'You need to update your Lesson Credits to confirm.');
   }
 
+  declineStudent(message, pending)
+  {
+    this.props.resetConfirmationDialogue();
+
+    if(!message || message === '')
+    {
+      this.props.showDialogue(() => {this.props.dialogueOkPressed()}, 'Please add a reason to Decline.');
+    }
+    else
+    {
+      this.props.declineStudent(message, pending);
+      this.Cancel();
+    }
+  }
+
   canConfirm()
   {
     if(!this.props.scheduled)
@@ -139,7 +155,7 @@ class ManageAC extends Component {
 
     if(this.props.student)
     {
-      this.props.showConfirmationDialogue((message, student) => {this.props.declineStudent(message, student), this.props.resetConfirmationDialogue(), this.Cancel()}, (student) => {this.confirmStudent(student)}, this.props.student, this.props.studentPhoto);
+      this.props.showConfirmationDialogue((message, student) => {this.declineStudent(message, student)}, (student) => {this.confirmStudent(student)}, this.props.student, this.props.studentPhoto);
       this.props.resetPendingSlotData();
     }
 

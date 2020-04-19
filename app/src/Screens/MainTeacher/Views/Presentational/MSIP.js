@@ -46,12 +46,12 @@ export default class MSIP extends Component {
           <View style={styles.reservationsContainer}>
 
             <Text 
-                numberOfLines={1} style={{marginLeft: wp(3), position: 'absolute', left: 0, fontSize: hp(2.5),fontWeight: '700',textAlign: 'center',color: '#ffffff',fontFamily: getBoldFont()}}>
+                numberOfLines={2} style={{marginLeft: wp(3), position: 'absolute', left: 0, fontSize: hp(2.5),fontWeight: '700',textAlign: 'center',color: '#ffffff',fontFamily: getBoldFont()}}>
                     {'Scheduled Lessons – please select the lesson to video call your pupil'}
             </Text> 
 
             {(this.props.scheduled) ? 
-            <FlatList contentContainerStyle={{ marginLeft: wp(3),marginTop: hp(5),flexGrow: 1 }}
+            <FlatList contentContainerStyle={{ marginLeft: wp(3),marginTop: hp(7),flexGrow: 1 }}
             data={this.props.scheduled} 
             renderItem={
               ({ item, index }) => { return( 
@@ -183,7 +183,7 @@ const styles = StyleSheet.create({
   },
   reservationsContainer: {
     width: wp(100),
-    height: hp(22),
+    height: hp(26),
     flexDirection:'column',
     backgroundColor: 'transparent',
     marginTop: hp(2.5)
@@ -193,6 +193,6 @@ const styles = StyleSheet.create({
     height: hp(22),
     flexDirection:'column',
     backgroundColor: 'transparent',
-    marginTop: hp(6.8)
+    marginTop: hp(2.5)
   },
 })

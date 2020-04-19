@@ -61,8 +61,14 @@ class MSIC extends Component {
 
   negativePressed(message, pending)
   {
-    this.props.declineStudent(message, pending);
     this.props.resetConfirmationDialogue();
+
+    if(!message || message === '')
+    {
+      this.props.showErrorDialogue(() => {this.props.negativeButtonPressed()}, 'Please add a reason to Decline.');
+    }
+    else
+      this.props.declineStudent(message, pending);
   }
 
   positivePressed(pending)
