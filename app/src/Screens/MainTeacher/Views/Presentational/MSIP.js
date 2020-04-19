@@ -46,8 +46,8 @@ export default class MSIP extends Component {
           <View style={styles.reservationsContainer}>
 
             <Text 
-                numberOfLines={1} style={{marginLeft: wp(3), position: 'absolute', left: 0, fontSize: hp(3),fontWeight: '700',textAlign: 'center',color: '#ffffff',fontFamily: getBoldFont()}}>
-                    {'Scheduled Lessons'}
+                numberOfLines={1} style={{marginLeft: wp(3), position: 'absolute', left: 0, fontSize: hp(2.5),fontWeight: '700',textAlign: 'center',color: '#ffffff',fontFamily: getBoldFont()}}>
+                    {'Scheduled Lessons – please select the lesson to video call your pupil'}
             </Text> 
 
             {(this.props.scheduled) ? 
@@ -103,7 +103,7 @@ export default class MSIP extends Component {
           </View>
           <View style={styles.categoriesContainer}>
             <Text 
-                numberOfLines={1} style={{marginLeft: wp(3), position: 'absolute', left: 0, fontSize: hp(3),fontWeight: '700',textAlign: 'center',color: '#ffffff',fontFamily: getBoldFont()}}>
+                numberOfLines={1} style={{marginLeft: wp(3), position: 'absolute', left: 0, fontSize: hp(2.5),fontWeight: '700',textAlign: 'center',color: '#ffffff',fontFamily: getBoldFont()}}>
                     {'Pending Requests'}
             </Text> 
 
