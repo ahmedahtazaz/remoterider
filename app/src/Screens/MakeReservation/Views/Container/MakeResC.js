@@ -50,7 +50,10 @@ class MakeResC extends Component {
 
   onConfirm(slotIndex)
   {
-    this.props.makeReservation(Number.parseInt(this.props.availableTimeSlots[slotIndex].time, 10), this.props.instructor);
+    if(Number.parseInt(this.props.availableTimeSlots[slotIndex].time, 10) < Date.now())
+      this.props.showDialogue(this.dialogueButtonPress, 'You cannot make reservation in the past.');
+    else
+      this.props.makeReservation(Number.parseInt(this.props.availableTimeSlots[slotIndex].time, 10), this.props.instructor);
   }
 
   Cancel()
