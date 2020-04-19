@@ -33,12 +33,23 @@ function* signUpInner(action)
 
         if(action.user.isInstructor)
         {
+            let defaultcredits = 0;
+
+            yield firestore().collection('DefaultLessonCredits').doc('DefaultLessonCredits').get().then(
+                (doc) => {
+                    if(doc && doc.data())
+                    {
+                        defaultcredits = doc.data().DefaultLessonCredits;
+                    }
+                }
+            ).catch();
+
             yield firestore().collection('Users').doc(currentUser.uid).set({
                 name: action.user.name,
                 profile: action.user.profile,
                 isInstructor: true,
                 uuid: currentUser.uid,
-                email: action.user.email,
+                lessonCredit: defaultcredits,
                 }).then(success = true).catch((err) => {success = false, error = err.message});
         }
         else{
