@@ -15,11 +15,12 @@ export default class SignInP extends Component {
     const backArrow = require('../../../../assets/backArrow.png');
 
     return (
+        
+      <LinearGradient colors={['#006b31', '#00652e', '#005e2b' , '#005326', '#004b22', '#00411e', '#003a1b', '#003619']} style={{flex: 1}}>      
         <KeyboardAwareScrollView
       contentContainerStyle={{flexGrow: 1}}
       keyboardShouldPersistTaps="always"
-    >
-      <LinearGradient colors={['#006b31', '#00652e', '#005e2b' , '#005326', '#004b22', '#00411e', '#003a1b', '#003619']} style={{flex: 1}}>      
+>
         <View style={styles.topBarContainer}>
             <TouchableOpacity style={{marginLeft: wp(2), height: hp(2.8), width: wp(7.8) , backgroundColor: 'transparent', alignSelf: 'center'}} onPress={this.props.backButton}>
             <Image source={backArrow} style={{height: hp(2.8), width: wp(7.8), resizeMode: 'contain'}}></Image>
@@ -63,7 +64,8 @@ export default class SignInP extends Component {
         </TouchableOpacity>
         <Dialogue/>
         {(this.props.loader) ? <View style={{alignSelf: 'center', height: hp(100), width: wp(100), justifyContent: 'center', position: 'absolute', zIndex: 1000}}><ActivityIndicator size="large" color="white" animating={this.props.loader}/></View> : null}
-      </LinearGradient></KeyboardAwareScrollView>);
+        </KeyboardAwareScrollView>
+      </LinearGradient>);
   }
 }
 
