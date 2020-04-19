@@ -19,21 +19,23 @@ export default class MSP extends Component {
             <TouchableOpacity style={{marginLeft: wp(2), height: hp(2.8), width: wp(7.4) , backgroundColor: 'transparent', alignSelf: 'center'}} onPress={this.props.menuPress}>
               <Image source={menu} style={{height: hp(2.7), width: wp(7.4), resizeMode: 'contain'}}/>
             </TouchableOpacity>
-            <TouchableOpacity style={{borderRadius: wp(12)/2, marginRight: wp(2), height: hp(5.9), width: wp(12) , backgroundColor: 'black', position: 'absolute', right: 0, alignSelf: 'center'}} onPress={this.props.profilePress}>
+            <TouchableOpacity style={{borderRadius: wp(12)/2, marginRight: wp(2), height: hp(5.9), width: wp(12) , backgroundColor: 'black', position: 'absolute', right: 0, alignSelf: 'center'}}>
               <Image source={{uri: this.props.photo}} style={{borderRadius: wp(12)/2, height: hp(5.9), width: wp(12), resizeMode: 'stretch'}}/>
-            </TouchableOpacity>
-            <TouchableOpacity style={{justifyContent: "center",borderRadius: hp(1), marginRight: wp(17), height: hp(4.5), width: wp(30.9) , backgroundColor: '#006b31', position: 'absolute', right: 0, alignSelf: 'center'}} onPress={this.props.reservationPress}>
-              <Text 
-                  numberOfLines={1} style={{fontSize: hp(1.4),fontWeight: '700',textAlign: 'center',color: '#ffffff',fontFamily: getBoldFont()}}>
-                      {'Make Reservation'}
-              </Text> 
             </TouchableOpacity>
           </View>
           <Slideshow dataSource = {this.props.images ? this.props.images : []} height = {hp(26.5)} width = {wp(100)}/>
-          <Text 
-                numberOfLines={1} style={{marginTop: hp(1), fontSize: hp(3),fontWeight: '700',textAlign: 'center',color: '#ffffff',fontFamily: getBoldFont()}}>
-                    {this.props.currentUser ? this.props.currentUser.name : ''}
-          </Text> 
+          <View style={{paddingLeft: wp(1), flexDirection: 'row', width: wp(100), height: hp(6)}}>
+            <TouchableOpacity style={{marginTop: hp(1), justifyContent: "center",borderRadius: hp(1), height: hp(4.5), width: wp(30.9) , backgroundColor: '#5a9c79'}} onPress={this.props.reservationPress}>
+                <Text 
+                    numberOfLines={1} style={{fontSize: hp(1.4),fontWeight: '700',textAlign: 'center',color: '#ffffff',fontFamily: getBoldFont()}}>
+                        {'Make Reservation'}
+                </Text> 
+              </TouchableOpacity>
+            <Text 
+                  numberOfLines={1} style={{width: wp(70), marginTop: hp(1), fontSize: hp(3),fontWeight: '700',textAlign: 'center',color: '#ffffff',fontFamily: getBoldFont()}}>
+                      {this.props.currentUser ? this.props.currentUser.name : ''}
+            </Text> 
+          </View>
           <View style={styles.reservationsContainer}>
 
             <Text 
