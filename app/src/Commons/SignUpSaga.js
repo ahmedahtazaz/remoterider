@@ -50,6 +50,7 @@ function* signUpInner(action)
                 isInstructor: true,
                 uuid: currentUser.uid,
                 lessonCredit: defaultcredits,
+                email: action.user.email,
                 }).then(success = true).catch((err) => {success = false, error = err.message});
         }
         else{
