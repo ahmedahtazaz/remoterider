@@ -113,12 +113,16 @@ export default function mscReducer() {
           return {
             ...state,
             featured: action.featured,
+            searchQuerry: undefined,
+            searchResults: undefined,
           };
 
           case LOAD_FEATURED_INSTRUCTORS_FAILURE:
           return {
             ...state,
             featured: undefined,
+            searchQuerry: undefined,
+            searchResults: undefined,
           };
 
           case LOAD_SEARCH_RESULTS_SUCCESS:
@@ -132,7 +136,7 @@ export default function mscReducer() {
           return {
             ...state,
             searchResults: undefined,
-            searchQuerry: undefined,
+            searchQuerry: action.searchQuerry,
           };
 
           case SET_INSTRUCTOR_FOR_RESERVATION:

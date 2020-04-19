@@ -30,13 +30,16 @@ export default class ResSearchP extends Component {
             </View>
           </View>
 
-          {(this.props.searchResults) ? 
+          {(this.props.searchResults || this.props.searchQuerry) ? 
           <View style={styles.featuredInstructorsContainer}>
 
-          <Text 
+          {(!this.props.searchResults) ? <Text 
+              numberOfLines={1} style={{marginLeft: wp(3), fontSize: hp(3),fontWeight: '700',color: '#ffffff',fontFamily: getBoldFont()}}>
+                  {'No matches found for '+this.props.searchQuerry}
+          </Text> : <Text 
               numberOfLines={1} style={{marginLeft: wp(3), fontSize: hp(3),fontWeight: '700',color: '#ffffff',fontFamily: getBoldFont()}}>
                   {'Search Results for '+this.props.searchQuerry}
-          </Text> 
+          </Text> }
           <FlatList contentContainerStyle={{ marginLeft: wp(3),marginTop: hp(2), flexGrow: 1 }}
           data={this.props.searchResults} 
           renderItem={

@@ -347,7 +347,7 @@ function* loadSearchResults(action) {
         yield put({type: LOAD_SEARCH_RESULTS_SUCCESS, searchResults: searchResults, searchQuerry: action.querry});
     }
     else
-        yield put({type: LOAD_SEARCH_RESULTS_FAILURE});
+        yield put({type: LOAD_SEARCH_RESULTS_FAILURE,  searchQuerry: action.querry});
 }
 
 function* loadSearchResultsInner(searchString) {
