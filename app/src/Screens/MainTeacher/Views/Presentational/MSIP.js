@@ -94,7 +94,7 @@ export default class MSIP extends Component {
             }
             horizontal={true}
             keyExtractor={(item, index) => index.toString()}/> : 
-            <TouchableOpacity style={{marginTop: hp(5), justifyContent: "center",borderRadius: hp(6), height: hp(15), width: wp(90.3) , backgroundColor: '#006b31', alignSelf: 'center'}} onPress={this.props.reservationPress}>
+            <TouchableOpacity style={{marginTop: hp(7), justifyContent: "center",borderRadius: hp(6), height: hp(15), width: wp(90.3) , backgroundColor: '#006b31', alignSelf: 'center'}} onPress={this.props.reservationPress}>
             <Text 
                 numberOfLines={1} style={{fontSize: hp(2),fontWeight: '700',textAlign: 'center',color: '#ffffff',fontFamily: getBoldFont()}}>
                     {'You Have Not Scheduled Any Lessons'}
