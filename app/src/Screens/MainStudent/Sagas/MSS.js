@@ -375,22 +375,6 @@ then((doc) => {
         }
     }}).catch((err) => {console.log(err)});
 
-    yield firestore().collection('Featured').doc('Featured').get().
-    then((doc) => {
-        if(doc.data())
-        {
-            let data = JSON.parse(doc.data().Featured);
-
-            if(data && data.length > 0)
-            {
-                for(let i = 0; i < data.length; i++)
-                {
-                    if((data[i].name.includes(searchString) || data[i].name.includes(searchString.toLowerCase()) || data[i].name.includes(searchString.toUpperCase())) && ( data[i - 1] !== undefined ? data[i].name !== data[i - 1].name : true))
-                        dataFeatured.push(data[i]);
-                }
-            }
-        }}).catch((err) => {console.log(err)});
-
         if(dataUsers.length > 0)
         {
             if(dataFeatured.length > 0)
@@ -419,32 +403,13 @@ then((doc) => {
             let photos = [];
 
             for(let i = 0; i < results.length; i++)
-            {
-                let skip = false;
-
-                for(let j = i + 1; j < results.length; j++)
+            {    
+                if(results[i])
+                    yield storage().ref(results[i].uuid+'.png').getDownloadURL().then((url) => {photos[i] = url}).catch((err) => {photos[i] = undefined, console.log(err)});
+                else
                 {
-                    if(results[j].name !== results[i].name && results[j].cost !== results[i].cost)
-                    {
-                        // do nothing
-                    }
-                    else{
-                        skip = true;
-                        results.splice(i, 1);
-                        i--;
-                        break;
-                    }
-                }
-
-                if(!skip)
-                {
-                    if(results[i])
-                        yield storage().ref(results[i].uuid+'.png').getDownloadURL().then((url) => {photos[i] = url}).catch((err) => {photos[i] = undefined, console.log(err)});
-                    else
-                    {
-                        results.splice(i, 1);
-                        i--;
-                    }
+                    results.splice(i, 1);
+                    i--;
                 }
             }
 
@@ -494,24 +459,6 @@ function* loadAvailableTimeSlotsInner(date, uuid) {
             }
         }
     }).catch((err) => {console.log(err)});
-
-    if(!available)
-    {
-        available = [];
-
-        let initial = Number.parseInt(date, 10);
-
-        for(let i = 0; i < 24; i++)
-        {
-            let newDate = new Date(initial + (3600000 * i));
-            let nextHourDate = new Date(initial + (3600000 * i) + 3600000);
-
-            let currentHour = newDate.getHours();
-            let nextHour = nextHourDate.getHours();
-
-            available.push({"time": newDate.getTime(), "date": date, "status": "available", "showAbleTime": currentHour+".00 to "+nextHour+".00"});
-        }
-    }
 
     return available;
 }
@@ -634,7 +581,7 @@ function* makeReservationInner(date, instructor) {
                             available.push({"time": newDate.getTime(), "date": initial, "status": "pending", "showAbleTime": currentHour+".00 to "+nextHour+".00"});
                         }
                         else    
-                            available.push({"time": newDate.getTime(), "date": initial, "status": "available", "showAbleTime": currentHour+".00 to "+nextHour+".00"});
+                            available.push({"time": newDate.getTime(), "date": initial, "status": "unavailable", "showAbleTime": currentHour+".00 to "+nextHour+".00"});
                     }
                 }
             }
@@ -1081,7 +1028,7 @@ function* loadTimeSlotsInner(date) {
             let currentHour = newDate.getHours();
             let nextHour = nextHourDate.getHours();
 
-            available.push({"time": newDate.getTime(), "date": date, "status": "available", "showAbleTime": currentHour+".00 to "+nextHour+".00"});
+            available.push({"time": newDate.getTime(), "date": date, "status": "unavailable", "showAbleTime": currentHour+".00 to "+nextHour+".00"});
         }
     }
 

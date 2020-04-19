@@ -18,7 +18,6 @@ class ResSearchC extends Component {
 
   componentWillMount()
   {
-      this.props.loadSearch('?');
       this.props.loadFeatured();
   }
 
