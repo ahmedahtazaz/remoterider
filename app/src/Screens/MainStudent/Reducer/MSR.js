@@ -24,6 +24,7 @@ const INITIAL_STATE = {
     ldrback: false,
     showProfileView: false,
     lessonCreditUrl: undefined,
+    searchQuerry: undefined,
   };
 
 export default function mscReducer() {
@@ -124,12 +125,14 @@ export default function mscReducer() {
           return {
             ...state,
             searchResults: action.searchResults,
+            searchQuerry: action.searchQuerry,
           };
 
           case LOAD_SEARCH_RESULTS_FAILURE:
           return {
             ...state,
             searchResults: undefined,
+            searchQuerry: undefined,
           };
 
           case SET_INSTRUCTOR_FOR_RESERVATION:

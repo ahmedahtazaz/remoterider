@@ -13,6 +13,7 @@ class ResSearchC extends Component {
       this.searchHandler = this.searchHandler.bind(this);
       this.onInstructorClick = this.onInstructorClick.bind(this);
       this.onInstructorClickFeatured = this.onInstructorClickFeatured.bind(this);
+      this.searchButton = this.searchButton.bind(this);
   }
 
   componentWillMount()
@@ -28,7 +29,15 @@ class ResSearchC extends Component {
 
   searchHandler(querry)
   {
-      this.props.loadSearch(querry);
+    this.searchQuerry = querry;
+  }
+
+  searchButton()
+  {
+    if(this.searchQuerry && this.searchQuerry !== '')
+    {
+      this.props.loadSearch(this.searchQuerry );
+    }
   }
 
   onInstructorClick(instructor, index)
@@ -45,7 +54,7 @@ class ResSearchC extends Component {
 
   render() {
 
-    return (<ResSearchP onInstructorClickFeatured={this.onInstructorClickFeatured} onInstructorClick={this.onInstructorClick} searchResults={this.props.searchResults} searchHandler={this.searchHandler} featured={this.props.featured} backButton={this.backButton} loader={this.props.loader}/>);
+    return (<ResSearchP searchQuerry={this.props.searchQuerry} searchButton={this.searchButton} onInstructorClickFeatured={this.onInstructorClickFeatured} onInstructorClick={this.onInstructorClick} searchResults={this.props.searchResults} searchHandler={this.searchHandler} featured={this.props.featured} backButton={this.backButton} loader={this.props.loader}/>);
   }
 }
 
@@ -62,6 +71,7 @@ const mapStateToProps = (state) => {
   return {
       featured: state.mscreducer.featured,
       searchResults: state.mscreducer.searchResults,
+      searchQuerry: state.mscreducer.searchQuerry,
   };
 };
 

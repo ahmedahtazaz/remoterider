@@ -344,7 +344,7 @@ function* loadSearchResults(action) {
 
     if(searchResults)
     {
-        yield put({type: LOAD_SEARCH_RESULTS_SUCCESS, searchResults: searchResults});
+        yield put({type: LOAD_SEARCH_RESULTS_SUCCESS, searchResults: searchResults, searchQuerry: action.querry});
     }
     else
         yield put({type: LOAD_SEARCH_RESULTS_FAILURE});
@@ -357,21 +357,23 @@ function* loadSearchResultsInner(searchString) {
 
     let results = [];
 
-    yield firestore().collection('Users').orderBy('name')
-                .startAt(searchString)
-                .endAt(searchString + '\uf8ff')
-                .get().
-    then((doc) => {
-        if(doc.docs && doc.docs.length > 0)
+    yield firestore().collection('Users')
+            .get().
+then((doc) => {
+    if(doc.docs && doc.docs.length > 0)
+    {
+        for(let i = 0; i < doc.docs.length; i++)
         {
-            for(let i = 0; i < doc.docs.length; i++)
+            if(doc.docs[i].data().isInstructor)
             {
-                if(doc.docs[i].data().isInstructor)
+                if(doc.docs[i].data().name)
                 {
-                    dataUsers.push(doc.docs[i].data());
+                    if(doc.docs[i].data().name.includes(searchString) || doc.docs[i].data().name.includes(searchString.toLowerCase()) || doc.docs[i].data().name.includes(searchString.toUpperCase()) )
+                        dataUsers.push(doc.docs[i].data());
                 }
             }
-        }}).catch((err) => {console.log(err)});
+        }
+    }}).catch((err) => {console.log(err)});
 
     yield firestore().collection('Featured').doc('Featured').get().
     then((doc) => {
@@ -383,7 +385,7 @@ function* loadSearchResultsInner(searchString) {
             {
                 for(let i = 0; i < data.length; i++)
                 {
-                    if((data[i].name.includes(searchString) || data[i].name.includes(searchString.toLowerCase())) && ( data[i - 1] !== undefined ? data[i].name !== data[i - 1].name : true))
+                    if((data[i].name.includes(searchString) || data[i].name.includes(searchString.toLowerCase()) || data[i].name.includes(searchString.toUpperCase())) && ( data[i - 1] !== undefined ? data[i].name !== data[i - 1].name : true))
                         dataFeatured.push(data[i]);
                 }
             }
@@ -418,12 +420,31 @@ function* loadSearchResultsInner(searchString) {
 
             for(let i = 0; i < results.length; i++)
             {
-                if(results[i])
-                    yield storage().ref(results[i].uuid+'.png').getDownloadURL().then((url) => {photos[i] = url}).catch((err) => {photos[i] = undefined, console.log(err)});
-                else
+                let skip = false;
+
+                for(let j = i + 1; j < results.length; j++)
                 {
-                    results.splice(i, 1);
-                    i--;
+                    if(results[j].name !== results[i].name && results[j].cost !== results[i].cost)
+                    {
+                        // do nothing
+                    }
+                    else{
+                        skip = true;
+                        results.splice(i, 1);
+                        i--;
+                        break;
+                    }
+                }
+
+                if(!skip)
+                {
+                    if(results[i])
+                        yield storage().ref(results[i].uuid+'.png').getDownloadURL().then((url) => {photos[i] = url}).catch((err) => {photos[i] = undefined, console.log(err)});
+                    else
+                    {
+                        results.splice(i, 1);
+                        i--;
+                    }
                 }
             }
 

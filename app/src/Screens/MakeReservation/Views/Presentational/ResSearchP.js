@@ -18,10 +18,15 @@ export default class ResSearchP extends Component {
               <Image source={backArrow} style={{height: hp(2.8), width: wp(7.8), resizeMode: 'contain'}}></Image>
             </TouchableOpacity>
             <View style={styles.fieldMaincontainerStyle}> 
-                <Image source={searchIcon} style={styles.searchImage}/>
                 <View style={styles.fieldInnercontainerStyle}> 
                     <TextInput onChangeText={this.props.searchHandler} style={styles.inputStyle} autoCorrect={false} placeholder={'Search For Instructor'} placeholderTextColor = "#598a6f" />
                 </View>
+                <TouchableOpacity style={styles.searchButton} onPress={this.props.searchButton}>
+                <Text 
+                    numberOfLines={1} style={styles.buttonText}>
+                        {'Search'}
+                </Text> 
+            </TouchableOpacity>
             </View>
           </View>
 
@@ -30,7 +35,7 @@ export default class ResSearchP extends Component {
 
           <Text 
               numberOfLines={1} style={{marginLeft: wp(3), fontSize: hp(3),fontWeight: '700',color: '#ffffff',fontFamily: getBoldFont()}}>
-                  {'Search Results'}
+                  {'Search Results for '+this.props.searchQuerry}
           </Text> 
           <FlatList contentContainerStyle={{ marginLeft: wp(3),marginTop: hp(2), flexGrow: 1 }}
           data={this.props.searchResults} 
@@ -145,7 +150,6 @@ const styles = StyleSheet.create({
     width: wp(80),
     alignSelf: 'center',
     backgroundColor: 'white',
-    borderRadius: hp(3),
     marginLeft: wp(3)
   },
 fieldInnercontainerStyle:{
@@ -168,4 +172,17 @@ fieldInnercontainerStyle:{
     borderBottomWidth: hp(.1),
     borderBottomColor: '#598a6f',
   },
+  buttonText: {
+    fontSize: hp(1.5),
+    fontWeight: '700',
+    textAlign: 'center',
+    color: '#ffffff',
+    fontFamily: getBoldFont()
+},
+searchButton: {
+    justifyContent: "center",
+    width: wp(20),
+    backgroundColor: '#006b31',
+    height: hp(6),
+},
 })
