@@ -73,12 +73,14 @@ export default class App extends Component {
         </View>
         <View style={styles.tcStyle}>
             <CheckBox onPress={this.props.onTCPress}/>
-            <Hyperlink linkStyle={{ color: 'white', fontSize: hp(2) }} linkText={url => url === 'https://tc.com' ? 'Terms & Conditions' : url}>
-                <Text 
-                    numberOfLines={1} style={styles.tcText}>
-                        {'I have accepted the https://tc.com'}
-                </Text>
-            </Hyperlink>
+            <TouchableOpacity style={{height: hp(4)}} onPress={this.props.tcClickHandler}>
+                <Hyperlink linkStyle={{ color: 'white', fontSize: hp(2) }} linkText={url => url === 'https://www.google.com' ? 'Terms & Conditions' : url}>
+                    <Text 
+                        numberOfLines={1} style={styles.tcText}>
+                            {'I have accepted the https://www.google.com'}
+                    </Text>
+                </Hyperlink>
+            </TouchableOpacity>          
         </View>
 
         <TouchableOpacity style={styles.signInButton} onPress={this.props.signUpButtonHandler}>

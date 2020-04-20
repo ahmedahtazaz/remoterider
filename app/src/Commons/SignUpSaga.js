@@ -1,4 +1,4 @@
-import { SIGN_UP_USER, SIGN_UP_FAILURE, SIGN_UP_SUCCESS } from "./Constants";
+import { SIGN_UP_USER, SIGN_UP_FAILURE, SIGN_UP_SUCCESS, LOAD_TC_TEXT, LOAD_TC_TEXT_SUCCESS, LOAD_TC_TEXT_FAILURE } from "./Constants";
 import {put, takeLatest} from 'redux-saga/effects';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
@@ -71,6 +71,28 @@ function* signUpInner(action)
     return {success: success, errMessage: error};
 }
 
+function* loadTCText(action)
+{
+    let tcText = undefined;
+
+            yield firestore().collection('TermsAndConditions').doc('TermsAndConditions').get().then(
+                (doc) => {
+                    if(doc && doc.data())
+                    {
+                        tcText = doc.data().TermsAndConditions;
+                    }
+                }
+            ).catch();
+
+    if(tcText)
+        yield put({type: LOAD_TC_TEXT_SUCCESS, tcText: tcText});
+    else
+    {
+        yield put({type: LOAD_TC_TEXT_FAILURE});
+    }
+}
+
 export default function* signUpActionWatcher() {
     yield takeLatest(`${SIGN_UP_USER}`, signUpUser);
+    yield takeLatest(`${LOAD_TC_TEXT}`, loadTCText);
 }

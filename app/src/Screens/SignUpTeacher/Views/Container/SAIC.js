@@ -24,6 +24,7 @@ class SAIC extends Component {
       this.negativePressed = this.negativePressed.bind(this);
       this.backButton = this.backButton.bind(this);
       this.confirmPasswordHandler = this.confirmPasswordHandler.bind(this);
+      this.tcClickHandler = this.tcClickHandler.bind(this);
   }
 
   confirmPasswordHandler(event)
@@ -104,13 +105,18 @@ class SAIC extends Component {
     this.props.navigation.navigate('Sign Up'); 
   }
 
+  tcClickHandler()
+  {
+    this.props.navigation.navigate('Terms and Conditions'); 
+  }
+
   render() {
     if(this.props.signUpError)
     {
       this.props.showErrorDialogue(this.negativePressed, this.props.signUpError);
     }
 
-    return (<SAIP confirmPasswordHandler={this.confirmPasswordHandler} backButton={this.backButton} loader={this.props.loader} photoHint={this.props.photo !== undefined ? this.props.photo.filename : 'Tap to Add Photo'} profileandler={this.profileandler} onTCPress={this.tcCheckBoxHandler} signUpButtonHandler={this.signUpButtonHandler} userNameHandler={this.userNameHandler} emailHandler={this.emailHandler} passwordHandler={this.passwordHandler} photoHandler={this.photoHandler}/>);
+    return (<SAIP tcClickHandler={this.tcClickHandler} confirmPasswordHandler={this.confirmPasswordHandler} backButton={this.backButton} loader={this.props.loader} photoHint={this.props.photo !== undefined ? this.props.photo.filename : 'Tap to Add Photo'} profileandler={this.profileandler} onTCPress={this.tcCheckBoxHandler} signUpButtonHandler={this.signUpButtonHandler} userNameHandler={this.userNameHandler} emailHandler={this.emailHandler} passwordHandler={this.passwordHandler} photoHandler={this.photoHandler}/>);
   }
 }
 
