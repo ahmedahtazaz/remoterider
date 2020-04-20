@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import {TouchableOpacity, Text, Image, View, StyleSheet} from 'react-native';
+import {TextInput, ActivityIndicator, TouchableOpacity, Text, Image, View, StyleSheet} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import { getRegularFont, getBoldFont } from '../../../../Commons/Fonts';
+import Dialogue from '../../../../Commons/Dialogue/Dialogue';
 
 export default class LDP extends Component {
 
@@ -51,7 +52,12 @@ export default class LDP extends Component {
                     </View>
                   </View>
             </View>
-            <View style={{marginTop: hp(10), alignSelf: 'center', flexDirection: 'row'}}>
+            <View style={styles.fieldMaincontainerStyle}> 
+                <View style={styles.fieldInnercontainerStyle}> 
+                    <TextInput onChangeText={this.props.declineMessageHandler} style={styles.inputStyle} autoCorrect={false} placeholder={'If Decline, Please Add Reason'} placeholderTextColor = "#598a6f" />
+                </View>
+            </View>
+            <View style={{marginTop: hp(5), alignSelf: 'center', flexDirection: 'row'}}>
                 {(this.props.student && this.props.student.date && this.props.student.date.toString() <= Date.now().toString() && Number.parseInt(Date.now(), 10) <= (Number.parseInt(this.props.student.date, 10) + 3600000)) ? <TouchableOpacity style={{alignItems: 'center', justifyContent: 'center', borderRadius: hp(40/2), marginRight: wp(3), backgroundColor: '#006b31', height: hp(18), width: wp(40)}} onPress={() => {this.props.callnow()}}>
                  <Text 
                     numberOfLines={1} style={{alignSelf: 'center', width: wp(40), fontSize: hp(2),fontWeight: '400',textAlign: 'center',color: '#ffffff',fontFamily: getRegularFont()}}>
@@ -65,6 +71,8 @@ export default class LDP extends Component {
                 </Text> 
                 </TouchableOpacity>
             </View> 
+            <Dialogue/>
+            {(this.props.loader) ? <View style={{alignSelf: 'center', height: hp(100), width: wp(100), justifyContent: 'center', position: 'absolute', zIndex: 1000}}><ActivityIndicator size="large" color="white" animating={this.props.loader}/></View> : null}
         </View>
       </LinearGradient>);
   }
@@ -87,4 +95,21 @@ const styles = StyleSheet.create({
     position: 'absolute',
     zIndex: 1000
 },
+fieldMaincontainerStyle:{
+  height: hp(4),
+  width: wp(67.6),
+  alignSelf: 'center',
+  marginTop: hp(4)
+  },
+  fieldInnercontainerStyle:{
+      width: wp(67.6)
+  },
+  inputStyle: {
+      fontSize: hp(2),
+      color: 'white',
+      fontFamily: getRegularFont(),
+      fontWeight: '200',
+      borderBottomWidth: hp(.1),
+      borderBottomColor: '#598a6f',
+  },
 })

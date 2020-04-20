@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import LDP from '../Presentational/LDP';
-import { declineStudentAction } from '../../Actions/LDA';
-import { LDR_RESET, SET_CALLING } from '../../../../Commons/Constants';
+import { dialogueOKAction, showialogueAction, declineStudentAction } from '../../Actions/LDA';
+import { LDR_RESET, SET_CALLING, SHOW_MAIN_LOADER, HIDE_MAIN_LOADER } from '../../../../Commons/Constants';
 import CallP from '../Presentational/CallP';
 
 class LDC extends Component {
@@ -15,6 +15,7 @@ class LDC extends Component {
       this.cancelReservation = this.cancelReservation.bind(this);
       this.callnow = this.callnow.bind(this);
       this.endCall = this.endCall.bind(this);
+      this.declineMessageHandler = this.declineMessageHandler.bind(this);
   }
 
   componentDidMount()
@@ -29,7 +30,15 @@ class LDC extends Component {
 
   cancelReservation()
   {
-    this.props.declineStudent(this.props.student);
+    if(!this.declineMessage || this.declineMessage === '')
+    {
+      this.props.showDialogue(() => {this.props.dialogueOkPressed()}, 'Please add a reason to Decline.');
+    }
+    else
+    {
+      this.props.showLoader();
+      this.props.declineStudent(this.declineMessage, this.props.student);
+    }
   }
 
   callnow()
@@ -42,9 +51,15 @@ class LDC extends Component {
     this.props.setCalling(false);
   }
 
+  declineMessageHandler(message)
+  {
+      this.declineMessage = message;
+  }
+
   render() {
     if(this.props.ldrback)
     {
+        this.props.hideLoader();
         this.props.resetLDR();
         this.backButton();
     }
@@ -52,16 +67,20 @@ class LDC extends Component {
     if(this.props.calling)
       return(<CallP endCall={this.endCall}></CallP>);
     else
-      return (<LDP callnow={this.callnow} cancelReservation={this.cancelReservation} studentPhoto={this.props.studentPhoto} student={this.props.student} backButton={this.backButton}/>);
+      return (<LDP loader={this.props.loader} declineMessageHandler={this.declineMessageHandler} callnow={this.callnow} cancelReservation={this.cancelReservation} studentPhoto={this.props.studentPhoto} student={this.props.student} backButton={this.backButton}/>);
   }
 }
 
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    declineStudent: (student) => dispatch(declineStudentAction(student)),
+    declineStudent: (message, student) => dispatch(declineStudentAction(message, student)),
     resetLDR: () => dispatch({"type": LDR_RESET}),
     setCalling: (status) => dispatch({"type": SET_CALLING, "status": status}),
+    showDialogue: (negativeButtonPressed, message) => dispatch(showialogueAction(negativeButtonPressed, message)),
+    dialogueOkPressed: () => dispatch(dialogueOKAction()),
+    showLoader: () => dispatch({"type": SHOW_MAIN_LOADER}),
+    hideLoader: () => dispatch({"type": HIDE_MAIN_LOADER}),
   };
 };
 
@@ -71,6 +90,7 @@ const mapStateToProps = (state) => {
     studentPhoto: state.ldrReducer.studentPhoto,
     ldrback: state.mscreducer.ldrback,
     calling: state.ldrReducer.calling,
+    loader: state.mscreducer.loader,
   };
 };
 
