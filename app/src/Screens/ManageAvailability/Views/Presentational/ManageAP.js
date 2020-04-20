@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {TextInput, FlatList, TouchableOpacity, Text, Image, View, StyleSheet} from 'react-native';
+import {ActivityIndicator, TextInput, FlatList, TouchableOpacity, Text, Image, View, StyleSheet} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import { getBoldFont, getRegularFont } from '../../../../Commons/Fonts';
@@ -151,6 +151,7 @@ export default class ManageAP extends Component {
           null}
           <Dialog/>
           <PictureDialogue/>
+          {(this.props.loader) ? <View style={{alignSelf: 'center', height: hp(100), width: wp(100), justifyContent: 'center', position: 'absolute', zIndex: 1000}}><ActivityIndicator size="large" color="white" animating={this.props.loader}/></View> : null}
         </View>
         </ScrollView>
       </LinearGradient>);

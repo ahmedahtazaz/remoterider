@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {FlatList, TouchableOpacity, Text, Image, View, StyleSheet} from 'react-native';
+import {ActivityIndicator, FlatList, TouchableOpacity, Text, Image, View, StyleSheet} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import Slideshow from 'react-native-image-slider-show';
@@ -162,6 +162,7 @@ export default class MSIP extends Component {
           <ProfileDialogue/>
           <PictureDialogue/>
           <Dialogue/>
+          {(this.props.loader) ? <View style={{alignSelf: 'center', height: hp(100), width: wp(100), justifyContent: 'center', position: 'absolute', zIndex: 1000}}><ActivityIndicator size="large" color="white" animating={this.props.loader}/></View> : null}
         </View>
       </LinearGradient>);
   }

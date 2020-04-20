@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { resetConfirmationDialogueAction, declineStudentAction, confirmStudentAction, showConfirmationDialogueAction, loadPendingSlotDataAction, onAvailabilityConfirmAction, setCostAction, dialogueOKAction, showialogueAction, loadTimeSlotsAction, clearTimeSlotsAction, setSelectedTimeSlotAction, resetSelectedTimeSlotAction} from '../../Actions/ManageA';
 import ManageAP from '../Presentational/ManageAP';
-import { SET_COST_FAILURE, LOAD_CURRENT_USER, LOAD_PENDING_SLOT_DATA_FAILURE } from '../../../../Commons/Constants';
+import { SET_COST_FAILURE, LOAD_CURRENT_USER, LOAD_PENDING_SLOT_DATA_FAILURE, SHOW_MAIN_LOADER, HIDE_MAIN_LOADER } from '../../../../Commons/Constants';
 
 class ManageAC extends Component {
 
@@ -116,7 +116,10 @@ class ManageAC extends Component {
     this.Cancel();
 
     if(this.canConfirm())
+    {
+      this.props.showLoader();
       this.props.confirmStudent(pending);
+    }
     else
       this.props.showDialogue(() => {this.props.dialogueOkPressed()}, 'You need to update your Lesson Credits to confirm.');
   }
@@ -131,6 +134,7 @@ class ManageAC extends Component {
     }
     else
     {
+      this.props.showLoader();
       this.props.declineStudent(message, pending);
       this.Cancel();
     }
@@ -147,6 +151,7 @@ class ManageAC extends Component {
 
     if(this.props.reload)
     {
+        this.props.hideLoader();
         this.props.resetReload();
         this.props.loadCurrentUser();
         this.Cancel();
@@ -159,7 +164,7 @@ class ManageAC extends Component {
       this.props.resetPendingSlotData();
     }
 
-    return (<ManageAP onPendingTimeSlotClick={this.onPendingTimeSlotClick} onAvailabilityConfirm={this.onAvailabilityConfirm} onCostConfirm={this.onCostConfirm} costHandler = {this.costHandler} currencyHandler = {this.currencyHandler} Cancel = {this.Cancel} onConfirm = {this.onConfirm} selectedSlot={this.props.selectedSlot} onTimeSlotClick={this.onTimeSlotClick} availableTimeSlots={this.props.availableTimeSlots} onDateChange={this.onDateChange} photo={this.props.photo} instructorPhoto={this.props.instructorPhoto} instructor={this.props.currentUser} backButton={this.backButton} loader={this.props.loader}/>);
+    return (<ManageAP loader={this.props.loader} onPendingTimeSlotClick={this.onPendingTimeSlotClick} onAvailabilityConfirm={this.onAvailabilityConfirm} onCostConfirm={this.onCostConfirm} costHandler = {this.costHandler} currencyHandler = {this.currencyHandler} Cancel = {this.Cancel} onConfirm = {this.onConfirm} selectedSlot={this.props.selectedSlot} onTimeSlotClick={this.onTimeSlotClick} availableTimeSlots={this.props.availableTimeSlots} onDateChange={this.onDateChange} photo={this.props.photo} instructorPhoto={this.props.instructorPhoto} instructor={this.props.currentUser} backButton={this.backButton} loader={this.props.loader}/>);
   }
 }
 
@@ -183,6 +188,8 @@ const mapDispatchToProps = (dispatch) => {
     resetConfirmationDialogue: () => dispatch(resetConfirmationDialogueAction()),
     declineStudent: (message, student) => dispatch(declineStudentAction(message, student)),
     confirmStudent: (student) => dispatch(confirmStudentAction(student)),
+    showLoader: () => dispatch({"type": SHOW_MAIN_LOADER}),
+    hideLoader: () => dispatch({"type": HIDE_MAIN_LOADER}),
   };
 };
 
@@ -196,6 +203,7 @@ const mapStateToProps = (state) => {
     student: state.mscreducer.student,
     studentPhoto: state.mscreducer.studentPhoto,
     scheduled: state.mscreducer.scheduled,
+    loader: state.mscreducer.loader,
   };
 };
 

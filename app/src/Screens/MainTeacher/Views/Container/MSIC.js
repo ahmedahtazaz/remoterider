@@ -5,7 +5,7 @@ import MSIPP from '../Presentational/MSIPP';
 import { connect } from 'react-redux';
 import {negativeAction, errorDialogueAction, setStudentForDeliveryAction, confirmStudentAction, declineStudentAction, resetConfirmationDialogueAction, showConfirmationDialogueAction, profilePressedAction, menuPresedAction, loadPhotoAction, loadSlidingImagesAction, loadScheduledLessonsAction, loadPendingLessonsAction} from '../../Actions/MSIA';
 import RNExitApp from 'react-native-exit-app';
-import { LOAD_LESSON_CREDIT_URL, DECLINE_STUDENT_FAILURE, LOAD_CURRENT_USER } from '../../../../Commons/Constants';
+import { LOAD_LESSON_CREDIT_URL, DECLINE_STUDENT_FAILURE, LOAD_CURRENT_USER, SHOW_MAIN_LOADER, HIDE_MAIN_LOADER } from '../../../../Commons/Constants';
 
 class MSIC extends Component {
 
@@ -68,7 +68,10 @@ class MSIC extends Component {
       this.props.showErrorDialogue(() => {this.props.negativeButtonPressed()}, 'Please add a reason to Decline.');
     }
     else
+    {
+      this.props.showLoader();
       this.props.declineStudent(message, pending);
+    }
   }
 
   positivePressed(pending)
@@ -76,7 +79,10 @@ class MSIC extends Component {
     this.props.resetConfirmationDialogue();
 
     if(this.canConfirm())
+    {
+      this.props.showLoader();
       this.props.confirmStudent(pending);
+    }
     else
       this.props.showErrorDialogue(() => {this.props.negativeButtonPressed()}, 'You need to update your Lesson Credits to confirm.');
   }
@@ -118,6 +124,7 @@ class MSIC extends Component {
 
     if(this.props.reload)
     {
+      this.props.hideLoader();
       this.props.resetReload();
       this.props.loadPhoto();
       this.props.loadSlidingImages();
@@ -128,9 +135,9 @@ class MSIC extends Component {
     }
 
     if(this.props.currentUser && this.props.currentUser.verified && this.props.currentUser.verified.toString() === 'true')
-      return (<MSIP updateCredit={this.updateCredit} currentUser={this.props.currentUser} onScheduledLessonsClick={this.onScheduledLessonsClick} onPendingClick={this.onPendingClick} pending={this.props.pending} availabilityPress={this.availabilityPress} scheduled={this.props.scheduled} images={this.props.slidingImages} backButton={this.backButtonPress} menuPress = {this.menuPress} photo = {this.props.photo} profilePress={this.profilePress}/>);
+      return (<MSIP loader={this.props.loader} updateCredit={this.updateCredit} currentUser={this.props.currentUser} onScheduledLessonsClick={this.onScheduledLessonsClick} onPendingClick={this.onPendingClick} pending={this.props.pending} availabilityPress={this.availabilityPress} scheduled={this.props.scheduled} images={this.props.slidingImages} backButton={this.backButtonPress} menuPress = {this.menuPress} photo = {this.props.photo} profilePress={this.profilePress}/>);
     else
-      return (<MSIPP currentUser={this.props.currentUser} onScheduledLessonsClick={this.onScheduledLessonsClick} onPendingClick={this.onPendingClick} pending={this.props.pending} availabilityPress={this.availabilityPress} scheduled={this.props.scheduled} images={this.props.slidingImages} backButton={this.backButtonPress} menuPress = {this.menuPress} photo = {this.props.photo} profilePress={this.profilePress}/>);
+      return (<MSIPP loader={this.props.loader} currentUser={this.props.currentUser} onScheduledLessonsClick={this.onScheduledLessonsClick} onPendingClick={this.onPendingClick} pending={this.props.pending} availabilityPress={this.availabilityPress} scheduled={this.props.scheduled} images={this.props.slidingImages} backButton={this.backButtonPress} menuPress = {this.menuPress} photo = {this.props.photo} profilePress={this.profilePress}/>);
   }
 }
 
@@ -153,6 +160,8 @@ const mapDispatchToProps = (dispatch) => {
     showErrorDialogue: (negativeButtonPressed, message) => dispatch(errorDialogueAction(negativeButtonPressed, message)),
     negativeButtonPressed: () => dispatch(negativeAction()),
     loadUpdateLessonCreditURL: () => dispatch({"type": LOAD_LESSON_CREDIT_URL}),
+    showLoader: () => dispatch({"type": SHOW_MAIN_LOADER}),
+    hideLoader: () => dispatch({"type": HIDE_MAIN_LOADER}),
   };
 };
 
@@ -164,6 +173,7 @@ const mapStateToProps = (state) => {
       slidingImages: state.mscreducer.slidingImages,
       reload: state.mscreducer.reload,
       currentUser: state.mscreducer.currentUser,
+      loader: state.mscreducer.loader,
   };
 };
 
