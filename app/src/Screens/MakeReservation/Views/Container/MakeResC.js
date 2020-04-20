@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import MakeResP from '../Presentational/MakeResP';
 import { dialogueOKAction, showialogueAction, loadAvailableTimeSlotsAction, clearAvailableTimeSlotsAction, setSelectedTimeSlotAction, resetSelectedTimeSlotAction, makeReservationAction, resetmakeReservationAction } from '../../Actions/MakeResA';
+import { SHOW_MAIN_LOADER, HIDE_MAIN_LOADER } from '../../../../Commons/Constants';
 
 class MakeResC extends Component {
 
@@ -53,7 +54,10 @@ class MakeResC extends Component {
     if(Number.parseInt(this.props.availableTimeSlots[slotIndex].time, 10) < Date.now())
       this.props.showDialogue(this.dialogueButtonPress, 'You cannot make reservation in the past.');
     else
+    {
+      this.props.showLoader();
       this.props.makeReservation(Number.parseInt(this.props.availableTimeSlots[slotIndex].time, 10), this.props.instructor);
+    }
   }
 
   Cancel()
@@ -72,10 +76,11 @@ class MakeResC extends Component {
   render() {
     if(this.props.makeReservMessage)
     {
+        this.props.hideLoader();
         this.props.showDialogue(this.dialogueButtonPress, this.props.makeReservMessage);
     }
 
-    return (<MakeResP Cancel = {this.Cancel} onConfirm = {this.onConfirm} selectedSlot={this.props.selectedSlot} onTimeSlotClick={this.onTimeSlotClick} availableTimeSlots={this.props.availableTimeSlots} onDateChange={this.onDateChange} photo={this.props.photo} instructorPhoto={this.props.instructorPhoto} instructor={this.props.instructor} backButton={this.backButton} loader={this.props.loader}/>);
+    return (<MakeResP loader={this.props.loader} Cancel = {this.Cancel} onConfirm = {this.onConfirm} selectedSlot={this.props.selectedSlot} onTimeSlotClick={this.onTimeSlotClick} availableTimeSlots={this.props.availableTimeSlots} onDateChange={this.onDateChange} photo={this.props.photo} instructorPhoto={this.props.instructorPhoto} instructor={this.props.instructor} backButton={this.backButton} loader={this.props.loader}/>);
   }
 }
 
@@ -90,6 +95,8 @@ const mapDispatchToProps = (dispatch) => {
     resetMakeReservation: () => dispatch(resetmakeReservationAction()),
     showDialogue: (negativeButtonPressed, message) => dispatch(showialogueAction(negativeButtonPressed, message)),
     dialogueOkPressed: () => dispatch(dialogueOKAction()),
+    showLoader: () => dispatch({"type": SHOW_MAIN_LOADER}),
+    hideLoader: () => dispatch({"type": HIDE_MAIN_LOADER}),
   };
 };
 
@@ -101,6 +108,7 @@ const mapStateToProps = (state) => {
     availableTimeSlots: state.mscreducer.availableTimeSlots,
     selectedSlot: state.mscreducer.selectedSlot,
     makeReservMessage: state.mscreducer.makeReservMessage,
+    loader: state.mscreducer.loader,
   };
 };
 

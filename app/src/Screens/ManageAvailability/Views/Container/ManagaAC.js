@@ -44,6 +44,7 @@ class ManageAC extends Component {
 
   onAvailabilityConfirm()
   {
+    this.props.showLoader();
     this.props.availabilityConfirm(this.props.availableTimeSlots);
   }
 
