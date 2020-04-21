@@ -65,7 +65,7 @@ class LDC extends Component {
     }
 
     if(this.props.calling)
-      return(<CallP endCall={this.endCall}></CallP>);
+      return(<CallP isInstructor={true} channelName={this.props.student.uuid} endCall={this.endCall}></CallP>);
     else
       return (<LDP loader={this.props.loader} declineMessageHandler={this.declineMessageHandler} callnow={this.callnow} cancelReservation={this.cancelReservation} studentPhoto={this.props.studentPhoto} student={this.props.student} backButton={this.backButton}/>);
   }

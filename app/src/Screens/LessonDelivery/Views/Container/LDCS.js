@@ -50,7 +50,7 @@ class LDCS extends Component {
     }
 
     if(this.props.calling)
-      return(<CallP endCall={this.endCall}></CallP>);
+      return(<CallP isInstructor={false} channelName={this.props.currentUser.uuid} endCall={this.endCall}></CallP>);
     else
       return (<LDPS callnow={this.callnow} cancelReservation={this.cancelReservation} studentPhoto={this.props.studentPhoto} student={this.props.student} backButton={this.backButton}/>);
   }
@@ -71,6 +71,7 @@ const mapStateToProps = (state) => {
     studentPhoto: state.ldrReducer.studentPhoto,
     ldrback: state.mscreducer.ldrback,
     calling: state.ldrReducer.calling,
+    currentUser: state.mscreducer.currentUser,
   };
 };
 

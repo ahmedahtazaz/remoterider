@@ -36,7 +36,7 @@ export default class CallP extends Component {
           peerIds: [],                                       //Array for storing connected peers
           uid: Math.floor(Math.random() * 100),              //Generate a UID for local user
           appid: config.appid,
-          channelName: 'channel-x',                        //Channel Name for the current session
+          channelName: props.channelName,                        //Channel Name for the current session
           joinSucceed: false,                                //State variable for storing success
         };
         if (Platform.OS === 'android') {                    //Request required permissions from Android
@@ -71,6 +71,7 @@ export default class CallP extends Component {
       * @description Function to start the call
       */
       startCall = () => {
+        console.log('channel name', this.state.channelName);
         RtcEngine.joinChannel(this.state.channelName, this.state.uid);  //Join Channel
         RtcEngine.enableAudio();                                        //Enable the audio
       }
@@ -154,14 +155,19 @@ export default class CallP extends Component {
                                   remoteUid={this.state.peerIds[1]} mode={1} />
                               </View>
                               : this.state.peerIds.length > 0                   //view for videostream
-                                ? <AgoraView style={styles.full}
+                                ? this.props.isInstructor ?  
+                                <AgoraView style={styles.full}
+                                remoteUid={this.state.peerIds[0]} mode={1} /> :
+                                <AgoraView style={styles.localVideoStyle}
                                   remoteUid={this.state.peerIds[0]} mode={1} />
-                                : <View style={{flex: 1}}>
+                                : <View style={{height: hp(10), width: wp(100)}}>
                                   <Text style={styles.noUserText}> No users connected </Text>
                                 </View>
                       }
-                      <AgoraView style={styles.localVideoStyle}
-                        zOrderMediaOverlay={true} showLocalVideo={true} mode={1} />
+                      {(this.props.isInstructor) ? <AgoraView style={styles.localVideoStyle}
+                        zOrderMediaOverlay={true} showLocalVideo={true} mode={1} /> : 
+                        <AgoraView style={styles.full}
+                        zOrderMediaOverlay={true} showLocalVideo={true} mode={1} />} 
                     </View>
                 }
               </View>
