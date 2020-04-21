@@ -17,6 +17,7 @@ class SplashC extends Component {
       this.signInFailure = this.signInFailure.bind(this);
       this.signInCallBack = this.signInCallBack.bind(this);
       this.handleAppStateChange = this.handleAppStateChange.bind(this);
+      this.apiCall = this.apiCall.bind(this);
   }
 
   componentDidMount()
@@ -37,13 +38,22 @@ class SplashC extends Component {
   {
     if (user) 
     {
-      this.props.checkUserType();
-      this.signInSuccess();
+      setTimeout(() => {
+
+        this.apiCall();
+        
+      }, 1000);
     } 
     else 
     {
       this.signInFailure();
     }
+  }
+
+  apiCall()
+  {
+      this.props.checkUserType();
+      this.signInSuccess();
   }
 
   signInUser()
