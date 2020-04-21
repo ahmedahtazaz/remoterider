@@ -92,12 +92,22 @@ export default class MSP extends Component {
                       </Text> 
                     </View>
                   </View>
-                  <View style={{bottom:0, alignItems: 'center', justifyContent: 'center', flexDirection: 'row', opacity: 1, position: 'absolute', backgroundColor: 'green', width: wp(61.3), height: hp(4)}}>
+                  {(item.confirmed.toString() === 'true') ? <View style={{bottom:0, alignItems: 'center', justifyContent: 'center', flexDirection: 'row', opacity: 1, position: 'absolute', backgroundColor: 'grey', width: wp(61.3), height: hp(4)}}>
                   <Text 
                           numberOfLines={1} style={{width: wp(61.3), fontSize: hp(2),fontWeight: '400',textAlign: 'center',color: '#ffffff',fontFamily: getRegularFont()}}>
-                              {item.confirmed.toString() === 'true' ? 'Accepted' : item.confirmed.toString() === 'false' && !item.declined ? 'Requested' : ('Declined'+(item.declineMessage !== null ? ' : '+item.declineMessage : ''))}
+                              {'Accepted' }
                       </Text> 
-                  </View>
+                  </View> : (item.confirmed.toString() === 'false' && !item.declined) ? <View style={{bottom:0, alignItems: 'center', justifyContent: 'center', flexDirection: 'row', opacity: 1, position: 'absolute', backgroundColor: 'green', width: wp(61.3), height: hp(4)}}>
+                  <Text 
+                          numberOfLines={1} style={{width: wp(61.3), fontSize: hp(2),fontWeight: '400',textAlign: 'center',color: '#ffffff',fontFamily: getRegularFont()}}>
+                              {'Requested' }
+                      </Text> 
+                  </View> : <View style={{bottom:0, alignItems: 'center', justifyContent: 'center', flexDirection: 'row', opacity: 1, position: 'absolute', backgroundColor: 'red', width: wp(61.3), height: hp(4)}}>
+                  <Text 
+                          numberOfLines={1} style={{width: wp(61.3), fontSize: hp(2),fontWeight: '400',textAlign: 'center',color: '#ffffff',fontFamily: getRegularFont()}}>
+                              {'Declined'+(item.declineMessage !== null ? ' : '+item.declineMessage : '')}
+                      </Text> 
+                  </View> }
                 </TouchableOpacity>
               )}
             }
