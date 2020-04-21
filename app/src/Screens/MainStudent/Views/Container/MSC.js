@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import {setInstructorForDeliveryAction, profilePressedAction, menuPresedAction, loadPhotoAction, loadSlidingImagesAction, loadReservationsAction, loadCategoriesAction} from '../../Actions/MSA';
 import RNExitApp from 'react-native-exit-app';
 import { LOAD_CURRENT_USER } from '../../../../Commons/Constants';
+import firestore from '@react-native-firebase/firestore';
+import auth from '@react-native-firebase/auth';
 
 class MSC extends Component {
 
@@ -17,6 +19,8 @@ class MSC extends Component {
       this.onReservationClick = this.onReservationClick.bind(this);
       this.makeReservationsHandler = this.makeReservationsHandler.bind(this);
       this.apiCall = this.apiCall.bind(this);
+      this.subscribeReservations = this.subscribeReservations.bind(this);
+      this.unSubscribeReservations = this.unSubscribeReservations.bind(this);
   }
 
   apiCall()
@@ -28,14 +32,34 @@ class MSC extends Component {
     this.props.loadCurrentUser();
   }
 
+  subscribeReservations()
+  {
+    var currentUser = auth().currentUser;
+
+    let doc = firestore().collection('Reservations').doc(currentUser.uid);
+
+    doc.onSnapshot(docSnapshot => {
+      this.apiCall();
+    }, err => {
+      console.log(`Encountered error: ${err}`);
+    });
+  }
+
+  unSubscribeReservations()
+  {
+    firestore().collection('Reservations').onSnapshot(() => {});
+  }
+
   componentWillUnmount()
   {
+    this.unSubscribeReservations();
     this.props.menuPresed(true);
     this.props.profilePressed(true);
   }
 
   componentDidMount()
   {
+    this.subscribeReservations();
     this.focusListener = this.props.navigation.addListener('focus', () => {
       this.apiCall();
     })
