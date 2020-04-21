@@ -12,13 +12,13 @@ class CheckBox extends React.PureComponent {
         if(this.props.checked)
         {   
             return(
-                <TouchableOpacity style={{ flex: .3}} onPress={() => {this.props.onPress(this.props.checked)}}>
+                <TouchableOpacity style={{ flex: .4}} onPress={() => {this.props.onPress(this.props.checked)}}>
                     <FitImage style={{flex:1}} source={checked}/>
                 </TouchableOpacity>);
         }
         else{
             return(
-                <TouchableOpacity style={{ flex: .3}} onPress={() => {this.props.onPress(this.props.checked)}}>
+                <TouchableOpacity style={{ flex: .4}} onPress={() => {this.props.onPress(this.props.checked)}}>
                     <FitImage style={{ flex: 1}} source={unchecked}/>
                 </TouchableOpacity>);
         }

@@ -73,7 +73,7 @@ export default class App extends Component {
         </View>
         <View style={styles.tcStyle}>
             <CheckBox onPress={this.props.onTCPress}/>
-            <TouchableOpacity style={{height: hp(4)}} onPress={this.props.tcClickHandler}>
+            <TouchableOpacity style={{height: hp(6)}} onPress={this.props.tcClickHandler}>
                 <Hyperlink linkStyle={{ color: 'white', fontSize: hp(2) }} linkText={url => url === 'https://www.google.com' ? 'Terms & Conditions' : url}>
                     <Text 
                         numberOfLines={1} style={styles.tcText}>
@@ -194,7 +194,7 @@ const styles = StyleSheet.create({
         borderBottomColor: '#598a6f',
     },
     tcStyle:{
-        height: hp(4),
+        height: hp(6),
         flexDirection: 'row',
         alignSelf: 'center',
         marginBottom: hp(3),
@@ -207,7 +207,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         color: '#59836c',
         fontFamily: getRegularFont(),
-        marginTop: hp(1),
+        marginTop: hp(2),
         paddingLeft: wp(.5)
       },
 })
