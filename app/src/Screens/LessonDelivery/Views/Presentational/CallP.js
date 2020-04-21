@@ -88,6 +88,10 @@ export default class CallP extends Component {
         RtcEngine.destroy();
         this.props.endCall();
       }
+
+      switchCamera = () => {
+        RtcEngine.switchCamera();
+      }
       /**
       * @name videoView
       * @description Function to return the view for the app
@@ -104,6 +108,9 @@ export default class CallP extends Component {
                   <TouchableOpacity title="End Call" onPress={this.endCall} style={styles.buttonEnd}>
                     <Text style={styles.buttonText}> End Call </Text>
                   </TouchableOpacity>
+                  {(this.state.joinSucceed) ? <TouchableOpacity title="Switch Camera" onPress={this.switchCamera} style={styles.buttonCamera}>
+                    <Text style={styles.buttonText}> Switch Camera </Text>
+                  </TouchableOpacity> : null}
                 </View>
                 {
                   !this.state.joinSucceed ?
@@ -197,6 +204,12 @@ export default class CallP extends Component {
             backgroundColor: 'red',
             borderRadius: 25,
         },
+        buttonCamera: {
+          paddingHorizontal: 20,
+          paddingVertical: 10,
+          backgroundColor: 'blue',
+          borderRadius: 25,
+      },
         buttonText: {
             color: '#fff',
         },
