@@ -368,7 +368,7 @@ then((doc) => {
             {
                 if(doc.docs[i].data().name)
                 {
-                    if(doc.docs[i].data().name.includes(searchString) || doc.docs[i].data().name.includes(searchString.toLowerCase()) || doc.docs[i].data().name.includes(searchString.toUpperCase()) )
+                    if(doc.docs[i].data().name.toLowerCase().includes(searchString.toLowerCase()))
                         dataUsers.push(doc.docs[i].data());
                 }
             }
