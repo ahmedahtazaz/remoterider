@@ -72,55 +72,7 @@ export default class ResSearchP extends Component {
             )}
           }
           numColumns={2}
-          keyExtractor={(item, index) => index.toString()}/></View> :
-            <View style={styles.featuredInstructorsContainer}>
-
-            <Text 
-                numberOfLines={1} style={{marginLeft: wp(3), fontSize: hp(3),fontWeight: '700',color: '#ffffff',fontFamily: getBoldFont()}}>
-                    {'Featured Instructors'}
-            </Text> 
-
-            {(this.props.featured) ? 
-            <FlatList contentContainerStyle={{ marginLeft: wp(3),marginTop: hp(2),flexGrow: 1 }}
-            data={this.props.featured} 
-            renderItem={
-              ({ item, index }) => { return(
-                <TouchableOpacity style={{ marginBottom: hp(1.3), marginRight: wp(3), backgroundColor: 'transparent', height: hp(13), width: wp(50)}} onPress={ () => {this.props.onInstructorClickFeatured(item, index)}}>
-                  <Image source={{uri: this.props.featured.photos[index]}} style={{height: hp(13), width: wp(50), resizeMode: 'stretch'}}/>
-                  <View style={{alignItems: 'center', justifyContent: 'center', flexDirection: 'column', opacity: .6, position: 'absolute', backgroundColor: 'green', width: wp(50), height: hp(13)}}>
-                    <View style={{backgroundColor: 'transparent', flexDirection: 'row', width: wp(50)}}>
-                      <Text 
-                          numberOfLines={1} style={{ marginLeft: wp(1), fontSize: hp(2),fontWeight: '400',color: '#ffffff',fontFamily: getRegularFont()}}>
-                              {'Name : '}
-                      </Text> 
-                      <Text 
-                          style={{width: wp(35), marginLeft: wp(1), fontSize: hp(2),fontWeight: '400',color: '#ffffff',fontFamily: getRegularFont()}}>
-                              {item.Name || item.name}
-                      </Text> 
-                    </View>
-                    <View style={{backgroundColor: 'transparent', flexDirection: 'row', width: wp(50), height: hp(3)}}>
-                      <Text 
-                          numberOfLines={1} style={{marginLeft: wp(1), fontSize: hp(2),fontWeight: '400',color: '#ffffff',fontFamily: getRegularFont()}}>
-                              {'Cost : '}
-                      </Text> 
-                      <Text 
-                          numberOfLines={1} style={{marginLeft: wp(1), fontSize: hp(2),fontWeight: '400',color: '#ffffff',fontFamily: getRegularFont()}}>
-                              {item.Cost || item.cost}
-                      </Text> 
-                    </View>
-                  </View>
-                </TouchableOpacity>
-              )}
-            }
-            numColumns={2}
-            keyExtractor={(item, index) => index.toString()}/> : 
-            <TouchableOpacity style={{marginTop: hp(5), justifyContent: "center",borderRadius: hp(6), height: hp(15), width: wp(90.3) , backgroundColor: '#006b31', alignSelf: 'center'}}>
-            <Text 
-                numberOfLines={1} style={{fontSize: hp(2),fontWeight: '700',textAlign: 'center',color: '#ffffff',fontFamily: getBoldFont()}}>
-                    {'No Featured Instructors are available'}
-            </Text></TouchableOpacity> }
-
-          </View>}
+          keyExtractor={(item, index) => index.toString()}/></View> : null}
           
         </View>
       </LinearGradient>);

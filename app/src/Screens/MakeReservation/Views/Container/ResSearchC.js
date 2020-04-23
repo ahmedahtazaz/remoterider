@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import ResSearchP from '../Presentational/ResSearchP';
 import { setInstructorAction, loadFeaturedAction, loadSearchAction } from '../../Actions/ResSearchA';
+import { CLEAR_SEARCH_DATA } from '../../../../Commons/Constants';
 
 class ResSearchC extends Component {
 
@@ -16,9 +17,9 @@ class ResSearchC extends Component {
       this.searchButton = this.searchButton.bind(this);
   }
 
-  componentWillMount()
+  componentWillUnmount()
   {
-      this.props.loadFeatured();
+    this.props.clearSearch();
   }
 
   backButton()
@@ -63,6 +64,7 @@ const mapDispatchToProps = (dispatch) => {
     loadFeatured: () => dispatch(loadFeaturedAction()),
     loadSearch: (querry) => dispatch(loadSearchAction(querry)),
     setInstructor: (instructor, instructorPhoto) => dispatch(setInstructorAction(instructor, instructorPhoto)),
+    clearSearch: () => dispatch({"type": CLEAR_SEARCH_DATA}),
   };
 };
 
