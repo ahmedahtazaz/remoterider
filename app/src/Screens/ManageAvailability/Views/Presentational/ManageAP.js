@@ -24,6 +24,29 @@ export default class ManageAP extends Component {
     return 'AM';
   }
 
+  getTimeToShow(time)
+  {
+    if(time)
+    {
+      let dateCurrent = new Date(Number.parseInt(time, 10));
+      let hoursCurrent = dateCurrent.getHours();
+
+      hoursCurrent = hoursCurrent % 12;
+      hoursCurrent = hoursCurrent ? hoursCurrent : 12;
+
+      let dateNext = new Date(Number.parseInt(time, 10) + 3600000);
+      let hoursNext = dateNext.getHours();
+
+      hoursNext = hoursNext % 12;
+      hoursNext = hoursNext ? hoursNext : 12;
+
+      return hoursCurrent+'.00 to '+hoursNext+'.00';
+    }
+
+    return '';
+
+  }
+
   getSlotsView(status, item, index)
   {
         switch(status)
@@ -136,7 +159,7 @@ export default class ManageAP extends Component {
                  <View style={{alignItems: 'center', justifyContent: 'center', borderRadius: hp(2), backgroundColor: '#006b31', flexDirection: 'column', width: wp(40), height: hp(10)}}>
                     <Text 
                         numberOfLines={1} style={{width: wp(40), marginLeft: wp(1), fontSize: hp(1.8),fontWeight: '400',textAlign: 'center',color: '#ffffff',fontFamily: getRegularFont()}}>
-                            {item.showAbleTime+' '+this.getAMPM(item.time)}
+                            {this.getTimeToShow(item.time)+' '+this.getAMPM(item.time)}
                     </Text> 
                     {this.getSlotsView(item.status, item, index)}  
                  </View>
