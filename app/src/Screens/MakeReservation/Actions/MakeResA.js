@@ -1,4 +1,4 @@
-import { SET_DIALOGUE, LOAD_AVAILABLE_TIME_SLOTS, LOAD_AVAILABLE_TIME_SLOTS_FAILURE, SET_SELECTED_SLOT, RESET_SELECTED_SLOT, MAKE_RESERVATION, RESET_MAKE_RESERVATION} from "../../../Commons/Constants";
+import { SET_DIALOGUE, LOAD_AVAILABLE_TIME_SLOTS, SET_SELECTED_SLOT, RESET_SELECTED_SLOT, MAKE_RESERVATION, RESET_MAKE_RESERVATION, CLEAR_AVAILABLE_TIME_SLOTS} from "../../../Commons/Constants";
 
 export const loadAvailableTimeSlotsAction = (date, uuid) => {
     return {
@@ -10,7 +10,7 @@ export const loadAvailableTimeSlotsAction = (date, uuid) => {
 
   export const clearAvailableTimeSlotsAction = () => {
     return {
-      type:`${LOAD_AVAILABLE_TIME_SLOTS_FAILURE}`,
+      type:`${CLEAR_AVAILABLE_TIME_SLOTS}`,
     }
   };
 

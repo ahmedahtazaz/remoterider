@@ -50,7 +50,7 @@ export default class MakeResP extends Component {
           <View style={{height:hp(21), marginTop: hp(2), flexDirection: 'column'}}>
           <Text 
             numberOfLines={1} style={{height: hp(3), marginLeft: wp(3), fontSize: hp(2.2),fontWeight: '700',color: '#ffffff',fontFamily: getBoldFont()}}>
-                {'Available Lesson Times'}
+                { this.props.availableTimeSlots.length > 0 ? 'Available Lesson Times' : 'No Availability'}
           </Text>
           <FlatList contentContainerStyle={{ marginLeft: wp(3),marginTop: hp(1),flexGrow: 1 }}
             data={this.props.availableTimeSlots} 
