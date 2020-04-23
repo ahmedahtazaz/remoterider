@@ -9,6 +9,20 @@ import { ScrollView } from 'react-native-gesture-handler';
 
 export default class MakeResP extends Component {
 
+  getAMPM(time)
+  {
+    if(time)
+    {
+      let date = new Date(Number.parseInt(time, 10));
+      let hours = date.getHours();
+
+      if(hours > 10 && hours < 23)
+        return 'PM';
+    }
+
+    return 'AM';
+  }
+
   render() {
     const backArrow = require('../../../../assets/backArrow.png');
     const menu = require('../../../../assets/menu.png');
@@ -61,13 +75,13 @@ export default class MakeResP extends Component {
                  <View style={{borderRadius: hp(2),  alignItems: 'center', justifyContent: 'center', backgroundColor: '#5a9c79', flexDirection: 'row', width: wp(40), height: hp(5)}}>
                  <Text 
                      numberOfLines={1} style={{width: wp(40), marginLeft: wp(1), fontSize: hp(1.8),fontWeight: '400',textAlign: 'center',color: '#ffffff',fontFamily: getRegularFont()}}>
-                         {item.showAbleTime}
+                         {item.showAbleTime+' '+this.getAMPM(item.time)}
                  </Text> 
              </View> :
              <View style={{borderRadius: hp(2),  alignItems: 'center', justifyContent: 'center', backgroundColor: '#006b31', flexDirection: 'row', width: wp(40), height: hp(5)}}>
                 <Text 
                     numberOfLines={1} style={{width: wp(40), marginLeft: wp(1), fontSize: hp(1.8),fontWeight: '400',textAlign: 'center',color: '#ffffff',fontFamily: getRegularFont()}}>
-                        {item.showAbleTime}
+                        {item.showAbleTime+' '+this.getAMPM(item.time)}
                 </Text> 
             </View>}
                 </TouchableOpacity>
