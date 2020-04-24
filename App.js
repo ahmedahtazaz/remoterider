@@ -23,6 +23,7 @@ import PVSC from './app/src/Screens/ProfileView/Views/Container/PVSC';
 import PVC from './app/src/Screens/ProfileView/Views/Container/PVC';
 import TCC from './app/src/Screens/TermsAndConditions/Views/Container/TCC';
 import TCSC from './app/src/Screens/TermsAndConditions/Views/Container/TCSC';
+import UTVC from './app/src/Screens/UpdateTeacher/Views/Container/UTVC';
 
 const sagaMiddleware = createSagaMiddleware();
 const store = createStore(createRootReducer(), compose(applyMiddleware(sagaMiddleware),),);
@@ -54,6 +55,7 @@ export default class App extends Component {
               <Stack.Screen name="Profile View Instructor" component={PVC} options={{ headerShown: false}}/>
               <Stack.Screen name="Terms and Conditions" component={TCC} options={{ headerShown: false}}/>
               <Stack.Screen name="Terms and Conditions Student" component={TCSC} options={{ headerShown: false}}/>
+              <Stack.Screen name="Update Teacher View" component={UTVC} options={{ headerShown: false}}/>
             </Stack.Navigator>
           </NavigationContainer>    
       </Provider>
