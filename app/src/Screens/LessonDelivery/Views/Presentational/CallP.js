@@ -164,8 +164,7 @@ export default class CallP extends Component {
                                   <Text style={styles.noUserText}> No users connected </Text>
                                 </View>
                       }
-                      {(this.props.isInstructor) ? <AgoraView style={styles.localVideoStyle}
-                        zOrderMediaOverlay={true} showLocalVideo={true} mode={1} /> : 
+                      {(this.props.isInstructor) ? null : 
                         <AgoraView style={styles.full}
                         zOrderMediaOverlay={true} showLocalVideo={true} mode={1} />} 
                     </View>
