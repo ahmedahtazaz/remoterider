@@ -37,13 +37,36 @@ export default class CallP extends Component {
           uid: Math.floor(Math.random() * 100),              //Generate a UID for local user
           appid: config.appid,
           channelName: props.channelName,                        //Channel Name for the current session
-          joinSucceed: false,                                //State variable for storing success
+          joinSucceed: false,
+          currwentZoomFactor: 1,                                //State variable for storing success
         };
         if (Platform.OS === 'android') {                    //Request required permissions from Android
           requestCameraAndAudioPermission().then(_ => {
           });
         }
+
+        this.setCameraZoomIn = this.setCameraZoomIn.bind(this);
+        this.setCameraZoomOut = this.setCameraZoomOut.bind(this);
       }
+
+      componentWillUnmount () {
+        if (this.state.joinSucceed) {
+          RtcEngine.leaveChannel().then(res => {
+            RtcEngine.removeAllListeners();
+            RtcEngine.destroy();
+            RtcEngine.removeEmitter();
+          }).catch(err => {
+            console.log("[agora]: err", err);
+            RtcEngine.removeAllListeners();
+            RtcEngine.destroy();
+            console.log("leave channel failed", err);
+          })
+        } else {
+          RtcEngine.removeAllListeners();
+          RtcEngine.destroy();
+        }
+      }
+      
       componentDidMount() {
         RtcEngine.on('userJoined', (data) => {
           const { peerIds } = this.state;                   //Get currrent peer IDs
@@ -84,6 +107,7 @@ export default class CallP extends Component {
         this.setState({
           peerIds: [],
           joinSucceed: false,
+          currwentZoomFactor: 1, 
         });
 
         RtcEngine.destroy();
@@ -97,15 +121,30 @@ export default class CallP extends Component {
       * @name videoView
       * @description Function to return the view for the app
       */
+
+      setCameraZoomIn()
+      {
+        this.state.currwentZoomFactor = this.state.currwentZoomFactor + 0.2;
+        RtcEngine.setCameraZoomFactor(this.state.currwentZoomFactor);
+      }
+
+      setCameraZoomOut()
+      {
+        if(this.state.currwentZoomFactor > 1)
+        {this.state.currwentZoomFactor = this.state.currwentZoomFactor - 0.2;
+          RtcEngine.setCameraZoomFactor(this.state.currwentZoomFactor);
+        }
+      }
+
       videoView() {
         return (
           <View style={styles.max}>
             {
               <View style={styles.max}>
                 <View style={styles.buttonHolder}>
-                  <TouchableOpacity title="Start Call" onPress={this.startCall} style={styles.buttonStart}>
+                {(!this.state.joinSucceed) ? <TouchableOpacity title="Start Call" onPress={this.startCall} style={styles.buttonStart}>
                     <Text style={styles.buttonText}> Start Call </Text>
-                  </TouchableOpacity>
+                  </TouchableOpacity> : null}           
                   <TouchableOpacity title="End Call" onPress={this.endCall} style={styles.buttonEnd}>
                     <Text style={styles.buttonText}> End Call </Text>
                   </TouchableOpacity>
@@ -113,6 +152,15 @@ export default class CallP extends Component {
                     <Text style={styles.buttonText}> Switch Camera </Text>
                   </TouchableOpacity> : null}
                 </View>
+                {(this.state.joinSucceed && !this.props.isInstructor) ? 
+                <View style={styles.buttonHolder2}>
+                  <TouchableOpacity title="Zoom In" onPress={this.setCameraZoomIn} style={styles.buttonZoomIn}>
+                    <Text style={styles.buttonText}> Zoom In </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity title="Zoom Out" onPress={this.setCameraZoomOut} style={styles.buttonCameraZoomOut}>
+                    <Text style={styles.buttonText}> Zoom Out </Text>
+                  </TouchableOpacity>
+                  </View> : null}
                 {
                   !this.state.joinSucceed ?
                     <View style={{flex: 1}}></View>
@@ -164,8 +212,7 @@ export default class CallP extends Component {
                                   <Text style={styles.noUserText}> No users connected </Text>
                                 </View>
                       }
-                      {(this.props.isInstructor) ? <AgoraView style={styles.localVideoStyle}
-                        zOrderMediaOverlay={true} showLocalVideo={true} mode={1} /> : 
+                      {(this.props.isInstructor) ? null : 
                         <AgoraView style={styles.full}
                         zOrderMediaOverlay={true} showLocalVideo={true} mode={1} />} 
                     </View>
@@ -198,6 +245,14 @@ export default class CallP extends Component {
             flexDirection: 'row',
             justifyContent: 'space-evenly',
         },
+        buttonHolder2: {
+          height: 100,
+          alignItems: 'center',
+          flex: 1,
+          flexDirection: 'row',
+          justifyContent: 'space-evenly',
+          marginTop: 20,
+      },
         buttonStart: {
             paddingHorizontal: 20,
             paddingVertical: 10,
@@ -216,6 +271,18 @@ export default class CallP extends Component {
           backgroundColor: 'blue',
           borderRadius: 25,
       },
+      buttonZoomIn: {
+        paddingHorizontal: 20,
+        paddingVertical: 10,
+        backgroundColor: 'brown',
+        borderRadius: 25,
+    },
+    buttonCameraZoomOut: {
+      paddingHorizontal: 20,
+      paddingVertical: 10,
+      backgroundColor: 'purple',
+      borderRadius: 25,
+  },
         buttonText: {
             color: '#fff',
         },
