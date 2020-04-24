@@ -148,7 +148,7 @@ export default class CallP extends Component {
                   <TouchableOpacity title="End Call" onPress={this.endCall} style={styles.buttonEnd}>
                     <Text style={styles.buttonText}> End Call </Text>
                   </TouchableOpacity>
-                  {(this.state.joinSucceed) ? <TouchableOpacity title="Switch Camera" onPress={this.switchCamera} style={styles.buttonCamera}>
+                  {(this.state.joinSucceed && !this.props.isInstructor) ? <TouchableOpacity title="Switch Camera" onPress={this.switchCamera} style={styles.buttonCamera}>
                     <Text style={styles.buttonText}> Switch Camera </Text>
                   </TouchableOpacity> : null}
                 </View>
@@ -236,22 +236,23 @@ export default class CallP extends Component {
       const styles = StyleSheet.create({
         max: {
             flex: 1,
-            backgroundColor: '#006b31'
+            backgroundColor: '#006b31',
+            paddingTop: hp(5)
         },
         buttonHolder: {
-            height: 100,
+            height: hp(15),
             alignItems: 'center',
             flex: 1,
             flexDirection: 'row',
             justifyContent: 'space-evenly',
         },
         buttonHolder2: {
-          height: 100,
+          height: hp(15),
           alignItems: 'center',
           flex: 1,
           flexDirection: 'row',
           justifyContent: 'space-evenly',
-          marginTop: 20,
+          marginTop: hp(1),
       },
         buttonStart: {
             paddingHorizontal: 20,
@@ -288,7 +289,7 @@ export default class CallP extends Component {
         },
         fullView: {
             width: dimensions.width,
-            height: dimensions.height - 100,
+            height: dimensions.height - hp(20),
         },
         halfViewRow: {
             flex: 1 / 2,
