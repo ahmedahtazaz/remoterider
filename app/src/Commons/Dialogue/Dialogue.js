@@ -19,7 +19,7 @@ class Dialogue extends React.PureComponent {
                             </TouchableOpacity> : 
                             (this.props.positive && this.props.negative) ? 
                             <View style={styles.buttonsContainer}>
-                                <TouchableOpacity style={styles.positiveBittonStyle}>
+                                <TouchableOpacity style={styles.positiveBittonStyle} onPress={this.props.positivePressed}>
                                     <Text style={styles.buttonText}>{this.props.positive}</Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity style={styles.ngativeBittonStyle}  onPress={this.props.negativePressed}>
@@ -72,7 +72,8 @@ const styles = StyleSheet.create({
         borderRadius: hp(1),
         backgroundColor: '#006b31',
         height: hp(6),
-        marginTop: hp(1)
+        marginTop: hp(1),
+        marginRight: wp(2)
     },
     ngativeBittonStyle: {
         justifyContent: "center",
@@ -104,9 +105,10 @@ const mapStateToProps = (state) => {
     return {
         visible: state.dialogueReducer.visible,
         message: state.dialogueReducer.message,
-        positive: state.dialogueReducer.positive,
+        positive: state.dialogueReducer.positve,
         negative: state.dialogueReducer.negative,
         negativePressed: state.dialogueReducer.negativeButtonPressed,
+        positivePressed: state.dialogueReducer.positivePressed,
     };
   };
 

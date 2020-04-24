@@ -1,4 +1,4 @@
-import { LOAD_LESSON_CREDIT_URL_FAILURE, LOAD_LESSON_CREDIT_URL_SUCCESS, CONFIRM_AVAILABILITY, LOAD_PHOTO, LOAD_PHOTO_SUCCESS, LOAD_PHOTO_FAILURE, LOAD_SLIDING_IMAGES, LOAD_SLIDING_IMAGES_SUCCESS, LOAD_SLIDING_IMAGES_FAILURE, LOAD_RESERVATIONS_SUCCESS, LOAD_RESERVATIONS_FAILURE, LOAD_RESERVATIONS, LOAD_CATEGORIES, LOAD_CATEGORIES_SUCCESS, LOAD_CATEGORIES_FAILURE, LOAD_SCHEDULED_LESSONS, LOAD_SCHEDULED_LESSONS_SUCCESS, LOAD_SCHEDULED_LESSONS_FAILURE, LOAD_PENDING_LESSONS_SUCCESS, LOAD_PENDING_LESSONS_FAILURE, LOAD_PENDING_LESSONS, LOAD_FEATURED_INSTRUCTORS, LOAD_FEATURED_INSTRUCTORS_SUCCESS, LOAD_FEATURED_INSTRUCTORS_FAILURE, LOAD_SEARCH_RESULTS, LOAD_SEARCH_RESULTS_SUCCESS, LOAD_SEARCH_RESULTS_FAILURE, LOAD_AVAILABLE_TIME_SLOTS, LOAD_AVAILABLE_TIME_SLOTS_SUCCESS, LOAD_AVAILABLE_TIME_SLOTS_FAILURE, MAKE_RESERVATION, MAKE_RESERVATION_SUCCESS, MAKE_RESERVATION_FAILURE, DECLINE_STUDENT, DECLINE_STUDENT_SUCCESS, DECLINE_STUDENT_FAILURE, CONFIRM_STUDENT, CONFIRM_STUDENT_SUCCESS, CONFIRM_STUDENT_FAILURE, LOAD_CURRENT_USER, LOAD_CURRENT_USER_SUCCESS, LOAD_CURRENT_USER_FAILURE, SET_COST, SET_COST_SUCCESS, SET_COST_FAILURE, LOAD_TIME_SLOTS, LOAD_TIME_SLOTS_SUCCESS, LOAD_TIME_SLOTS_FAILURE, CONFIRM_AVAILABILITY_SUCCESS, CONFIRM_AVAILABILITY_FAILURE, LOAD_PENDING_SLOT_DATA_SUCCESS, LOAD_PENDING_SLOT_DATA_FAILURE, LOAD_PENDING_SLOT_DATA, LOAD_LESSON_CREDIT_URL} from "../../../Commons/Constants";
+import { LOAD_LESSON_CREDIT_URL_FAILURE, LOAD_LESSON_CREDIT_URL_SUCCESS, CONFIRM_AVAILABILITY, LOAD_PHOTO, LOAD_PHOTO_SUCCESS, LOAD_PHOTO_FAILURE, LOAD_SLIDING_IMAGES, LOAD_SLIDING_IMAGES_SUCCESS, LOAD_SLIDING_IMAGES_FAILURE, LOAD_RESERVATIONS_SUCCESS, LOAD_RESERVATIONS_FAILURE, LOAD_RESERVATIONS, LOAD_CATEGORIES, LOAD_CATEGORIES_SUCCESS, LOAD_CATEGORIES_FAILURE, LOAD_SCHEDULED_LESSONS, LOAD_SCHEDULED_LESSONS_SUCCESS, LOAD_SCHEDULED_LESSONS_FAILURE, LOAD_PENDING_LESSONS_SUCCESS, LOAD_PENDING_LESSONS_FAILURE, LOAD_PENDING_LESSONS, LOAD_FEATURED_INSTRUCTORS, LOAD_FEATURED_INSTRUCTORS_SUCCESS, LOAD_FEATURED_INSTRUCTORS_FAILURE, LOAD_SEARCH_RESULTS, LOAD_SEARCH_RESULTS_SUCCESS, LOAD_SEARCH_RESULTS_FAILURE, LOAD_AVAILABLE_TIME_SLOTS, LOAD_AVAILABLE_TIME_SLOTS_SUCCESS, LOAD_AVAILABLE_TIME_SLOTS_FAILURE, MAKE_RESERVATION, MAKE_RESERVATION_SUCCESS, MAKE_RESERVATION_FAILURE, DECLINE_STUDENT, DECLINE_STUDENT_SUCCESS, DECLINE_STUDENT_FAILURE, CONFIRM_STUDENT, CONFIRM_STUDENT_SUCCESS, CONFIRM_STUDENT_FAILURE, LOAD_CURRENT_USER, LOAD_CURRENT_USER_SUCCESS, LOAD_CURRENT_USER_FAILURE, SET_COST, SET_COST_SUCCESS, SET_COST_FAILURE, LOAD_TIME_SLOTS, LOAD_TIME_SLOTS_SUCCESS, LOAD_TIME_SLOTS_FAILURE, CONFIRM_AVAILABILITY_SUCCESS, CONFIRM_AVAILABILITY_FAILURE, LOAD_PENDING_SLOT_DATA_SUCCESS, LOAD_PENDING_SLOT_DATA_FAILURE, LOAD_PENDING_SLOT_DATA, LOAD_LESSON_CREDIT_URL, DECLINE_INSTRUCTOR, DECLINE_INSTRUCTOR_SUCCESS, DECLINE_INSTRUCTOR_FAILURE} from "../../../Commons/Constants";
 import {put, takeLatest} from 'redux-saga/effects';
 import firestore from '@react-native-firebase/firestore';
 import storage from '@react-native-firebase/storage';
@@ -95,7 +95,7 @@ function* loadReservationsInner() {
                             let nextHour = nextHourDate.getHours();
 
                             reservations[i].showAbleTime = currentHour+".00 to "+nextHour+".00";
-                            reservations[i].showAbleDate = onlyDate.getDate()+"/"+onlyDate.getMonth()+"/"+onlyDate.getFullYear();
+                            reservations[i].showAbleDate = onlyDate.getDate()+"/"+(onlyDate.getMonth() + 1)+"/"+onlyDate.getFullYear();
                         }
                     }).catch();
                 }
@@ -188,7 +188,7 @@ function* loadScheduledLessonsInner() {
                         let newDate = new Date(Number.parseInt(reservations[i].date, 10));
                         let nextHour = new Date(Number.parseInt(reservations[i].date, 10) + 3600000);
 
-                        let showableDate = newDate.getDate()+'/'+newDate.getMonth()+'/'+newDate.getFullYear();
+                        let showableDate = newDate.getDate()+'/'+(newDate.getMonth() + 1)+'/'+newDate.getFullYear();
                         let time = newDate.getHours()+'.00 to '+nextHour.getHours()+'.00';
 
                         reservations[i].showableDate = showableDate;
@@ -266,7 +266,7 @@ function* loadPendingLessonsInner() {
                         let newDate = new Date(Number.parseInt(reservations[i].date, 10));
                         let nextHour = new Date(Number.parseInt(reservations[i].date, 10) + 3600000);
 
-                        let showableDate = newDate.getDate()+'/'+newDate.getMonth()+'/'+newDate.getFullYear();
+                        let showableDate = newDate.getDate()+'/'+(newDate.getMonth() + 1)+'/'+newDate.getFullYear();
                         let time = newDate.getHours()+'.00 to '+nextHour.getHours()+'.00';
 
                         reservations[i].showableDate = showableDate;
@@ -1119,7 +1119,7 @@ function* loadPendingSlotDataInner(slot) {
                 let newDate = new Date(Number.parseInt(slot.time, 10));
                 let nextHour = new Date(Number.parseInt(slot.time, 10) + 3600000);
 
-                let showableDate = newDate.getDate()+'/'+newDate.getMonth()+'/'+newDate.getFullYear();
+                let showableDate = newDate.getDate()+'/'+(newDate.getMonth() + 1)+'/'+newDate.getFullYear();
                 let time = newDate.getHours()+'.00 to '+nextHour.getHours()+'.00';
 
                 student.date = slot.time;
@@ -1158,6 +1158,136 @@ function* loadLessonCreditUrl(action) {
         yield put({type: LOAD_LESSON_CREDIT_URL_FAILURE});
 }
 
+function* declineInstructor(action) {
+
+    console.log(action)
+    let success = yield* declineInstructorInner(action.instructor);
+
+    if(success)
+    {
+        yield put({type: DECLINE_INSTRUCTOR_SUCCESS});
+    }
+    else
+        yield put({type: DECLINE_INSTRUCTOR_FAILURE});
+}
+
+function* declineInstructorInner(instructor) {
+
+    let data = undefined;
+    var currentUser = auth().currentUser;
+    let newReservations = [];
+
+    let success = false;
+
+    let currentuid = currentUser.uid;
+
+    yield firestore().collection('Reservations').doc(currentuid).get().
+    then((doc) => {
+        if(doc && doc.data() && doc.data().Reservations)
+            data = doc.data().Reservations;
+            
+            if(data && data.length > 0)
+            {
+                newReservations = data;
+
+                for(let i = 0; i < newReservations.length; i++)
+                {
+                    if(newReservations[i].uuid.toString() === instructor.uuid.toString() && newReservations[i].date.toString() === instructor.date.toString())
+                    {
+                        newReservations.splice(i, 1);
+                        i--;
+                    }
+                }
+            }
+
+        }).catch((err) => {console.log(err)});
+
+    yield firestore().collection('Reservations').doc(currentuid).set({"Reservations" :newReservations}).then(
+        () => {success = true}
+    ).catch((err) => console.log(err));
+
+    if(success)
+    {
+        let available = [];
+        let dateFound = false;
+        let timefound = false;
+
+        yield firestore().collection('Users').doc(instructor.uuid).get().
+        then((doc) => {
+            if(doc.data())
+            {
+                let data = doc.data().availableSlots;
+
+                if(data && data.length > 0)
+                {
+                    available = data;
+
+                    for(let i = 0; i < available.length; i++)
+                    {
+                        let innerTime = available[i].time;
+                        let innerDate = available[i].date;
+
+                        let onlyDate = new Date(Number.parseInt(instructor.date, 10));
+                        let initialDate = new Date(Date.UTC(onlyDate.getFullYear(), onlyDate.getMonth(), onlyDate.getDate(), 0, 0, 0));
+                        let dateMillis = initialDate.getTime();
+
+                        if(innerDate.toString() === dateMillis.toString())
+                        {
+                            dateFound = true;
+
+                            if(innerTime.toString() === instructor.date.toString())
+                            {
+                                timefound = true;
+
+                                available[i].status = 'available';
+                                break;
+                            }
+                        }
+                    }                 
+                }
+            }
+        }).catch((err) => {console.log(err)});
+
+        if(available.length > 0)
+        {
+            yield firestore().collection('Users').doc(instructor.uuid).update({
+                availableSlots: available,
+            }).then((doc) => {
+                success = true;
+            }).catch((err) => {console.log(err)});
+        }
+
+        let studentReservations = [];
+
+        yield firestore().collection('Reservations').doc(instructor.uuid).get().
+        then((doc) => {
+            if(doc && doc.data() && doc.data().Reservations)
+                data = doc.data().Reservations;
+                
+                if(data && data.length > 0)
+                {
+                    studentReservations = data;
+    
+                    for(let i = 0; i < studentReservations.length; i++)
+                    {
+                        if(studentReservations[i].uuid.toString() === currentuid.toString() && studentReservations[i].date.toString() === instructor.date.toString())
+                        {
+                            studentReservations.splice(i, 1);
+                            i--;
+                        }
+                    }
+                }
+    
+            }).catch((err) => {console.log(err)});
+    
+        yield firestore().collection('Reservations').doc(instructor.uuid).set({"Reservations" :studentReservations}).then(
+            () => {success = true}
+        ).catch((err) => console.log(err));
+    }
+
+    return success;
+}
+
 export default function* loadDataActionWatcher() {
     yield takeLatest(`${LOAD_SLIDING_IMAGES}`, loadSlidingImages);
     yield takeLatest(`${LOAD_PHOTO}`, loadPhoto);
@@ -1177,4 +1307,5 @@ export default function* loadDataActionWatcher() {
     yield takeLatest(`${CONFIRM_AVAILABILITY}`, confirmAvailability);
     yield takeLatest(`${LOAD_PENDING_SLOT_DATA}`, loadPendingSlotData);
     yield takeLatest(`${LOAD_LESSON_CREDIT_URL}`, loadLessonCreditUrl);
+    yield takeLatest(`${DECLINE_INSTRUCTOR}`, declineInstructor);
 }

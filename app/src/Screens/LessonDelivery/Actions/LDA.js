@@ -1,4 +1,4 @@
-import { DECLINE_STUDENT, SET_DIALOGUE } from "../../../Commons/Constants";
+import { DECLINE_STUDENT, SET_DIALOGUE, DECLINE_INSTRUCTOR } from "../../../Commons/Constants";
 
 export const declineStudentAction = (message, student) => {
     return {
@@ -26,5 +26,36 @@ export const declineStudentAction = (message, student) => {
       negative: undefined,     
       positive: undefined,
       negativeButtonPressed: undefined,
+    }
+  };
+
+  export const showialogueCancelStudentAction = (positiveButtonPressed, negativeButtonPressed) => {
+    return {
+      type:`${SET_DIALOGUE}`,
+      visible: true,
+      message: "Lessons cancelled within 24 hours of the lesson time will be chargeable, unless otherwise agreed with the instructor.   Do you still want to Cancel?",
+      negative: 'No',
+      positive: 'Yes',
+      negativeButtonPressed: negativeButtonPressed,
+      positivePressed: positiveButtonPressed,
+    }
+  };
+
+  export const dialogueCancelAction = () => {
+    return {
+      type:`${SET_DIALOGUE}`,
+      visible: false,
+      message: '',
+      negative: undefined,
+      positive: undefined,
+      negativeButtonPressed: undefined,
+      positivePressed: undefined,
+    }
+  };
+
+  export const declineInstructorAction = (instructor) => {
+    return {
+      type:`${DECLINE_INSTRUCTOR}`,
+      instructor: instructor,
     }
   };

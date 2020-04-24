@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import LDPS from '../Presentational/LDPS';
-import { declineStudentAction } from '../../Actions/LDA';
+import { declineInstructorAction, dialogueCancelAction, showialogueCancelStudentAction} from '../../Actions/LDA';
 import { LDR_RESET, SET_CALLING } from '../../../../Commons/Constants';
 import CallP from '../Presentational/CallP';
 
@@ -29,7 +29,7 @@ class LDCS extends Component {
 
   cancelReservation()
   {
-    this.props.declineStudent(this.props.student);
+    this.props.showDialogue(() => {this.props.cancelDialogue(), this.props.declineInstructor(this.props.student)}, () => {this.props.cancelDialogue()});
   }
 
   callnow()
@@ -59,9 +59,11 @@ class LDCS extends Component {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    declineStudent: (student) => dispatch(declineStudentAction(student)),
+    declineInstructor: (instructor) => dispatch(declineInstructorAction(instructor)),
     resetLDR: () => dispatch({"type": LDR_RESET}),
     setCalling: (status) => dispatch({"type": SET_CALLING, "status": status}),
+    cancelDialogue: () => dispatch(dialogueCancelAction()),
+    showDialogue: (positiveButtonPressed, negativeButtonPressed) => dispatch(showialogueCancelStudentAction(positiveButtonPressed, negativeButtonPressed)),
   };
 };
 

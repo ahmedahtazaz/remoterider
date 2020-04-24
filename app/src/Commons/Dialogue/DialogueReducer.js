@@ -23,6 +23,7 @@ export default function dialogueReducer() {
                 message: action.message,
                 positve: action.positive,
                 negative: action.negative,
+                positivePressed: action.positivePressed,
                 negativeButtonPressed: action.negativeButtonPressed,
               };
 

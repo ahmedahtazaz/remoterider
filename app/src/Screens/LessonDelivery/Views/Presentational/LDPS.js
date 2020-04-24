@@ -3,6 +3,7 @@ import {TouchableOpacity, Text, Image, View, StyleSheet} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import { getRegularFont, getBoldFont } from '../../../../Commons/Fonts';
+import Dialogue from '../../../../Commons/Dialogue/Dialogue';
 
 export default class LDPS extends Component {
 
@@ -58,7 +59,14 @@ export default class LDPS extends Component {
                         {'Call Now'}
                 </Text> 
             </TouchableOpacity>
+            <TouchableOpacity style={{alignItems: 'center', justifyContent: 'center', borderRadius: hp(40/2), backgroundColor: 'red', height: hp(18), width: wp(40)}} onPress={() => {this.props.cancelReservation()}}>
+                <Text 
+                    numberOfLines={1} style={{alignSelf: 'center', width: wp(40), fontSize: hp(2),fontWeight: '400',textAlign: 'center',color: '#ffffff',fontFamily: getRegularFont()}}>
+                        {'Cancel Reservation'}
+                </Text> 
+            </TouchableOpacity>
             </View> 
+            <Dialogue/>
         </View>
       </LinearGradient>);
   }
