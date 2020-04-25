@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import {TouchableOpacity} from 'react-native';
-import FitImage from 'react-native-fit-image';
+import {TouchableOpacity, Image} from 'react-native';
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
 class CheckBox extends React.PureComponent {
 
@@ -12,14 +12,14 @@ class CheckBox extends React.PureComponent {
         if(this.props.checked)
         {   
             return(
-                <TouchableOpacity style={{ flex: .4}} onPress={() => {this.props.onPress(this.props.checked)}}>
-                    <FitImage style={{flex:1}} source={checked}/>
+                <TouchableOpacity style={{height: hp(6), width: wp(12)}} onPress={() => {this.props.onPress(this.props.checked)}}>
+                    <Image style={{height: hp(6), width: wp(12), resizeMode: 'contain'}} source={checked}/>
                 </TouchableOpacity>);
         }
         else{
             return(
-                <TouchableOpacity style={{ flex: .4}} onPress={() => {this.props.onPress(this.props.checked)}}>
-                    <FitImage style={{ flex: 1}} source={unchecked}/>
+                <TouchableOpacity style={{height: hp(6), width: wp(12)}} onPress={() => {this.props.onPress(this.props.checked)}}>
+                    <Image style={{height: hp(6), width: wp(12), resizeMode: 'contain'}} source={unchecked}/>
                 </TouchableOpacity>);
         }
     };
