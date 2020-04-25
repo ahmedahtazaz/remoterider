@@ -138,7 +138,7 @@ export default class ManageAP extends Component {
             </View> 
         </View>  : null}
         {(this.props.instructor.cost) ? 
-            <View style={{height: hp(45), alignSelf: 'center'}}>
+            <View style={{alignSelf: 'center'}}>
             <Text 
                 numberOfLines={1} style={{height: hp(3), marginTop: hp(2), fontSize: hp(2.2),fontWeight: '700',color: '#ffffff',fontFamily: getBoldFont()}}>
                     {'Choose The Date of Your Availability'}
@@ -146,7 +146,7 @@ export default class ManageAP extends Component {
             <Calendar onDateChange={this.props.onDateChange}/>
         </View> : null} 
           {(this.props.availableTimeSlots) ? 
-          <View style={{height:hp(21), marginTop: hp(2), flexDirection: 'column'}}>
+          <View style={{height:hp(21), marginTop: hp(.1), flexDirection: 'column'}}>
           <Text 
             numberOfLines={1} style={{height: hp(3), marginLeft: wp(3), fontSize: hp(2.2),fontWeight: '700',color: '#ffffff',fontFamily: getBoldFont()}}>
                 {'Choose Your Available Hours'}
@@ -199,12 +199,11 @@ export default class ManageAP extends Component {
 const styles = StyleSheet.create({
   background: {
     width: wp('100%'),
-    height: hp('100%'),
     flexDirection:'column'
   },
   topBarContainer: {
     width: wp(100),
-    height: hp(11.5),
+    height: hp(8),
     flexDirection:'row',
     backgroundColor: '#5a9c79'
   },
