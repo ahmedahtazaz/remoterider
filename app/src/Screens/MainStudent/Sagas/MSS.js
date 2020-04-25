@@ -1054,8 +1054,38 @@ function* confirmAvailabilityInner(slots) {
 
     let currentuid = currentUser.uid;
 
+    let currentlyAvailable = undefined;
+
+    yield firestore().collection('Users').doc(currentuid).get().then((doc) => {
+        if(doc && doc.data())
+        {
+            currentlyAvailable = doc.data().availableSlots;
+        }
+    }).catch((err) => {console.log(err)});
+
+    if(currentlyAvailable)
+    {
+        for(let i = 0; i < slots.length; i++)
+        {
+            let shouldPush = true;
+
+            for(let j = 0; j < currentlyAvailable.length; j++)
+            {
+                if(currentlyAvailable[j].date == slots[i].date && currentlyAvailable[j].time == slots[i].time)
+                {
+                    currentlyAvailable[j].status = slots[i].status;
+                    shouldPush = false;
+                    break;
+                }
+            }
+
+            if(shouldPush)
+                currentlyAvailable.push(slots[i]);
+        }
+    }
+
     yield firestore().collection('Users').doc(currentuid).update({
-        availableSlots: slots,
+        availableSlots: currentlyAvailable ? currentlyAvailable : slots,
     }).then((doc) => {
         success = true;
     }).catch((err) => {console.log(err)});
