@@ -23,7 +23,6 @@ export default class Calendar extends Component {
     
     const styles = StyleSheet.create({
       container: {
-        height: heightPercentageToDP(40),
         backgroundColor: 'transparent',
         marginTop: heightPercentageToDP(1),
       },
