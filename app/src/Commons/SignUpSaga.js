@@ -62,7 +62,7 @@ function* signUpInner(action)
                 }).then(success = true).catch((err) => {success = false, error = err.message});
         }
 
-        if(success)
+        if(success && action.user && action.user.image && action.user.image.path)
         {
             yield storage().ref(currentUser.uid+'.png').putFile(action.user.image.path).then(success = true).catch((err) => {success = false, error = err.message});
         }
