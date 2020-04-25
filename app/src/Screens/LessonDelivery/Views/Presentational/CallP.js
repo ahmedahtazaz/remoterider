@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import { View, NativeModules, Text, TouchableOpacity, Platform, StyleSheet, Dimensions } from 'react-native';
 import { RtcEngine, AgoraView } from 'react-native-agora';
-import LinearGradient from 'react-native-linear-gradient';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
-import { getRegularFont, getBoldFont } from '../../../../Commons/Fonts';
 import requestCameraAndAudioPermission from './permission'; 
+import KeepAwake from 'react-native-keep-awake';
 
 const { Agora } = NativeModules;
 
@@ -50,6 +49,7 @@ export default class CallP extends Component {
       }
 
       componentWillUnmount () {
+        KeepAwake.deactivate();
         if (this.state.joinSucceed) {
           RtcEngine.leaveChannel().then(res => {
             RtcEngine.removeAllListeners();
@@ -81,7 +81,8 @@ export default class CallP extends Component {
             peerIds: this.state.peerIds.filter(uid => uid !== data.uid), //remove peer ID from state array
           });
         });
-        RtcEngine.on('joinChannelSuccess', (data) => {                   //If Local user joins RTC channel
+        RtcEngine.on('joinChannelSuccess', (data) => {    
+          KeepAwake.activate();               
           RtcEngine.startPreview();                                      //Start RTC preview
           this.setState({
             joinSucceed: true,                                           //Set state variable to true
@@ -103,6 +104,7 @@ export default class CallP extends Component {
       * @description Function to end the call
       */
       endCall = () => {
+        KeepAwake.deactivate();
         RtcEngine.leaveChannel();
         this.setState({
           peerIds: [],
