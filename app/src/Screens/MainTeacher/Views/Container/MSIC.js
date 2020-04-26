@@ -6,6 +6,8 @@ import { connect } from 'react-redux';
 import {negativeAction, errorDialogueAction, setStudentForDeliveryAction, confirmStudentAction, declineStudentAction, resetConfirmationDialogueAction, showConfirmationDialogueAction, profilePressedAction, menuPresedAction, loadPhotoAction, loadSlidingImagesAction, loadScheduledLessonsAction, loadPendingLessonsAction} from '../../Actions/MSIA';
 import RNExitApp from 'react-native-exit-app';
 import { LOAD_LESSON_CREDIT_URL, DECLINE_STUDENT_FAILURE, LOAD_CURRENT_USER, SHOW_MAIN_LOADER, HIDE_MAIN_LOADER } from '../../../../Commons/Constants';
+import firestore from '@react-native-firebase/firestore';
+import auth from '@react-native-firebase/auth';
 
 class MSIC extends Component {
 
@@ -25,6 +27,27 @@ class MSIC extends Component {
       this.updateCredit = this.updateCredit.bind(this);
       this.canConfirm = this.canConfirm.bind(this);
       this.picturePress = this.picturePress.bind(this);
+      this.subscribeReservations = this.subscribeReservations.bind(this);
+      this.unSubscribeReservations = this.unSubscribeReservations.bind(this);
+  }
+
+  subscribeReservations()
+  {
+    var currentUser = auth().currentUser;
+
+    let doc = firestore().collection('Reservations').doc(currentUser.uid);
+
+    doc.onSnapshot(docSnapshot => {
+      console.log('changed')
+      this.apiCall();
+    }, err => {
+      console.log(`Encountered error: ${err}`);
+    });
+  }
+
+  unSubscribeReservations()
+  {
+    firestore().collection('Reservations').onSnapshot(() => {});
   }
 
   apiCall()
@@ -39,12 +62,14 @@ class MSIC extends Component {
 
   componentWillUnmount()
   {
+    this.unSubscribeReservations();
     this.props.menuPresed(true);
     this.props.profilePressed(true);
   }
 
   componentDidMount()
   {
+    this.subscribeReservations();
     this.focusListener = this.props.navigation.addListener('focus', () => {
       this.apiCall();
     })
