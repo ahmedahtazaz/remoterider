@@ -15,7 +15,7 @@ const {
   } = Agora; 
 
   const config = {                            //Setting config of the app
-    appid: '6f5d5be0ad194b618312a64bf39bc1d1',               //Enter the App ID generated from the Agora Website
+    appid: '5723d764f8a74828817d9576b35e0687',               //Enter the App ID generated from the Agora Website
     channelProfile: 0,                        //Set channel profile as 0 for RTC
     videoEncoderConfig: {                     //Set Video feed encoder settings
       width: 720,
