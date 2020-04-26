@@ -1189,8 +1189,7 @@ function* loadLessonCreditUrl(action) {
 }
 
 function* declineInstructor(action) {
-
-    console.log(action)
+    
     let success = yield* declineInstructorInner(action.instructor);
 
     if(success)

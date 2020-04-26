@@ -6,6 +6,13 @@ import RNExitApp from 'react-native-exit-app';
 import { LOAD_CURRENT_USER } from '../../../../Commons/Constants';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
+import { InterstitialAd, AdEventType, TestIds } from '@react-native-firebase/admob';
+
+const adUnitId = TestIds.INTERSTITIAL;
+
+const interstitial = InterstitialAd.createForAdRequest(adUnitId, {
+  requestNonPersonalizedAdsOnly: true,
+});
 
 class MSC extends Component {
 
@@ -21,6 +28,8 @@ class MSC extends Component {
       this.apiCall = this.apiCall.bind(this);
       this.subscribeReservations = this.subscribeReservations.bind(this);
       this.unSubscribeReservations = this.unSubscribeReservations.bind(this);
+      this.onAdLoaded = this.onAdLoaded.bind(this);
+      this.loadInterstitialAd = this.loadInterstitialAd.bind(this);
   }
 
   apiCall()
@@ -30,6 +39,28 @@ class MSC extends Component {
     this.props.loadReservations();
     this.props.loadCategories();
     this.props.loadCurrentUser();
+  }
+
+  loadInterstitialAd()
+  {
+    interstitial.onAdEvent(type => {
+      if (type === AdEventType.LOADED) 
+      {
+        this.onAdLoaded(true);
+      }
+      else if(type === AdEventType.CLOSED)
+      {
+        interstitial.onAdEvent(() => {});
+      }
+    });
+
+    interstitial.load();
+  }
+
+  onAdLoaded(status)
+  {
+    if(status)
+      interstitial.show();
   }
 
   subscribeReservations()
@@ -52,6 +83,7 @@ class MSC extends Component {
 
   componentWillUnmount()
   {
+    interstitial.onAdEvent(() => {});
     this.unSubscribeReservations();
     this.props.menuPresed(true);
     this.props.profilePressed(true);
@@ -96,6 +128,7 @@ class MSC extends Component {
 
   makeReservationsHandler()
   {
+    this.loadInterstitialAd();
     this.props.navigation.navigate('Search for Instructor'); 
   }
 

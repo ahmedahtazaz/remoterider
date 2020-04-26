@@ -95,7 +95,6 @@ export default class CallP extends Component {
       * @description Function to start the call
       */
       startCall = () => {
-        console.log('channel name', this.state.channelName);
         RtcEngine.joinChannel(this.state.channelName, this.state.uid);  //Join Channel
         RtcEngine.enableAudio();                                        //Enable the audio
       }

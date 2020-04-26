@@ -38,7 +38,6 @@ class MSIC extends Component {
     let doc = firestore().collection('Reservations').doc(currentUser.uid);
 
     doc.onSnapshot(docSnapshot => {
-      console.log('changed')
       this.apiCall();
     }, err => {
       console.log(`Encountered error: ${err}`);

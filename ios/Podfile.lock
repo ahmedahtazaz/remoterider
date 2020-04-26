@@ -177,6 +177,11 @@ PODS:
     - React-Core (= 0.61.5)
     - React-jsi (= 0.61.5)
     - ReactCommon/turbomodule/core (= 0.61.5)
+  - Firebase/AdMob (6.13.0):
+    - Firebase/CoreOnly
+    - Google-Mobile-Ads-SDK (~> 7.50)
+  - Firebase/Analytics (6.13.0):
+    - Firebase/Core
   - Firebase/Auth (6.13.0):
     - Firebase/CoreOnly
     - FirebaseAuth (~> 6.4.0)
@@ -250,6 +255,8 @@ PODS:
     - DoubleConversion
     - glog
   - glog (0.3.5)
+  - Google-Mobile-Ads-SDK (7.58.0):
+    - GoogleAppMeasurement (~> 6.0)
   - GoogleAppMeasurement (6.1.6):
     - GoogleUtilities/AppDelegateSwizzler (~> 6.0)
     - GoogleUtilities/MethodSwizzler (~> 6.0)
@@ -301,6 +308,7 @@ PODS:
     - nanopb/encode (= 0.3.9011)
   - nanopb/decode (0.3.9011)
   - nanopb/encode (0.3.9011)
+  - PersonalizedAdConsent (1.0.5)
   - RCTRequired (0.61.5)
   - RCTTypeSafety (0.61.5):
     - FBLazyVector (= 0.61.5)
@@ -510,10 +518,17 @@ PODS:
     - React-cxxreact (= 0.61.5)
     - React-jsi (= 0.61.5)
     - ReactCommon/jscallinvoker (= 0.61.5)
-  - RNCMaskedView (0.1.9):
+  - RNCMaskedView (0.1.10):
     - React
   - RNExitApp (1.1.0):
     - React
+  - RNFBAdMob (6.4.0):
+    - Firebase/AdMob (~> 6.13.0)
+    - Firebase/Analytics (~> 6.13.0)
+    - Firebase/Core (~> 6.13.0)
+    - PersonalizedAdConsent (~> 1.0.4)
+    - React
+    - RNFBApp
   - RNFBApp (6.4.0):
     - Firebase/Core (~> 6.13.0)
     - React
@@ -545,9 +560,9 @@ PODS:
     - RSKImageCropper
   - RNReanimated (1.8.0):
     - React
-  - RNScreens (2.4.0):
+  - RNScreens (2.7.0):
     - React
-  - RNShare (3.2.0):
+  - RNShare (3.3.0):
     - React
   - RNVectorIcons (6.6.0):
     - React
@@ -590,6 +605,7 @@ DEPENDENCIES:
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - "RNCMaskedView (from `../node_modules/@react-native-community/masked-view`)"
   - RNExitApp (from `../node_modules/react-native-exit-app`)
+  - "RNFBAdMob (from `../node_modules/@react-native-firebase/admob`)"
   - "RNFBApp (from `../node_modules/@react-native-firebase/app`)"
   - "RNFBAuth (from `../node_modules/@react-native-firebase/auth`)"
   - "RNFBFirestore (from `../node_modules/@react-native-firebase/firestore`)"
@@ -618,6 +634,7 @@ SPEC REPOS:
     - FirebaseFirestore
     - FirebaseInstanceID
     - FirebaseStorage
+    - Google-Mobile-Ads-SDK
     - GoogleAppMeasurement
     - GoogleDataTransport
     - GoogleDataTransportCCTSupport
@@ -627,6 +644,7 @@ SPEC REPOS:
     - GTMSessionFetcher
     - leveldb-library
     - nanopb
+    - PersonalizedAdConsent
     - RSKImageCropper
 
 EXTERNAL SOURCES:
@@ -694,6 +712,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-community/masked-view"
   RNExitApp:
     :path: "../node_modules/react-native-exit-app"
+  RNFBAdMob:
+    :path: "../node_modules/@react-native-firebase/admob"
   RNFBApp:
     :path: "../node_modules/@react-native-firebase/app"
   RNFBAuth:
@@ -738,6 +758,7 @@ SPEC CHECKSUMS:
   FirebaseStorage: 93fe2f8190a01bfb2b2c4932df7d679744c4ef1d
   Folly: 30e7936e1c45c08d884aa59369ed951a8e68cf51
   glog: 1f3da668190260b06b429bb211bfbee5cd790c28
+  Google-Mobile-Ads-SDK: 7052557293c75c676db55feb707ace9b790f32c1
   GoogleAppMeasurement: dfe55efa543e899d906309eaaac6ca26d249862f
   GoogleDataTransport: b29a21d813e906014ca16c00897827e40e4a24ab
   GoogleDataTransportCCTSupport: 6f15a89b0ca35d6fa523e1f752ef818588885988
@@ -747,6 +768,7 @@ SPEC CHECKSUMS:
   GTMSessionFetcher: cea130bbfe5a7edc8d06d3f0d17288c32ffe9925
   leveldb-library: 55d93ee664b4007aac644a782d11da33fba316f7
   nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
+  PersonalizedAdConsent: dbecabb3467df967c16d9cebc2ef4a8890e4bbd8
   RCTRequired: b153add4da6e7dbc44aebf93f3cf4fcae392ddf1
   RCTTypeSafety: 9aa1b91d7f9310fc6eadc3cf95126ffe818af320
   React: b6a59ef847b2b40bb6e0180a97d0ca716969ac78
@@ -771,8 +793,9 @@ SPEC CHECKSUMS:
   React-RCTText: 9ccc88273e9a3aacff5094d2175a605efa854dbe
   React-RCTVibration: a49a1f42bf8f5acf1c3e297097517c6b3af377ad
   ReactCommon: 198c7c8d3591f975e5431bec1b0b3b581aa1c5dd
-  RNCMaskedView: 71fc32d971f03b7f03d6ab6b86b730c4ee64f5b6
+  RNCMaskedView: 5a8ec07677aa885546a0d98da336457e2bea557f
   RNExitApp: c4e052df2568b43bec8a37c7cd61194d4cfee2c3
+  RNFBAdMob: fb4566703243981ef0a381c0cb06e65a9f567061
   RNFBApp: 69781cf10ce41f6f6db789e6264dd80119ef2fb7
   RNFBAuth: 50fcc7826344dc96caad8bc4f5b40a64904297b8
   RNFBFirestore: 69e59e5266927857fa3629715111ee65f4de1cd0
@@ -780,8 +803,8 @@ SPEC CHECKSUMS:
   RNGestureHandler: 8f09cd560f8d533eb36da5a6c5a843af9f056b38
   RNImageCropPicker: cf129d17e042ce3e96fb9ada967c28f21f977c82
   RNReanimated: 955cf4068714003d2f1a6e2bae3fb1118f359aff
-  RNScreens: b5c0e1b2b04512919e78bd3898e144a157ce2363
-  RNShare: 13f1b72aab353c3092b30dce99d212871bb2a8a1
+  RNScreens: cf198f915f8a2bf163de94ca9f5bfc8d326c3706
+  RNShare: fea1801315aa8875d6db73a4010b14afcd568765
   RNVectorIcons: 0bb4def82230be1333ddaeee9fcba45f0b288ed4
   RSKImageCropper: a446db0e8444a036b34f3c43db01b2373baa4b2a
   Yoga: f2a7cd4280bfe2cca5a7aed98ba0eb3d1310f18b
