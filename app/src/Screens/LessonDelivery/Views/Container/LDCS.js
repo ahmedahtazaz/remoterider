@@ -50,7 +50,11 @@ class LDCS extends Component {
     }
 
     if(this.props.calling)
-      return(<CallP isInstructor={false} channelName={this.props.currentUser.uuid} endCall={this.endCall}></CallP>);
+    {
+      let channelName = this.props.currentUser.uuid+'_'+this.props.student.date;
+
+      return(<CallP isInstructor={false} channelName={channelName} endCall={this.endCall}></CallP>);
+    }
     else
       return (<LDPS callnow={this.callnow} cancelReservation={this.cancelReservation} studentPhoto={this.props.studentPhoto} student={this.props.student} backButton={this.backButton}/>);
   }
