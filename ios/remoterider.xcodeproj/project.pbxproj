@@ -17,7 +17,6 @@
 		16364F3B9D798A845FDF27AE /* libPods-remoterider.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BA535D545B1D6CDA7CF8C535 /* libPods-remoterider.a */; };
 		1781318599308BE4F0FD68B7 /* libPods-remoteriderTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EDF9BCA9805744C91689F731 /* libPods-remoteriderTests.a */; };
 		183A3B8D24406C86002AA8C0 /* CUSTOM.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 183A3B8C24406C86002AA8C0 /* CUSTOM.ttf */; };
-		18A0A6A5243CE06900DC32C0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 18A0A6A4243CE06900DC32C0 /* GoogleService-Info.plist */; };
 		18AADEBD2454EDAB00486645 /* checkbox_u.png in Resources */ = {isa = PBXBuildFile; fileRef = 18AADEA22454EDAB00486645 /* checkbox_u.png */; };
 		18AADEBE2454EDAB00486645 /* TopStyle.png in Resources */ = {isa = PBXBuildFile; fileRef = 18AADEA32454EDAB00486645 /* TopStyle.png */; };
 		18AADEBF2454EDAB00486645 /* checkbox_c.png in Resources */ = {isa = PBXBuildFile; fileRef = 18AADEA42454EDAB00486645 /* checkbox_c.png */; };
@@ -39,6 +38,7 @@
 		18AADECF2454EDAB00486645 /* back-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 18AADEBB2454EDAB00486645 /* back-icon.png */; };
 		18AADED02454EDAB00486645 /* back-icon-mask.png in Resources */ = {isa = PBXBuildFile; fileRef = 18AADEBC2454EDAB00486645 /* back-icon-mask.png */; };
 		18AADED22454EDB500486645 /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = 18AADED12454EDB400486645 /* main.jsbundle */; };
+		18EEDC6F2456108400531185 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 18EEDC6E2456108400531185 /* GoogleService-Info.plist */; };
 		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -74,7 +74,6 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = remoterider/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = remoterider/main.m; sourceTree = "<group>"; };
 		183A3B8C24406C86002AA8C0 /* CUSTOM.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = CUSTOM.ttf; path = ../../../Downloads/corbel/CUSTOM.ttf; sourceTree = "<group>"; };
-		18A0A6A4243CE06900DC32C0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		18AADEA22454EDAB00486645 /* checkbox_u.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = checkbox_u.png; sourceTree = "<group>"; };
 		18AADEA32454EDAB00486645 /* TopStyle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TopStyle.png; sourceTree = "<group>"; };
 		18AADEA42454EDAB00486645 /* checkbox_c.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = checkbox_c.png; sourceTree = "<group>"; };
@@ -96,6 +95,7 @@
 		18AADEBB2454EDAB00486645 /* back-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "back-icon.png"; sourceTree = "<group>"; };
 		18AADEBC2454EDAB00486645 /* back-icon-mask.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "back-icon-mask.png"; sourceTree = "<group>"; };
 		18AADED12454EDB400486645 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
+		18EEDC6E2456108400531185 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		18EF667C24421AE5002E2845 /* RemoteRider.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = RemoteRider.entitlements; path = remoterider/RemoteRider.entitlements; sourceTree = "<group>"; };
 		2434E2B8952527536C6120DB /* libPods-remoterider-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-remoterider-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E47B1E0B4A5D006451C7 /* remoterider-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "remoterider-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -327,10 +327,10 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				18EEDC6E2456108400531185 /* GoogleService-Info.plist */,
 				18AADED12454EDB400486645 /* main.jsbundle */,
 				18AADE9E2454EDAB00486645 /* assets */,
 				183A3B8C24406C86002AA8C0 /* CUSTOM.ttf */,
-				18A0A6A4243CE06900DC32C0 /* GoogleService-Info.plist */,
 				13B07FAE1A68108700A75B9A /* remoterider */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* remoteriderTests */,
@@ -501,6 +501,7 @@
 			files = (
 				18AADEC82454EDAB00486645 /* menu.png in Resources */,
 				18AADEC02454EDAB00486645 /* searchIcon.png in Resources */,
+				18EEDC6F2456108400531185 /* GoogleService-Info.plist in Resources */,
 				18AADECD2454EDAB00486645 /* back-icon@3x.png in Resources */,
 				183A3B8D24406C86002AA8C0 /* CUSTOM.ttf in Resources */,
 				18AADECE2454EDAB00486645 /* back-icon@2x.png in Resources */,
@@ -521,7 +522,6 @@
 				18AADEC32454EDAB00486645 /* welcomeImage1.png in Resources */,
 				18AADEC92454EDAB00486645 /* midSectionImage.png in Resources */,
 				18AADEC72454EDAB00486645 /* horseShoe.png in Resources */,
-				18A0A6A5243CE06900DC32C0 /* GoogleService-Info.plist in Resources */,
 				18AADEC42454EDAB00486645 /* passImage.png in Resources */,
 				18AADEBD2454EDAB00486645 /* checkbox_u.png in Resources */,
 			);

@@ -12,11 +12,11 @@ function* loadSlidingImages(action) {
     yield firestore().collection('SlidingImages').doc('Images').get().
     then((doc) => {
         if(doc.data()) 
-            data = JSON.parse(doc.data().Urls)}).catch((err) => {console.log(err)});
+            data = doc.data().Urls}).catch((err) => {console.log(err)});
 
     if(data)
     {
-        images = data.map( (s) => {return {url: s.url};});
+        images = data.map( (s) => {return {url: s};});
         yield put({type: LOAD_SLIDING_IMAGES_SUCCESS, slidingImages: images});
     }
     else
@@ -122,7 +122,7 @@ function* loadCategories(action) {
     yield firestore().collection('Categories').doc('Available').get().
     then((doc) => {
         if(doc.data())
-            data = JSON.parse(doc.data().Categories)}).catch((err) => {console.log(err)});
+            data = doc.data().Categories}).catch((err) => {console.log(err)});
 
     if(data)
     {
