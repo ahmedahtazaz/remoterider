@@ -100,8 +100,8 @@ export default class ManageAP extends Component {
             numberOfLines={2} style={{marginTop: hp(1), fontSize: hp(2.2),fontWeight: '700',textAlign: 'center',color: '#ffffff',fontFamily: getBoldFont()}}>
                 {this.props.instructor.name+'! Welcome to Remote Rider'}
             </Text>  : null}  
-          <TouchableOpacity style={{alignSelf: 'center', marginTop: hp(1), backgroundColor: 'transparent', height: hp(16), width: wp(61.3)}}>
-            <Image source={{uri: this.props.photo}} style={{height: hp(16), width: wp(61.3), resizeMode: 'stretch'}}/>    
+          <TouchableOpacity style={{alignSelf: 'center', marginTop: hp(1), backgroundColor: 'transparent', height: hp(14), width: wp(61.3)}}>
+            <Image source={{uri: this.props.photo}} style={{height: hp(14), width: wp(61.3), resizeMode: 'stretch'}}/>    
             {(this.props.instructor.cost) ?
             <View style={{alignItems: 'center', justifyContent: 'center', flexDirection: 'column', opacity: .6, position: 'absolute', backgroundColor: '#006b31', width: wp(61.3), height: hp(16)}}>
             <View style={{alignItems: 'center', justifyContent: 'center', backgroundColor: 'transparent', flexDirection: 'row', width: wp(61.3), height: hp(3)}}>
@@ -203,7 +203,7 @@ const styles = StyleSheet.create({
   },
   topBarContainer: {
     width: wp(100),
-    height: hp(8),
+    height: hp(11.5),
     flexDirection:'row',
     backgroundColor: '#5a9c79'
   },
