@@ -51,6 +51,7 @@ function* signUpInner(action)
                 uuid: currentUser.uid,
                 lessonCredit: defaultcredits,
                 email: action.user.email,
+                verified: false,
                 }).then(success = true).catch((err) => {success = false, error = err.message});
         }
         else{

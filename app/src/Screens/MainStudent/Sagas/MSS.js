@@ -955,7 +955,7 @@ function* setCostInner(cost, currency) {
             {
                 user = doc.data();
 
-                user.cost = cost+" "+currency;
+                user.cost = currency+" "+cost;
             }
 
         }).catch((err) => {console.log(err)});
