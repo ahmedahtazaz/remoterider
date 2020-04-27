@@ -651,6 +651,9 @@ function* declineStudentInner(declineMessage, date, student) {
 
     let currentuid = currentUser.uid;
 
+    let addCredit = false;
+    let credit = undefined;
+
     yield firestore().collection('Reservations').doc(currentuid).get().
     then((doc) => {
         if(doc && doc.data() && doc.data().Reservations)
@@ -664,6 +667,9 @@ function* declineStudentInner(declineMessage, date, student) {
                 {
                     if(newReservations[i].uuid.toString() === student.uuid.toString() && newReservations[i].date.toString() === student.date.toString())
                     {
+                        if(newReservations[i].confirmed.toString() === 'true')
+                            addCredit = true;
+
                         newReservations.splice(i, 1);
                         i--;
                     }
@@ -715,6 +721,13 @@ function* declineStudentInner(declineMessage, date, student) {
                         }
                     }                 
                 }
+
+                if(addCredit)
+                {
+                    credit = doc.data().lessonCredit;
+                    credit = Number.parseInt(credit, 10);
+                    credit = credit + 1;
+                }
             }
         }).catch((err) => {console.log(err)});
 
@@ -722,6 +735,15 @@ function* declineStudentInner(declineMessage, date, student) {
         {
             yield firestore().collection('Users').doc(currentuid).update({
                 availableSlots: available,
+            }).then((doc) => {
+                success = true;
+            }).catch((err) => {console.log(err)});
+        }
+
+        if(addCredit && credit !== undefined)
+        {
+            yield firestore().collection('Users').doc(currentuid).update({
+                lessonCredit: credit,
             }).then((doc) => {
                 success = true;
             }).catch((err) => {console.log(err)});
@@ -849,6 +871,7 @@ function* confirmStudentInner(date, student) {
         let available = [];
         let dateFound = false;
         let timefound = false;
+        let credit = undefined;
 
         yield firestore().collection('Users').doc(currentuid).get().
         then((doc) => {
@@ -883,6 +906,10 @@ function* confirmStudentInner(date, student) {
                         }
                     }                 
                 }
+
+                credit = doc.data().lessonCredit;
+                credit = Number.parseInt(credit, 10);
+                credit = credit - 1;
             }
         }).catch((err) => {console.log(err)});
 
@@ -890,6 +917,15 @@ function* confirmStudentInner(date, student) {
         {
             yield firestore().collection('Users').doc(currentuid).update({
                 availableSlots: available,
+            }).then((doc) => {
+                success = true;
+            }).catch((err) => {console.log(err)});
+        }
+
+        if(credit !== undefined)
+        {
+            yield firestore().collection('Users').doc(currentuid).update({
+                lessonCredit: credit,
             }).then((doc) => {
                 success = true;
             }).catch((err) => {console.log(err)});
@@ -1240,6 +1276,7 @@ function* declineInstructorInner(instructor) {
         let available = [];
         let dateFound = false;
         let timefound = false;
+        let credit = undefined;
 
         yield firestore().collection('Users').doc(instructor.uuid).get().
         then((doc) => {
@@ -1274,6 +1311,10 @@ function* declineInstructorInner(instructor) {
                         }
                     }                 
                 }
+
+                credit = doc.data().lessonCredit;
+                credit = Number.parseInt(credit, 10);
+                credit = credit + 1;
             }
         }).catch((err) => {console.log(err)});
 
@@ -1281,6 +1322,15 @@ function* declineInstructorInner(instructor) {
         {
             yield firestore().collection('Users').doc(instructor.uuid).update({
                 availableSlots: available,
+            }).then((doc) => {
+                success = true;
+            }).catch((err) => {console.log(err)});
+        }
+
+        if(credit !== undefined)
+        {
+            yield firestore().collection('Users').doc(instructor.uuid).update({
+                lessonCredit: credit,
             }).then((doc) => {
                 success = true;
             }).catch((err) => {console.log(err)});

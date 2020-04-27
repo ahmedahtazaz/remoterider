@@ -114,9 +114,7 @@ class MSIC extends Component {
 
   canConfirm()
   {
-    if(!this.props.scheduled)
-      return true;
-    else return this.props.scheduled.length < this.props.currentUser.lessonCredit;
+    return Number.parseInt(this.props.currentUser.lessonCredit, 10) > 0;
   }
 
   menuPress()
