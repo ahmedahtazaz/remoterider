@@ -34,7 +34,7 @@ export default class MSIP extends Component {
             <TouchableOpacity style={{justifyContent: "center",borderRadius: hp(1), marginRight: wp(52), height: hp(4.5), width: wp(32) , backgroundColor: '#006b31', position: 'absolute', right: 0, alignSelf: 'center'}} onPress={this.props.updateCredit}>
               <Text 
                   numberOfLines={1} style={{fontSize: hp(1.4),fontWeight: '700',textAlign: 'center',color: '#ffffff',fontFamily: getBoldFont()}}>
-                      {'Update Credit'}
+                      {this.props.currentUser ?  'Credit : '+this.props.currentUser.lessonCredit : 'Update Credit'}
               </Text> 
             </TouchableOpacity>
           </View>
