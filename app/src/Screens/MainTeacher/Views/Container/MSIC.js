@@ -134,8 +134,11 @@ class MSIC extends Component {
 
   onScheduledLessonsClick(item, index)
   {
-    this.props.setStudentForDelivery(item, this.props.scheduled.photos[index]);
-    this.props.navigation.navigate('Lesson Delivery Instructor'); 
+    if(!item.declined || item.declined.toString() === 'false')
+    {
+      this.props.setStudentForDelivery(item, this.props.scheduled.photos[index]);
+      this.props.navigation.navigate('Lesson Delivery Instructor'); 
+    }
   }
 
   updateCredit()
