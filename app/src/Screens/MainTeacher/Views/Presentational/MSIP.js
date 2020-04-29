@@ -11,6 +11,43 @@ import Dialogue from '../../../../Commons/Dialogue/Dialogue';
 
 export default class MSIP extends Component {
 
+  getAMPM(time)
+  {
+    if(time)
+    {
+      let date = new Date(Number.parseInt(time, 10));
+      let hours = date.getHours();
+
+      if(hours > 10 && hours < 23)
+        return 'PM';
+    }
+
+    return 'AM';
+  }
+
+  getTimeToShow(time)
+  {
+    if(time)
+    {
+      let dateCurrent = new Date(Number.parseInt(time, 10));
+      let hoursCurrent = dateCurrent.getHours();
+
+      hoursCurrent = hoursCurrent % 12;
+      hoursCurrent = hoursCurrent ? hoursCurrent : 12;
+
+      let dateNext = new Date(Number.parseInt(time, 10) + 3600000);
+      let hoursNext = dateNext.getHours();
+
+      hoursNext = hoursNext % 12;
+      hoursNext = hoursNext ? hoursNext : 12;
+
+      return hoursCurrent+'.00 to '+hoursNext+'.00';
+    }
+
+    return '';
+
+  }
+
   render() {
     const backArrow = require('../../../../assets/backArrow.png');
     const menu = require('../../../../assets/menu.png');
@@ -85,7 +122,7 @@ export default class MSIP extends Component {
                       </Text> 
                       <Text 
                           numberOfLines={1} style={{marginLeft: wp(1), fontSize: hp(1.8),fontWeight: '400',textAlign: 'center',color: '#ffffff',fontFamily: getRegularFont()}}>
-                              {item.time}
+                              {this.getTimeToShow(item.date)+' '+this.getAMPM(item.date)}
                       </Text> 
                     </View>
                   </View>
@@ -142,7 +179,7 @@ export default class MSIP extends Component {
                       </Text> 
                       <Text 
                           numberOfLines={1} style={{marginLeft: wp(1), fontSize: hp(1.8),fontWeight: '400',textAlign: 'center',color: '#ffffff',fontFamily: getRegularFont()}}>
-                              {item.time}
+                              {this.getTimeToShow(item.date)+' '+this.getAMPM(item.date)}
                       </Text> 
                     </View>
                   </View>

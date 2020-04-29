@@ -10,6 +10,43 @@ import Dialogue from '../../../../Commons/Dialogue/Dialogue';
 
 export default class MSP extends Component {
 
+  getAMPM(time)
+  {
+    if(time)
+    {
+      let date = new Date(Number.parseInt(time, 10));
+      let hours = date.getHours();
+
+      if(hours > 10 && hours < 23)
+        return 'PM';
+    }
+
+    return 'AM';
+  }
+
+  getTimeToShow(time)
+  {
+    if(time)
+    {
+      let dateCurrent = new Date(Number.parseInt(time, 10));
+      let hoursCurrent = dateCurrent.getHours();
+
+      hoursCurrent = hoursCurrent % 12;
+      hoursCurrent = hoursCurrent ? hoursCurrent : 12;
+
+      let dateNext = new Date(Number.parseInt(time, 10) + 3600000);
+      let hoursNext = dateNext.getHours();
+
+      hoursNext = hoursNext % 12;
+      hoursNext = hoursNext ? hoursNext : 12;
+
+      return hoursCurrent+'.00 to '+hoursNext+'.00';
+    }
+
+    return '';
+
+  }
+
   render() {
     const backArrow = require('../../../../assets/backArrow.png');
     const menu = require('../../../../assets/menu.png');
@@ -48,7 +85,7 @@ export default class MSP extends Component {
             <FlatList contentContainerStyle={{ marginLeft: wp(3),marginTop: hp(5),flexGrow: 1 }}
             data={this.props.reservations} 
             renderItem={
-              ({ item, index }) => { return(
+              ({ item, index }) => { return( 
                 <TouchableOpacity style={{marginRight: wp(3), backgroundColor: 'transparent', height: hp(16), width: wp(61.3)}} onPress={ () => {this.props.onReservationClick(item, index)}}>
                   <Image source={{uri: this.props.reservations.photos[index]}} style={{height: hp(16), width: wp(61.3), resizeMode: 'stretch'}}/>
                   <View style={{top: 0, alignItems: 'center', justifyContent: 'center', flexDirection: 'column', opacity: .6, position: 'absolute', backgroundColor: 'green', width: wp(61.3), height: hp(12)}}>
@@ -89,7 +126,7 @@ export default class MSP extends Component {
                       </Text> 
                       <Text 
                           numberOfLines={1} style={{marginLeft: wp(1), fontSize: hp(1.8),fontWeight: '400',textAlign: 'center',color: '#ffffff',fontFamily: getRegularFont()}}>
-                              {item.showAbleTime}
+                              {this.getTimeToShow(item.date)+' '+this.getAMPM(item.date)}
                       </Text> 
                     </View>
                   </View>
