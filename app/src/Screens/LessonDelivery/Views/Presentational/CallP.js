@@ -22,7 +22,7 @@ const {
       height: 1080,
       bitrate: 1,
       frameRate: FPS30,
-      orientationMode: Adaptative,
+      orientationMode: 2,
     },
     audioProfile: AudioProfileDefault,
     audioScenario: AudioScenarioDefault,
