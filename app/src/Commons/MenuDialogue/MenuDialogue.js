@@ -26,8 +26,7 @@ class MenuDialogue extends React.PureComponent {
     {
         this.props.signOut();
         this.props.hideMenu(true);
-        this.props.resetReducers();
-        
+        this.props.resetReducers();       
     }
 
     shareUs()

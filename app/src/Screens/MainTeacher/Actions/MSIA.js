@@ -107,3 +107,27 @@ export const loadPhotoAction = () => {
       negativeButtonPressed: negativeButtonPressed,
     }
   };
+
+  export const showEmailVerificationDialogueAction = (positiveButtonPressed, negativeButtonPressed) => {
+    return {
+      type:`${SET_DIALOGUE}`,
+      visible: true,
+      message: "We have sent you an email but Your Email Address is not verified. Kindly verify your email Address and Sign In Again",
+      negative: 'Resend Email',
+      positive: 'Ok',
+      negativeButtonPressed: negativeButtonPressed,
+      positivePressed: positiveButtonPressed,
+    }
+  };
+
+  export const cancelEmailVerificationDialogueAction = () => {
+    return {
+      type:`${SET_DIALOGUE}`,
+      visible: false,
+      message: "",
+      negative: undefined,
+      positive: undefined,
+      negativeButtonPressed: undefined,
+      positivePressed: undefined,
+    }
+  };

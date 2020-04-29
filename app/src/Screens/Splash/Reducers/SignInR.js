@@ -1,4 +1,4 @@
-import {SIGN_IN_SUCCESS, SIGN_IN_FAILURE, CHECK_USER_SUCCESS, CHECK_USER_FAILURE, CLEAR_SIGN_IN_ERROR, SHOW_SIGN_IN_LOADER, HIDE_SIGN_IN_LOADER, FORGOT_PASSWORD_SUCCESS, FORGOT_PASSWORD_FAILURE, CLEAR_FORGOT_PASSWORD_MESSAGE, USE_APP_STATE, RESET_REDUCERS } from '../../../Commons/Constants'
+import {SIGN_IN_SUCCESS, SIGN_IN_FAILURE, CHECK_USER_SUCCESS, CHECK_USER_FAILURE, CLEAR_SIGN_IN_ERROR, SHOW_SIGN_IN_LOADER, HIDE_SIGN_IN_LOADER, FORGOT_PASSWORD_SUCCESS, FORGOT_PASSWORD_FAILURE, CLEAR_FORGOT_PASSWORD_MESSAGE, USE_APP_STATE, RESET_REDUCERS, SET_EMAIL_VERIFICATION } from '../../../Commons/Constants'
 
 const INITIAL_STATE = {
     authenticated: false,
@@ -9,6 +9,7 @@ const INITIAL_STATE = {
     errMessage: undefined,
     forGotPasswordResponse: undefined,
     useAppState: true,
+    emailVerified: undefined,
   };
 
 export default function signInReducer() {
@@ -31,6 +32,7 @@ export default function signInReducer() {
             signInAttempted: true,
             loader: false,
             errMessage: action.errMessage,
+            emailVerified: undefined,
           };
 
           case CHECK_USER_SUCCESS:
@@ -88,13 +90,20 @@ export default function signInReducer() {
           return {
             ...state,
             authenticated: false,
-    signInAttempted: false,
-    isStudent: false,
-    isInstructor: false,
-    loader: false,
-    errMessage: undefined,
-    forGotPasswordResponse: undefined,
-    useAppState: true,
+            signInAttempted: false,
+            isStudent: false,
+            isInstructor: false,
+            loader: false,
+            errMessage: undefined,
+            forGotPasswordResponse: undefined,
+            useAppState: true,
+            emailVerified: undefined,
+          };
+
+          case SET_EMAIL_VERIFICATION:
+          return {
+            ...state,
+            emailVerified: action.emailVerified,
           };
 
         default:

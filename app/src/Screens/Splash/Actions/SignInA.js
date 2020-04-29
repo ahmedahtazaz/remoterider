@@ -1,4 +1,4 @@
-import { SIGN_IN_USER, SIGN_IN_SUCCESS, SIGN_IN_FAILURE, CHECK_USER_TYPE, SIGN_OUT_USER, SET_DIALOGUE, CLEAR_SIGN_IN_ERROR, SHOW_SIGN_IN_LOADER, HIDE_SIGN_IN_LOADER, FORGOT_PASSWORD, CLEAR_FORGOT_PASSWORD_MESSAGE } from "../../../Commons/Constants";
+import { SIGN_IN_USER, SIGN_IN_SUCCESS, SIGN_IN_FAILURE, CHECK_USER_TYPE, SIGN_OUT_USER, SET_DIALOGUE, CLEAR_SIGN_IN_ERROR, SHOW_SIGN_IN_LOADER, HIDE_SIGN_IN_LOADER, FORGOT_PASSWORD, CLEAR_FORGOT_PASSWORD_MESSAGE, SET_EMAIL_VERIFICATION } from "../../../Commons/Constants";
 
 export const signInUserAction = (email, password) => {
     return {
@@ -93,5 +93,12 @@ export const signInUserAction = (email, password) => {
   export const clearforgotPasswordAction = () => {
     return {
       type:`${CLEAR_FORGOT_PASSWORD_MESSAGE}`,
+    }
+  };
+
+  export const emailVerificationAction = (status) => {
+    return {
+      type:`${SET_EMAIL_VERIFICATION}`,
+      emailVerified: status
     }
   };

@@ -6,6 +6,7 @@ import Slideshow from 'react-native-image-slider-show';
 import { getBoldFont, getRegularFont } from '../../../../Commons/Fonts';
 import MenuDialogue from '../../../../Commons/MenuDialogue/MenuDialogue';
 import ProfileDialogue from '../../../../Commons/ProfileDialogue/ProfileDialogue';
+import Dialogue from '../../../../Commons/Dialogue/Dialogue';
 
 export default class MSP extends Component {
 
@@ -155,6 +156,7 @@ export default class MSP extends Component {
           </View>
           <MenuDialogue/>
           <ProfileDialogue/>
+          <Dialogue/>
         </View>
       </LinearGradient>);
   }

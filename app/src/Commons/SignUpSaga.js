@@ -23,7 +23,7 @@ function* signUpInner(action)
 
     yield auth().createUserWithEmailAndPassword(
         action.user.email, 
-        action.user.password).then(() => {
+        action.user.password).then((doc) => {
             success = true;
         }).catch((err) => {success = false, error = err.message});
 
@@ -66,6 +66,11 @@ function* signUpInner(action)
         if(success && action.user && action.user.image && action.user.image.path)
         {
             yield storage().ref(currentUser.uid+'.png').putFile(action.user.image.path).then(success = true).catch((err) => {success = false, error = err.message});
+        }
+
+        if(currentUser)
+        {
+            yield currentUser.sendEmailVerification().then().catch((err) => {console.log(err)});
         }
     }   
 

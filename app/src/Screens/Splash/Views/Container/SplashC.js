@@ -3,7 +3,7 @@ import SplashP from '../Presentational/SplashP'
 import { connect } from 'react-redux';
 import auth from '@react-native-firebase/auth';
 import { AppState} from "react-native";
-import { signOutUserAction, signInUserAction, moveToWelcome1Action, signInSuccessAction, signInFailureAction, checkUserTypeAction, moveToMSAction, moveToMIAction} from '../../Actions/SignInA';
+import { signOutUserAction, signInUserAction, moveToWelcome1Action, signInSuccessAction, signInFailureAction, checkUserTypeAction, moveToMSAction, moveToMIAction, emailVerificationAction} from '../../Actions/SignInA';
 import { RESET_REDUCERS, USE_APP_STATE, RESET_RELOAD } from '../../../../Commons/Constants';
 
 class SplashC extends Component {
@@ -18,6 +18,7 @@ class SplashC extends Component {
       this.signInCallBack = this.signInCallBack.bind(this);
       this.handleAppStateChange = this.handleAppStateChange.bind(this);
       this.apiCall = this.apiCall.bind(this);
+      this.setEmailVerified = this.setEmailVerified.bind(this);
   }
 
   componentDidMount()
@@ -40,6 +41,7 @@ class SplashC extends Component {
     {
       setTimeout(() => {
 
+        this.setEmailVerified(user.emailVerified)
         this.apiCall();
         
       }, 1000);
@@ -48,6 +50,11 @@ class SplashC extends Component {
     {
       this.signInFailure();
     }
+  }
+
+  setEmailVerified(status)
+  {
+    this.props.setEmailVerification(status);
   }
 
   apiCall()
@@ -107,6 +114,7 @@ const mapDispatchToProps = (dispatch) => {
       setUseAppState: (status) => dispatch({type:`${USE_APP_STATE}`, useAppState: status}),
       resetReload: () => dispatch({"type": RESET_RELOAD}),
       resetReducers: () => dispatch({"type": RESET_REDUCERS}),
+      setEmailVerification: (status) => dispatch(emailVerificationAction(status)),
   };
 };
 

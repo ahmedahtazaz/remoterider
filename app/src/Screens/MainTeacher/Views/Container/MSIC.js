@@ -3,7 +3,7 @@ import MSIP from '../Presentational/MSIP';
 import MSIPP from '../Presentational/MSIPP';
 
 import { connect } from 'react-redux';
-import {negativeAction, errorDialogueAction, setStudentForDeliveryAction, confirmStudentAction, declineStudentAction, resetConfirmationDialogueAction, showConfirmationDialogueAction, profilePressedAction, menuPresedAction, loadPhotoAction, loadSlidingImagesAction, loadScheduledLessonsAction, loadPendingLessonsAction} from '../../Actions/MSIA';
+import {negativeAction, errorDialogueAction, setStudentForDeliveryAction, confirmStudentAction, declineStudentAction, resetConfirmationDialogueAction, showConfirmationDialogueAction, profilePressedAction, menuPresedAction, loadPhotoAction, loadSlidingImagesAction, loadScheduledLessonsAction, loadPendingLessonsAction, showEmailVerificationDialogueAction, cancelEmailVerificationDialogueAction} from '../../Actions/MSIA';
 import RNExitApp from 'react-native-exit-app';
 import { LOAD_LESSON_CREDIT_URL, DECLINE_STUDENT_FAILURE, LOAD_CURRENT_USER, SHOW_MAIN_LOADER, HIDE_MAIN_LOADER } from '../../../../Commons/Constants';
 import firestore from '@react-native-firebase/firestore';
@@ -150,6 +150,11 @@ class MSIC extends Component {
 
   render() {
 
+    if( this.props.emailVerified !== undefined && this.props.emailVerified.toString() === 'false')
+    {
+      this.props.showEmailVerificationDialogue(() => {this.props.cancelEmailVerificationDialogue()}, () => {this.props.cancelEmailVerificationDialogue()});
+    }
+
     if(this.props.reload)
     {
       this.props.hideLoader();
@@ -190,6 +195,8 @@ const mapDispatchToProps = (dispatch) => {
     loadUpdateLessonCreditURL: () => dispatch({"type": LOAD_LESSON_CREDIT_URL}),
     showLoader: () => dispatch({"type": SHOW_MAIN_LOADER}),
     hideLoader: () => dispatch({"type": HIDE_MAIN_LOADER}),
+    showEmailVerificationDialogue: (positiveButtonPressed, negativeButtonPressed) => dispatch(showEmailVerificationDialogueAction(positiveButtonPressed, negativeButtonPressed)),
+    cancelEmailVerificationDialogue: () => dispatch(cancelEmailVerificationDialogueAction()),
   };
 };
 
@@ -202,6 +209,7 @@ const mapStateToProps = (state) => {
       reload: state.mscreducer.reload,
       currentUser: state.mscreducer.currentUser,
       loader: state.mscreducer.loader,
+      emailVerified: state.signInReducer.emailVerified,
   };
 };
 

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import MSP from '../Presentational/MSP'
 import { connect } from 'react-redux';
-import {setInstructorForDeliveryAction, profilePressedAction, menuPresedAction, loadPhotoAction, loadSlidingImagesAction, loadReservationsAction, loadCategoriesAction} from '../../Actions/MSA';
+import {setInstructorForDeliveryAction, profilePressedAction, menuPresedAction, loadPhotoAction, loadSlidingImagesAction, loadReservationsAction, loadCategoriesAction, showEmailVerificationDialogueAction, cancelEmailVerificationDialogueAction} from '../../Actions/MSA';
 import RNExitApp from 'react-native-exit-app';
 import { LOAD_CURRENT_USER } from '../../../../Commons/Constants';
 import firestore from '@react-native-firebase/firestore';
@@ -134,6 +134,11 @@ class MSC extends Component {
 
   render() {
 
+    if( this.props.emailVerified !== undefined && this.props.emailVerified.toString() === 'false')
+    {
+      this.props.showEmailVerificationDialogue(() => {this.props.cancelEmailVerificationDialogue()}, () => {this.props.cancelEmailVerificationDialogue()});
+    }
+
     return (<MSP currentUser={this.props.currentUser} reservationPress={this.makeReservationsHandler} showmenu={this.props.showmenu} onCategoriesClick={this.onCategoriesClick} categories={this.props.categories} onReservationClick={this.onReservationClick} reservations={this.props.reservations} images={this.props.slidingImages} backButton={this.backButtonPress} menuPress = {this.menuPress} photo = {this.props.photo} profilePress={this.profilePress}/>);
   }
 }
@@ -149,6 +154,8 @@ const mapDispatchToProps = (dispatch) => {
     profilePressed: (status) => dispatch(profilePressedAction(status)),
     loadCurrentUser: () => dispatch({"type": LOAD_CURRENT_USER}),
     setInstructorForDelivery: (student, photo) => dispatch(setInstructorForDeliveryAction(student, photo)),
+    showEmailVerificationDialogue: (positiveButtonPressed, negativeButtonPressed) => dispatch(showEmailVerificationDialogueAction(positiveButtonPressed, negativeButtonPressed)),
+    cancelEmailVerificationDialogue: () => dispatch(cancelEmailVerificationDialogueAction()),
   };
 };
 
@@ -159,6 +166,7 @@ const mapStateToProps = (state) => {
       photo: state.mscreducer.photo,
       slidingImages: state.mscreducer.slidingImages,
       currentUser: state.mscreducer.currentUser,
+      emailVerified: state.signInReducer.emailVerified,
   };
 };
 
