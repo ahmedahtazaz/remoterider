@@ -129,7 +129,7 @@ export default class MSIP extends Component {
                   {(item.declined && item.declined.toString() === 'true') ? <View style={{bottom:0, alignItems: 'center', justifyContent: 'center', flexDirection: 'row', opacity: 1, position: 'absolute', backgroundColor: 'red', width: wp(61.3), height: hp(4)}}>
                   <Text 
                           numberOfLines={1} style={{width: wp(61.3), fontSize: hp(2),fontWeight: '400',textAlign: 'center',color: '#ffffff',fontFamily: getRegularFont()}}>
-                              {'Declined' }
+                              {'Cancelled' }
                       </Text> 
                   </View> : <View style={{bottom:0, alignItems: 'center', justifyContent: 'center', flexDirection: 'row', opacity: 1, position: 'absolute', backgroundColor: 'green', width: wp(61.3), height: hp(4)}}>
                   <Text 

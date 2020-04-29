@@ -160,7 +160,8 @@ function* loadScheduledLessonsInner() {
 
     if(data)
     {
-        reservations = data.map( (s) => {if(s.confirmed === "true") return s});
+        console.log(data)
+        reservations = data.map( (s) => {if(s.confirmed.toString() === "true" || (s.declined && s.declined.toString() === "true")) return s});
 
         if(reservations)
         {
@@ -238,7 +239,7 @@ function* loadPendingLessonsInner() {
 
     if(data)
     {
-        reservations = data.map( (s) => {if(!s.confirmed || s.confirmed === "false") return s});
+        reservations = data.map( (s) => {if((!s.confirmed || s.confirmed === "false") &&  (!s.declined || s.declined.toString() === "false")) return s});
         
         if(reservations)
         {
@@ -612,12 +613,29 @@ function* makeReservationInnerStudent(date, instructor) {
         if(doc && doc.data() && doc.data().Reservations)
             data = doc.data().Reservations;
             
+            let shouldPush = true;
+
             if(data && data.length > 0)
             {
                 newReservations = data;
+
+                for(let i = 0; i < newReservations.length; i++)
+                {
+                    let resDate = newReservations[i].date;
+                    let resUid = newReservations[i].uuid;
+
+                    if(resDate.toString() === date.toString() && resUid.toString() === instructor.uuid.toString())
+                    {
+                        newReservations[i].declined = false;
+                        newReservations[i].confirmed = false;
+                        shouldPush = false;
+                        break;
+                    }
+                }
             }
 
-            newReservations.push({"uuid" : instructor.uuid, "confirmed" : "false", date: date});
+            if(shouldPush)
+                newReservations.push({"uuid" : instructor.uuid, "confirmed" : "false", date: date});
 
         }).catch((err) => {console.log(err)});
 
@@ -1351,8 +1369,8 @@ function* declineInstructorInner(instructor) {
                     {
                         if(studentReservations[i].uuid.toString() === currentuid.toString() && studentReservations[i].date.toString() === instructor.date.toString())
                         {
-                            studentReservations.splice(i, 1);
-                            i--;
+                            studentReservations[i].declined = true;
+                            studentReservations[i].confirmed = false;
                         }
                     }
                 }
