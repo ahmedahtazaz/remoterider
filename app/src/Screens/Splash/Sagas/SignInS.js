@@ -1,4 +1,4 @@
-import { SIGN_IN_USER, SIGN_IN_FAILURE, SIGN_IN_SUCCESS, CHECK_USER_TYPE, CHECK_USER_SUCCESS, CHECK_USER_FAILURE, SIGN_OUT_USER, FORGOT_PASSWORD, FORGOT_PASSWORD_SUCCESS, FORGOT_PASSWORD_FAILURE, SET_CURRENT_STATE } from "../../../Commons/Constants";
+import { SIGN_IN_USER, SIGN_IN_FAILURE, SIGN_IN_SUCCESS, CHECK_USER_TYPE, CHECK_USER_SUCCESS, CHECK_USER_FAILURE, SIGN_OUT_USER, FORGOT_PASSWORD, FORGOT_PASSWORD_SUCCESS, FORGOT_PASSWORD_FAILURE, SET_CURRENT_STATE, RESEND_EMAIL_VERIFICATION_MAIL, RESEND_EMAIL_VERIFICATION_MAIL_SUCCESS, RESEND_EMAIL_VERIFICATION_MAIL_FAILURE } from "../../../Commons/Constants";
 import {put, takeLatest} from 'redux-saga/effects';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
@@ -61,9 +61,25 @@ function* forgotPassword(action) {
         yield put({type: FORGOT_PASSWORD_FAILURE, forGotPasswordResponse: message});
 }
 
+function* resendVerificationMail(action) {
+
+    let success = false;
+    let message = undefined;
+
+    var currentUser = auth().currentUser;
+
+    yield currentUser.sendEmailVerification().then(success = true).catch((err) => {console.log(err)});
+    
+    if(success)
+        yield put({type: RESEND_EMAIL_VERIFICATION_MAIL_SUCCESS, message: message});
+    else
+        yield put({type: RESEND_EMAIL_VERIFICATION_MAIL_FAILURE, message: message});
+}
+
 export default function* signInActionWatcher() {
     yield takeLatest(`${SIGN_IN_USER}`, signInUser);
     yield takeLatest(`${CHECK_USER_TYPE}`, checkUserType);
     yield takeLatest(`${SIGN_OUT_USER}`, signOutUser);
     yield takeLatest(`${FORGOT_PASSWORD}`, forgotPassword);
+    yield takeLatest(`${RESEND_EMAIL_VERIFICATION_MAIL}`, resendVerificationMail);
 }

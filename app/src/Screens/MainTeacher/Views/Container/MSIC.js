@@ -5,7 +5,7 @@ import MSIPP from '../Presentational/MSIPP';
 import { connect } from 'react-redux';
 import {negativeAction, errorDialogueAction, setStudentForDeliveryAction, confirmStudentAction, declineStudentAction, resetConfirmationDialogueAction, showConfirmationDialogueAction, profilePressedAction, menuPresedAction, loadPhotoAction, loadSlidingImagesAction, loadScheduledLessonsAction, loadPendingLessonsAction, showEmailVerificationDialogueAction, cancelEmailVerificationDialogueAction} from '../../Actions/MSIA';
 import RNExitApp from 'react-native-exit-app';
-import { LOAD_LESSON_CREDIT_URL, DECLINE_STUDENT_FAILURE, LOAD_CURRENT_USER, SHOW_MAIN_LOADER, HIDE_MAIN_LOADER } from '../../../../Commons/Constants';
+import { LOAD_LESSON_CREDIT_URL, DECLINE_STUDENT_FAILURE, LOAD_CURRENT_USER, SHOW_MAIN_LOADER, HIDE_MAIN_LOADER, SIGN_OUT_USER, RESET_REDUCERS, RESEND_EMAIL_VERIFICATION_MAIL } from '../../../../Commons/Constants';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 
@@ -152,7 +152,7 @@ class MSIC extends Component {
 
     if( this.props.emailVerified !== undefined && this.props.emailVerified.toString() === 'false')
     {
-      this.props.showEmailVerificationDialogue(() => {this.props.cancelEmailVerificationDialogue()}, () => {this.props.cancelEmailVerificationDialogue()});
+      this.props.showEmailVerificationDialogue(() => {this.props.cancelEmailVerificationDialogue(), this.props.signOut(), this.props.resetReducers()}, () => {this.props.cancelEmailVerificationDialogue(), this.props.resendVerificationLink(), this.props.signOut(), this.props.resetReducers()});
     }
 
     if(this.props.reload)
@@ -197,6 +197,9 @@ const mapDispatchToProps = (dispatch) => {
     hideLoader: () => dispatch({"type": HIDE_MAIN_LOADER}),
     showEmailVerificationDialogue: (positiveButtonPressed, negativeButtonPressed) => dispatch(showEmailVerificationDialogueAction(positiveButtonPressed, negativeButtonPressed)),
     cancelEmailVerificationDialogue: () => dispatch(cancelEmailVerificationDialogueAction()),
+    signOut: () => dispatch({type:`${SIGN_OUT_USER}`}),
+    resetReducers: () => dispatch({"type": RESET_REDUCERS}),
+    resendVerificationLink: () => dispatch({"type": RESEND_EMAIL_VERIFICATION_MAIL}),
   };
 };
 

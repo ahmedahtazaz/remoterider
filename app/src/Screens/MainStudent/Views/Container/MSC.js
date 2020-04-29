@@ -3,7 +3,7 @@ import MSP from '../Presentational/MSP'
 import { connect } from 'react-redux';
 import {setInstructorForDeliveryAction, profilePressedAction, menuPresedAction, loadPhotoAction, loadSlidingImagesAction, loadReservationsAction, loadCategoriesAction, showEmailVerificationDialogueAction, cancelEmailVerificationDialogueAction} from '../../Actions/MSA';
 import RNExitApp from 'react-native-exit-app';
-import { LOAD_CURRENT_USER } from '../../../../Commons/Constants';
+import { LOAD_CURRENT_USER, SIGN_OUT_USER, RESET_REDUCERS, RESEND_EMAIL_VERIFICATION_MAIL } from '../../../../Commons/Constants';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import { InterstitialAd, AdEventType, TestIds } from '@react-native-firebase/admob';
@@ -136,7 +136,7 @@ class MSC extends Component {
 
     if( this.props.emailVerified !== undefined && this.props.emailVerified.toString() === 'false')
     {
-      this.props.showEmailVerificationDialogue(() => {this.props.cancelEmailVerificationDialogue()}, () => {this.props.cancelEmailVerificationDialogue()});
+      this.props.showEmailVerificationDialogue(() => {this.props.cancelEmailVerificationDialogue(), this.props.signOut(), this.props.resetReducers()}, () => {this.props.cancelEmailVerificationDialogue(), this.props.resendVerificationLink(), this.props.signOut(), this.props.resetReducers()});
     }
 
     return (<MSP currentUser={this.props.currentUser} reservationPress={this.makeReservationsHandler} showmenu={this.props.showmenu} onCategoriesClick={this.onCategoriesClick} categories={this.props.categories} onReservationClick={this.onReservationClick} reservations={this.props.reservations} images={this.props.slidingImages} backButton={this.backButtonPress} menuPress = {this.menuPress} photo = {this.props.photo} profilePress={this.profilePress}/>);
@@ -156,6 +156,9 @@ const mapDispatchToProps = (dispatch) => {
     setInstructorForDelivery: (student, photo) => dispatch(setInstructorForDeliveryAction(student, photo)),
     showEmailVerificationDialogue: (positiveButtonPressed, negativeButtonPressed) => dispatch(showEmailVerificationDialogueAction(positiveButtonPressed, negativeButtonPressed)),
     cancelEmailVerificationDialogue: () => dispatch(cancelEmailVerificationDialogueAction()),
+    signOut: () => dispatch({type:`${SIGN_OUT_USER}`}),
+    resetReducers: () => dispatch({"type": RESET_REDUCERS}),
+    resendVerificationLink: () => dispatch({"type": RESEND_EMAIL_VERIFICATION_MAIL}),
   };
 };
 
