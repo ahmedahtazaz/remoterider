@@ -68,6 +68,10 @@ function* loadReservationsInner() {
     {
         reservations = data.map( (s) => {return s});
 
+        reservations.sort(function(a, b) {
+            return a.date - b.date;
+         });
+
         if(reservations)
         {
             let photos = [];
@@ -160,8 +164,11 @@ function* loadScheduledLessonsInner() {
 
     if(data)
     {
-        console.log(data)
         reservations = data.map( (s) => {if(s.confirmed.toString() === "true" || (s.declined && s.declined.toString() === "true")) return s});
+        
+        reservations.sort(function(a, b) {
+            return a.date - b.date;
+         });
 
         if(reservations)
         {
@@ -241,6 +248,10 @@ function* loadPendingLessonsInner() {
     {
         reservations = data.map( (s) => {if((!s.confirmed || s.confirmed === "false") &&  (!s.declined || s.declined.toString() === "false")) return s});
         
+        reservations.sort(function(a, b) {
+            return a.date - b.date;
+         });
+
         if(reservations)
         {
             let photos = [];
@@ -484,17 +495,36 @@ function* makeReservationInner(date, instructor) {
 
     let message = undefined;
 
+    let currentUid = currentUser.uid;
+
     yield firestore().collection('Reservations').doc(instructor.uuid).get().
     then((doc) => {
         if(doc && doc.data() && doc.data().Reservations)
             data = doc.data().Reservations;
             
+            let shouldPush = true;
+
             if(data && data.length > 0)
             {
                 newReservations = data;
+
+                for(let i = 0; i < newReservations.length; i++)
+                {
+                    let resDate = newReservations[i].date;
+                    let resUUId = newReservations[i].uuid;
+
+                    if(resDate.toString() === date.toString() && resUUId.toString() === currentUid.toString())
+                    {
+                        newReservations[i].confirmed = false;
+                        newReservations[i].declined = false;
+                        shouldPush = false;
+                        break;
+                    }
+                }
             }
 
-            newReservations.push({"uuid" : currentUser.uid, "confirmed" : "false", date: date});
+            if(shouldPush)
+                newReservations.push({"uuid" : currentUid, "confirmed" : "false", date: date});
 
         }).catch((err) => {console.log(err)});
 
