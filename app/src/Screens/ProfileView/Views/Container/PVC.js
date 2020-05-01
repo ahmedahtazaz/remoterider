@@ -29,7 +29,7 @@ class PVC extends Component {
 
     openCredit()
     {
-        Linking.openURL(this.props.lessonCreditUrl ? this.props.lessonCreditUrl : 'https://www.google.com');
+        Linking.openURL(this.props.lessonCreditUrl ? this.props.lessonCreditUrl+"?email="+this.props.currentUser.email : 'https://www.google.com');
     }
   
     render() {
