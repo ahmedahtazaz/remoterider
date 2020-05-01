@@ -3,16 +3,12 @@ import MSP from '../Presentational/MSP'
 import { connect } from 'react-redux';
 import {setInstructorForDeliveryAction, profilePressedAction, menuPresedAction, loadPhotoAction, loadSlidingImagesAction, loadReservationsAction, loadCategoriesAction, showEmailVerificationDialogueAction, cancelEmailVerificationDialogueAction} from '../../Actions/MSA';
 import RNExitApp from 'react-native-exit-app';
-import { LOAD_CURRENT_USER, SIGN_OUT_USER, RESET_REDUCERS, RESEND_EMAIL_VERIFICATION_MAIL } from '../../../../Commons/Constants';
+import { LOAD_CURRENT_USER, SIGN_OUT_USER, RESET_REDUCERS, RESEND_EMAIL_VERIFICATION_MAIL, LOAD_ADMOB_ID } from '../../../../Commons/Constants';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import { InterstitialAd, AdEventType, TestIds } from '@react-native-firebase/admob';
 
-const adUnitId = TestIds.INTERSTITIAL;
-
-const interstitial = InterstitialAd.createForAdRequest(adUnitId, {
-  requestNonPersonalizedAdsOnly: true,
-});
+let interstitial = undefined;
 
 class MSC extends Component {
 
@@ -30,6 +26,25 @@ class MSC extends Component {
       this.unSubscribeReservations = this.unSubscribeReservations.bind(this);
       this.onAdLoaded = this.onAdLoaded.bind(this);
       this.loadInterstitialAd = this.loadInterstitialAd.bind(this);
+      this.initInterstitialAd = this.initInterstitialAd.bind(this);
+      this.subscribeAdmob = this.subscribeAdmob.bind(this);
+      this.unSubscribeAdmob = this.unSubscribeAdmob.bind(this);
+  }
+
+  initInterstitialAd()
+  {
+    let adUnit = this.props.admobId ? (this.props.admobId.toString() === 'TestId' ? TestIds.INTERSTITIAL : this.props.admobId) : TestIds.INTERSTITIAL;
+    
+    if(interstitial)
+    {
+      interstitial.onAdEvent(() => {});
+      interstitial = undefined;
+    }
+
+    interstitial = InterstitialAd.createForAdRequest(adUnit, {
+      requestNonPersonalizedAdsOnly: true,
+    });
+     
   }
 
   apiCall()
@@ -39,27 +54,34 @@ class MSC extends Component {
     this.props.loadReservations();
     this.props.loadCategories();
     this.props.loadCurrentUser();
+    this.props.loadAdmobId();
   }
 
   loadInterstitialAd()
   {
-    interstitial.onAdEvent(type => {
-      if (type === AdEventType.LOADED) 
-      {
-        this.onAdLoaded(true);
-      }
-      else if(type === AdEventType.CLOSED)
-      {
-        interstitial.onAdEvent(() => {});
-      }
-    });
+    this.initInterstitialAd();
 
-    interstitial.load();
+    if(interstitial)
+    {
+      interstitial.onAdEvent(type => {
+        if (type === AdEventType.LOADED) 
+        {
+          this.onAdLoaded(true);
+        }
+        else if(type === AdEventType.CLOSED)
+        {
+          if(interstitial)
+            interstitial.onAdEvent(() => {});
+        }
+      });
+  
+      interstitial.load();
+    }
   }
 
   onAdLoaded(status)
   {
-    if(status)
+    if(status && interstitial)
       interstitial.show();
   }
 
@@ -81,9 +103,32 @@ class MSC extends Component {
     firestore().collection('Reservations').onSnapshot(() => {});
   }
 
+  subscribeAdmob()
+  {
+    let doc = firestore().collection('Admob').doc('Admob');
+
+    doc.onSnapshot(docSnapshot => {
+      interstitial = undefined;
+      this.apiCall();
+    }, err => {
+      console.log(`Encountered error: ${err}`);
+    });
+  }
+
+  unSubscribeAdmob()
+  {
+    firestore().collection('Admob').onSnapshot(() => {});
+  }
+
   componentWillUnmount()
   {
-    interstitial.onAdEvent(() => {});
+    if(interstitial)
+    {
+      interstitial.onAdEvent(() => {});
+      interstitial = undefined;
+    }
+    
+    this.unSubscribeAdmob();
     this.unSubscribeReservations();
     this.props.menuPresed(true);
     this.props.profilePressed(true);
@@ -91,6 +136,7 @@ class MSC extends Component {
 
   componentDidMount()
   {
+    this.subscribeAdmob();
     this.subscribeReservations();
     this.focusListener = this.props.navigation.addListener('focus', () => {
       this.apiCall();
@@ -159,6 +205,7 @@ const mapDispatchToProps = (dispatch) => {
     signOut: () => dispatch({type:`${SIGN_OUT_USER}`}),
     resetReducers: () => dispatch({"type": RESET_REDUCERS}),
     resendVerificationLink: () => dispatch({"type": RESEND_EMAIL_VERIFICATION_MAIL}),
+    loadAdmobId: () => dispatch({"type": LOAD_ADMOB_ID}),
   };
 };
 
@@ -170,6 +217,7 @@ const mapStateToProps = (state) => {
       slidingImages: state.mscreducer.slidingImages,
       currentUser: state.mscreducer.currentUser,
       emailVerified: state.signInReducer.emailVerified,
+      admobId: state.mscreducer.admobId,
   };
 };
 

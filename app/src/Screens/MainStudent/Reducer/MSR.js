@@ -1,4 +1,4 @@
-import {CLEAR_SEARCH_DATA, SHOW_MAIN_LOADER, HIDE_MAIN_LOADER, RESET_REDUCERS, RESET_MAKE_RESERVATION, RESET_SELECTED_SLOT, LOAD_PHOTO_SUCCESS, LOAD_PHOTO_FAILURE, LOAD_SLIDING_IMAGES_SUCCESS, LOAD_SLIDING_IMAGES_FAILURE, LOAD_RESERVATIONS_SUCCESS, LOAD_RESERVATIONS_FAILURE, LOAD_CATEGORIES_SUCCESS, LOAD_CATEGORIES_FAILURE, LOAD_PENDING_LESSONS_SUCCESS, LOAD_PENDING_LESSONS_FAILURE, LOAD_SCHEDULED_LESSONS_SUCCESS, LOAD_SCHEDULED_LESSONS_FAILURE, SET_MENU_VISIBILITY, LOAD_FEATURED_INSTRUCTORS_SUCCESS, LOAD_FEATURED_INSTRUCTORS_FAILURE, LOAD_SEARCH_RESULTS_SUCCESS, LOAD_SEARCH_RESULTS_FAILURE, SET_INSTRUCTOR_FOR_RESERVATION, LOAD_AVAILABLE_TIME_SLOTS_SUCCESS, LOAD_AVAILABLE_TIME_SLOTS_FAILURE, SET_SELECTED_SLOT, MAKE_RESERVATION_SUCCESS, MAKE_RESERVATION_FAILURE, DECLINE_STUDENT_SUCCESS, DECLINE_STUDENT_FAILURE, CONFIRM_STUDENT_SUCCESS, CONFIRM_STUDENT_FAILURE, LOAD_CURRENT_USER_SUCCESS, LOAD_CURRENT_USER_FAILURE, SET_COST_SUCCESS, SET_COST_FAILURE, LOAD_TIME_SLOTS_SUCCESS, LOAD_TIME_SLOTS_FAILURE, CONFIRM_AVAILABILITY_SUCCESS, CONFIRM_AVAILABILITY_FAILURE, LOAD_PENDING_SLOT_DATA_SUCCESS, LOAD_PENDING_SLOT_DATA_FAILURE, LDR_RESET, SHOW_PROFILE_VIEW, RESET_RELOAD, LOAD_LESSON_CREDIT_URL_SUCCESS, LOAD_LESSON_CREDIT_URL_FAILURE, CLEAR_AVAILABLE_TIME_SLOTS, DECLINE_INSTRUCTOR_SUCCESS, DECLINE_INSTRUCTOR_FAILURE} from '../../../Commons/Constants'
+import {CLEAR_SEARCH_DATA, SHOW_MAIN_LOADER, HIDE_MAIN_LOADER, RESET_REDUCERS, RESET_MAKE_RESERVATION, RESET_SELECTED_SLOT, LOAD_PHOTO_SUCCESS, LOAD_PHOTO_FAILURE, LOAD_SLIDING_IMAGES_SUCCESS, LOAD_SLIDING_IMAGES_FAILURE, LOAD_RESERVATIONS_SUCCESS, LOAD_RESERVATIONS_FAILURE, LOAD_CATEGORIES_SUCCESS, LOAD_CATEGORIES_FAILURE, LOAD_PENDING_LESSONS_SUCCESS, LOAD_PENDING_LESSONS_FAILURE, LOAD_SCHEDULED_LESSONS_SUCCESS, LOAD_SCHEDULED_LESSONS_FAILURE, SET_MENU_VISIBILITY, LOAD_FEATURED_INSTRUCTORS_SUCCESS, LOAD_FEATURED_INSTRUCTORS_FAILURE, LOAD_SEARCH_RESULTS_SUCCESS, LOAD_SEARCH_RESULTS_FAILURE, SET_INSTRUCTOR_FOR_RESERVATION, LOAD_AVAILABLE_TIME_SLOTS_SUCCESS, LOAD_AVAILABLE_TIME_SLOTS_FAILURE, SET_SELECTED_SLOT, MAKE_RESERVATION_SUCCESS, MAKE_RESERVATION_FAILURE, DECLINE_STUDENT_SUCCESS, DECLINE_STUDENT_FAILURE, CONFIRM_STUDENT_SUCCESS, CONFIRM_STUDENT_FAILURE, LOAD_CURRENT_USER_SUCCESS, LOAD_CURRENT_USER_FAILURE, SET_COST_SUCCESS, SET_COST_FAILURE, LOAD_TIME_SLOTS_SUCCESS, LOAD_TIME_SLOTS_FAILURE, CONFIRM_AVAILABILITY_SUCCESS, CONFIRM_AVAILABILITY_FAILURE, LOAD_PENDING_SLOT_DATA_SUCCESS, LOAD_PENDING_SLOT_DATA_FAILURE, LDR_RESET, SHOW_PROFILE_VIEW, RESET_RELOAD, LOAD_LESSON_CREDIT_URL_SUCCESS, LOAD_LESSON_CREDIT_URL_FAILURE, CLEAR_AVAILABLE_TIME_SLOTS, DECLINE_INSTRUCTOR_SUCCESS, DECLINE_INSTRUCTOR_FAILURE, ADMOB_AD_ID, LOAD_ADMOB_ID_SUCCESS, LOAD_ADMOB_ID_FAILURE} from '../../../Commons/Constants'
 
 const INITIAL_STATE = {
     reservations: undefined,
@@ -26,6 +26,7 @@ const INITIAL_STATE = {
     lessonCreditUrl: undefined,
     searchQuerry: undefined,
     loader: false,
+    admobId: ADMOB_AD_ID,
   };
 
 export default function mscReducer() {
@@ -305,28 +306,28 @@ export default function mscReducer() {
           return {
             ...state,
             reservations: undefined,
-    categories: undefined,
-    photo: undefined,
-    slidingImages: undefined,
-    scheduled: undefined,
-    pending: undefined,
-    showmenu: false,
-    featured: undefined,
-    searchResults: undefined,
-    instructor: undefined,
-    instructorPhoto: undefined,
-    availableTimeSlots: undefined,
-    selectedSlot: undefined,
-    makeReservMessage: undefined,
-    reload: false,
-    currentUser: undefined,
-    reloadaAvailability: false,
-    timeSlots: undefined,
-    student: undefined,
-    studentPhoto: undefined,
-    ldrback: false,
-    showProfileView: false,
-    lessonCreditUrl: undefined,
+            categories: undefined,
+            photo: undefined,
+            slidingImages: undefined,
+            scheduled: undefined,
+            pending: undefined,
+            showmenu: false,
+            featured: undefined,
+            searchResults: undefined,
+            instructor: undefined,
+            instructorPhoto: undefined,
+            availableTimeSlots: undefined,
+            selectedSlot: undefined,
+            makeReservMessage: undefined,
+            reload: false,
+            currentUser: undefined,
+            reloadaAvailability: false,
+            timeSlots: undefined,
+            student: undefined,
+            studentPhoto: undefined,
+            ldrback: false,
+            showProfileView: false,
+            lessonCreditUrl: undefined,
           };
 
           case SHOW_MAIN_LOADER:
@@ -339,6 +340,18 @@ export default function mscReducer() {
           return {
             ...state,
             loader: false,
+          };
+
+          case LOAD_ADMOB_ID_SUCCESS:
+          return {
+            ...state,
+            admobId: action.admobId,
+          };
+
+          case LOAD_ADMOB_ID_FAILURE:
+          return {
+            ...state,
+            admobId: ADMOB_AD_ID,
           };
 
         default:
