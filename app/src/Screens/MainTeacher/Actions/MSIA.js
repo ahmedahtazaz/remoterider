@@ -112,7 +112,7 @@ export const loadPhotoAction = () => {
     return {
       type:`${SET_DIALOGUE}`,
       visible: true,
-      message: "We have sent you an email but Your Email Address is not verified. Kindly verify your email Address and Sign In Again",
+      message: "We have sent you an email to confirm your Remote Rider registration. To complete your registration please open the email and follow the instructions",
       negative: 'Resend Email',
       positive: 'Ok',
       negativeButtonPressed: negativeButtonPressed,

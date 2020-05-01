@@ -109,7 +109,7 @@ class MSIC extends Component {
       this.props.confirmStudent(pending);
     }
     else
-      this.props.showErrorDialogue(() => {this.props.negativeButtonPressed()}, 'You need to update your Lesson Credits to confirm.');
+      this.props.showErrorDialogue(() => {this.props.negativeButtonPressed()}, 'You need to purchase more lesson credits to confirm further lessons');
   }
 
   canConfirm()

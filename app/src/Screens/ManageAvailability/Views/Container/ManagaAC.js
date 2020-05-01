@@ -122,7 +122,7 @@ class ManageAC extends Component {
       this.props.confirmStudent(pending);
     }
     else
-      this.props.showDialogue(() => {this.props.dialogueOkPressed()}, 'You need to update your Lesson Credits to confirm.');
+      this.props.showDialogue(() => {this.props.dialogueOkPressed()}, 'You need to purchase more lesson credits to confirm further lessons');
   }
 
   declineStudent(message, pending)
