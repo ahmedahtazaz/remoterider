@@ -67,7 +67,10 @@ function* loadReservationsInner() {
 
     if(data)
     {
-        reservations = data.map( (s) => {return s});
+        let dateNow = new Date();
+        let todayDateOnly = new Date(dateNow.getFullYear(), dateNow.getMonth(), dateNow.getDate(), 0, 0, 0);
+
+        reservations = data.filter((s)=>{if(s.date && Number.parseInt(s.date , 10) >= todayDateOnly.getTime()) return s}).map( (s) => {return s});
 
         reservations.sort(function(a, b) {
             return a.date - b.date;
@@ -165,7 +168,10 @@ function* loadScheduledLessonsInner() {
 
     if(data)
     {
-        reservations = data.map( (s) => {if(s.confirmed.toString() === "true" || (s.declined && s.declined.toString() === "true")) return s});
+        let dateNow = new Date();
+        let todayDateOnly = new Date(dateNow.getFullYear(), dateNow.getMonth(), dateNow.getDate(), 0, 0, 0);
+
+        reservations = data.filter((s)=>{if(s.date && Number.parseInt(s.date , 10) >= todayDateOnly.getTime()) return s}).map( (s) => {if(s.confirmed.toString() === "true" || (s.declined && s.declined.toString() === "true")) return s});
         
         reservations.sort(function(a, b) {
             return a.date - b.date;
@@ -247,7 +253,10 @@ function* loadPendingLessonsInner() {
 
     if(data)
     {
-        reservations = data.map( (s) => {if((!s.confirmed || s.confirmed === "false") &&  (!s.declined || s.declined.toString() === "false")) return s});
+        let dateNow = new Date();
+        let todayDateOnly = new Date(dateNow.getFullYear(), dateNow.getMonth(), dateNow.getDate(), 0, 0, 0);
+
+        reservations = data.filter((s)=>{if(s.date && Number.parseInt(s.date , 10) >= todayDateOnly.getTime()) return s}).map( (s) => {if((!s.confirmed || s.confirmed === "false") &&  (!s.declined || s.declined.toString() === "false")) return s});
         
         reservations.sort(function(a, b) {
             return a.date - b.date;
