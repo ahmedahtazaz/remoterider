@@ -25,7 +25,16 @@ function* signUpInner(action)
         action.user.email, 
         action.user.password).then((doc) => {
             success = true;
-        }).catch((err) => {success = false, error = err.message});
+        }).catch((err) => {
+            success = false; 
+            error = err.message; 
+
+            if(error && error.toString().includes('weak-password')) 
+                error = "Your chosen password does not meet our security standards. Passwords need to be 8 characters long and contain UPPER case letters, lower case letters and numbers"
+            else if(error && error.toString().includes('email-already-in-use')) 
+                error = "The email you are using to sign up to Remote Rider is already in use. If you are having trouble signing in please go to the sign in page and use \"Forgotten Password\""
+                  
+        });
 
     if(success) 
     {
@@ -52,7 +61,10 @@ function* signUpInner(action)
                 lessonCredit: defaultcredits,
                 email: action.user.email,
                 verified: false,
-                }).then(success = true).catch((err) => {success = false, error = err.message});
+                }).then(success = true).catch((err) => {
+                    success = false; 
+                    error = err.message; 
+                });
         }
         else{
             yield firestore().collection('Users').doc(currentUser.uid).set({
@@ -60,7 +72,10 @@ function* signUpInner(action)
                 isInstructor: false,
                 uuid: currentUser.uid,
                 email: action.user.email,
-                }).then(success = true).catch((err) => {success = false, error = err.message});
+                }).then(success = true).catch((err) => {
+                    success = false; 
+                    error = err.message; 
+                });
         }
 
         if(success && action.user && action.user.image && action.user.image.path)
