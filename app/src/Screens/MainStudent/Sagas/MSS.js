@@ -3,6 +3,7 @@ import {put, takeLatest} from 'redux-saga/effects';
 import firestore from '@react-native-firebase/firestore';
 import storage from '@react-native-firebase/storage';
 import auth from '@react-native-firebase/auth';
+import { Platform } from "react-native";
 
 function* loadSlidingImages(action) {
 
@@ -1435,7 +1436,14 @@ function* loadAdmobIdInner() {
     then((doc) => {
         if(doc && doc.data())
         {
-            id = doc.data().AdId;
+            if(Platform.OS === 'ios')
+            {
+                id = doc.data().AdIdIos;
+            }
+            else
+            {
+                id = doc.data().AdIdAndroid;
+            }
         }
 
         }).catch((err) => {console.log(err)});
