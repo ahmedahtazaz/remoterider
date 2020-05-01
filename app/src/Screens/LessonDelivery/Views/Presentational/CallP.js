@@ -4,6 +4,7 @@ import { RtcEngine, AgoraView } from 'react-native-agora';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import requestCameraAndAudioPermission from './permission'; 
 import KeepAwake from 'react-native-keep-awake';
+import { getBoldFont } from '../../../../Commons/Fonts';
 
 const { Agora } = NativeModules;
 
@@ -209,7 +210,7 @@ export default class CallP extends Component {
                                 remoteUid={this.state.peerIds[0]} mode={1} /> :
                                 <AgoraView style={styles.localVideoStyle}
                                   remoteUid={this.state.peerIds[0]} mode={1} />
-                                : <View style={{height: hp(10), width: wp(100)}}>
+                                : <View >
                                   <Text style={styles.noUserText}> No users connected </Text>
                                 </View>
                       }
@@ -238,55 +239,81 @@ export default class CallP extends Component {
         max: {
             flex: 1,
             backgroundColor: '#006b31',
-            paddingTop: hp(5)
+            paddingTop: hp(3)
         },
         buttonHolder: {
-            height: hp(15),
             alignItems: 'center',
             flex: 1,
             flexDirection: 'row',
-            justifyContent: 'space-evenly',
+            alignContent: 'center',
+            alignItems: 'center',
+            justifyContent: 'center'
         },
         buttonHolder2: {
-          height: hp(15),
           alignItems: 'center',
           flex: 1,
           flexDirection: 'row',
-          justifyContent: 'space-evenly',
           marginTop: hp(1),
+          alignContent: 'center',
+          alignItems: 'center',
+          justifyContent: 'center'
       },
         buttonStart: {
-            paddingHorizontal: 20,
-            paddingVertical: 10,
+            width: wp(40),
+            height: hp(5),
             backgroundColor: '#5a9c79',
-            borderRadius: 25,
+            borderRadius: hp(1),
+            alignItems: 'center',
+            justifyContent: 'center',
+            marginRight: wp(1),
+            marginLeft: wp(1)
         },
         buttonEnd: {
-            paddingHorizontal: 20,
-            paddingVertical: 10,
-            backgroundColor: 'red',
-            borderRadius: 25,
+          width: wp(40),
+          height: hp(5),
+          backgroundColor: 'red',
+          borderRadius: hp(1),
+          alignItems: 'center',
+          justifyContent: 'center',
+          marginLeft: wp(1)
         },
         buttonCamera: {
-          paddingHorizontal: 20,
-          paddingVertical: 10,
+          width: wp(40),
+          height: hp(5),
           backgroundColor: 'blue',
-          borderRadius: 25,
+          borderRadius: hp(1),
+          alignItems: 'center',
+          justifyContent: 'center',
+          marginRight: wp(1),
+          marginLeft: wp(1)
       },
       buttonZoomIn: {
-        paddingHorizontal: 20,
-        paddingVertical: 10,
+        width: wp(40),
+        height: hp(5),
         backgroundColor: 'brown',
-        borderRadius: 25,
+        borderRadius: hp(1),
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginRight: wp(1),
+        marginLeft: wp(1)
     },
     buttonCameraZoomOut: {
-      paddingHorizontal: 20,
-      paddingVertical: 10,
+      width: wp(40),
+      height: hp(5),
       backgroundColor: 'purple',
-      borderRadius: 25,
+      borderRadius: hp(1),
+      alignItems: 'center',
+      justifyContent: 'center',
+      marginRight: wp(1),
+      marginLeft: wp(1)
   },
         buttonText: {
-            color: '#fff',
+          fontSize: hp(2),
+          fontWeight: '700',
+          textAlign: 'center',
+          color: '#ffffff',
+          alignSelf: 'center',
+          fontFamily: getBoldFont()
         },
         fullView: {
             width: dimensions.width,
@@ -311,8 +338,9 @@ export default class CallP extends Component {
             zIndex: 100,
         },
         noUserText: {
-            paddingHorizontal: 10,
-            paddingVertical: 5,
-            color: '#0093E9',
+          fontSize: hp(1.5),
+          fontWeight: '700',
+          color: '#0093E9',
+          marginTop: hp(1)
         },
     });
