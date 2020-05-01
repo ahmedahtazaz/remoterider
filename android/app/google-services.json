@@ -1,38 +1,38 @@
 {
   "project_info": {
-    "project_number": "1080230214603",
-    "firebase_url": "https://remoteriderxabi.firebaseio.com",
-    "project_id": "remoteriderxabi",
-    "storage_bucket": "remoteriderxabi.appspot.com"
+    "project_number": "160376970028",
+    "firebase_url": "https://remoterider-b813c.firebaseio.com",
+    "project_id": "remoterider-b813c",
+    "storage_bucket": "remoterider-b813c.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1080230214603:android:bed18411209d4c9b47544e",
+        "mobilesdk_app_id": "1:160376970028:android:7aa5403cd849bf20a8aa89",
         "android_client_info": {
           "package_name": "com.remoterider"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1080230214603-dum1fhgg7tiguv3hoco65fr9t6bv28pb.apps.googleusercontent.com",
+          "client_id": "160376970028-4dc6d57modk8elp06squc481jd196o89.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBEdAk85DdLo3aW7TqntriE5IJvml9I4Bs"
+          "current_key": "AIzaSyAYfZDACU1SXIAAa4OxUPBmn6kA0vZ3pxE"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "1080230214603-dum1fhgg7tiguv3hoco65fr9t6bv28pb.apps.googleusercontent.com",
+              "client_id": "160376970028-4dc6d57modk8elp06squc481jd196o89.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "1080230214603-142f7284tc1i8t6jpp5eoq2ns6rhgjnd.apps.googleusercontent.com",
+              "client_id": "160376970028-hgdcdsoiofpefvnji5ui2hrdgse26btv.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
                 "bundle_id": "com.remoterider"
