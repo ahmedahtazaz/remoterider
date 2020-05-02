@@ -8,6 +8,10 @@ import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import { InterstitialAd, AdEventType, TestIds } from '@react-native-firebase/admob';
 
+import { Platform, BackHandler } from 'react-native';
+
+let backListener = undefined;
+
 let interstitial = undefined;
 
 class MSC extends Component {
@@ -29,6 +33,7 @@ class MSC extends Component {
       this.initInterstitialAd = this.initInterstitialAd.bind(this);
       this.subscribeAdmob = this.subscribeAdmob.bind(this);
       this.unSubscribeAdmob = this.unSubscribeAdmob.bind(this);
+      this.handleBackButton = this.handleBackButton.bind(this);
   }
 
   initInterstitialAd()
@@ -127,6 +132,9 @@ class MSC extends Component {
       interstitial.onAdEvent(() => {});
       interstitial = undefined;
     }
+
+    if(backListener)
+        backListener.remove();
     
     this.unSubscribeAdmob();
     this.unSubscribeReservations();
@@ -139,8 +147,25 @@ class MSC extends Component {
     this.subscribeAdmob();
     this.subscribeReservations();
     this.focusListener = this.props.navigation.addListener('focus', () => {
+      backListener =  BackHandler.addEventListener("hardwareBackPress", () =>{this.handleBackButton()});
       this.apiCall();
-    })
+    });
+    this.props.navigation.addListener('blur', () => {
+      
+      if(backListener)
+        backListener.remove();
+    });
+  }
+
+  handleBackButton(){
+    
+    if(this.props.route.name === 'Main Student Screen')
+    {
+      RNExitApp.exitApp();
+      return true;
+    }
+
+    return false;
   }
 
   backButtonPress()

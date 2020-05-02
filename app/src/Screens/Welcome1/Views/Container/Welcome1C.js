@@ -3,6 +3,9 @@ import { connect } from 'react-redux';
 import Welcome1P from '../Presentational/Welcome1P'
 import { moveToSignUpAction, moveToSignInAction } from '../../Actions/Welcome1A';
 import RNExitApp from 'react-native-exit-app';
+import { Platform, BackHandler } from 'react-native';
+
+let backListener = undefined;
 
 class Welcome1C extends Component {
 
@@ -14,9 +17,35 @@ class Welcome1C extends Component {
       this.signInPress = this.signInPress.bind(this);
       this.handleBackButton = this.handleBackButton.bind(this);
   }
+  
+  componentDidMount()
+  {
+    this.props.navigation.addListener('focus', () => {
+        backListener =  BackHandler.addEventListener("hardwareBackPress", () =>{this.handleBackButton()});
+    });
+
+    this.props.navigation.addListener('blur', () => {
+      
+      if(backListener)
+        backListener.remove();
+    });
+  }
+
+  componentWillUnmount()
+  {
+    if(backListener)
+      backListener.remove();
+  }
 
   handleBackButton(){
-    RNExitApp.exitApp();
+    
+    if(this.props.route.name === 'Welcome')
+    {
+      RNExitApp.exitApp();
+      return true;
+    }
+
+    return false;
   }
 
   signUpPress()

@@ -9,6 +9,10 @@ import { LOAD_LESSON_CREDIT_URL, DECLINE_STUDENT_FAILURE, LOAD_CURRENT_USER, SHO
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 
+import { Platform, BackHandler } from 'react-native';
+
+let backListener = undefined;
+
 class MSIC extends Component {
 
   constructor(props)
@@ -29,6 +33,7 @@ class MSIC extends Component {
       this.picturePress = this.picturePress.bind(this);
       this.subscribeReservations = this.subscribeReservations.bind(this);
       this.unSubscribeReservations = this.unSubscribeReservations.bind(this);
+      this.handleBackButton = this.handleBackButton.bind(this);
   }
 
   subscribeReservations()
@@ -61,6 +66,9 @@ class MSIC extends Component {
 
   componentWillUnmount()
   {
+    if(backListener)
+        backListener.remove();
+        
     this.unSubscribeReservations();
     this.props.menuPresed(true);
     this.props.profilePressed(true);
@@ -70,8 +78,25 @@ class MSIC extends Component {
   {
     this.subscribeReservations();
     this.focusListener = this.props.navigation.addListener('focus', () => {
+      backListener =  BackHandler.addEventListener("hardwareBackPress", () =>{this.handleBackButton()});
       this.apiCall();
-    })
+    });
+    this.props.navigation.addListener('blur', () => {
+      
+      if(backListener)
+        backListener.remove();
+    });
+  }
+
+  handleBackButton(){
+    
+    if(this.props.route.name === 'Main Instructor Screen')
+    {
+      RNExitApp.exitApp();
+      return true;
+    }
+
+    return false;
   }
 
   backButtonPress()

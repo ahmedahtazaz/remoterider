@@ -31,7 +31,8 @@ class MenuDialogue extends React.PureComponent {
 
     shareUs()
     {
-        Share.open({message: 'Hello everyone. I am using Remote Rider app and it has been a great experience.'})
+        Share.open({message: "Im using Remote Rider for live horse riding lessons via video conference. Find out more at www.remoterider.app"
+    })
         .then((res) => {})
         .catch((err) => { err && console.log(err); });
     }

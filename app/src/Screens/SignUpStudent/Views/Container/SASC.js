@@ -50,7 +50,15 @@ class SASC extends Component {
     }
     else if(this.user.name !== undefined)
     {
-      if(this.user.password !== this.user.confirmPassword)
+      if(!this.user.password)
+      {
+        this.props.showErrorDialogue(this.negativePressed, 'Please Enter Password');
+      }
+      else if(!this.user.email)
+      {
+        this.props.showErrorDialogue(this.negativePressed, 'Please Enter Email');
+      }
+      else if(this.user.password !== this.user.confirmPassword)
       {
         this.props.showErrorDialogue(this.negativePressed, 'Passwords do not match.');
       }

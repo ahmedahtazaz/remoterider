@@ -39,13 +39,13 @@ export default class App extends Component {
           <NavigationContainer >
             <Stack.Navigator >
               <Stack.Screen name="Splash" component={Splash} options={{ headerShown: false}}/>
-              <Stack.Screen name="Welcome" component={Welcome1} options={{ headerShown: false}}/>
+              <Stack.Screen name="Welcome" component={Welcome1} options={{ gesturesEnabled: false, headerShown: false}}/>
               <Stack.Screen name="Sign Up" component={Welcome2} options={{ headerShown: false}}/>
               <Stack.Screen name="Student Sign Up" component={SAStudent} options={{ headerShown: false}}/>
               <Stack.Screen name="Instructor Sign Up" component={SAInstructor} options={{ headerShown: false}}/>
-              <Stack.Screen name="Main Student Screen" component={MSC} options={{ headerShown: false}}/>
+              <Stack.Screen name="Main Student Screen" component={MSC} options={{ gesturesEnabled: false, headerShown: false}}/>
               <Stack.Screen name="Sign In" component={SignInC} options={{ headerShown: false}}/>
-              <Stack.Screen name="Main Instructor Screen" component={MSIC} options={{ headerShown: false}}/>
+              <Stack.Screen name="Main Instructor Screen" component={MSIC} options={{ gesturesEnabled: false, headerShown: false}}/>
               <Stack.Screen name="Search for Instructor" component={ResSearchC} options={{ headerShown: false}}/>
               <Stack.Screen name="Make Reservation with Instructor" component={MakeResC} options={{ headerShown: false}}/>
               <Stack.Screen name="Manage Availability" component={ManagaAC} options={{ headerShown: false}}/>
