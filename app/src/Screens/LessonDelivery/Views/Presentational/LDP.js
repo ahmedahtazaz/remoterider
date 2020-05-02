@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {TextInput, ActivityIndicator, TouchableOpacity, Text, Image, View, StyleSheet} from 'react-native';
+import {Platform, TextInput, ActivityIndicator, TouchableOpacity, Text, Image, View, StyleSheet} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import { getRegularFont, getBoldFont } from '../../../../Commons/Fonts';
@@ -132,7 +132,7 @@ const styles = StyleSheet.create({
     zIndex: 1000
 },
 fieldMaincontainerStyle:{
-  height: hp(4),
+  height: Platform.OS === 'android' ? hp(7) : hp(4),
   width: wp(67.6),
   alignSelf: 'center',
   marginTop: hp(4)
