@@ -37,7 +37,7 @@
 		180AA521245EE84800932860 /* back-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 180AA50D245EE84800932860 /* back-icon.png */; };
 		180AA522245EE84800932860 /* back-icon-mask.png in Resources */ = {isa = PBXBuildFile; fileRef = 180AA50E245EE84800932860 /* back-icon-mask.png */; };
 		180AA524245EE85200932860 /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = 180AA523245EE85200932860 /* main.jsbundle */; };
-		183A3B8D24406C86002AA8C0 /* CUSTOM.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 183A3B8C24406C86002AA8C0 /* CUSTOM.ttf */; };
+		180AA526245EEFBD00932860 /* CUSTOM.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 180AA525245EEFBD00932860 /* CUSTOM.ttf */; };
 		189143B4245CD6AC00C13E99 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 189143B3245CD6AC00C13E99 /* GoogleService-Info.plist */; };
 		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
@@ -94,7 +94,7 @@
 		180AA50D245EE84800932860 /* back-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "back-icon.png"; sourceTree = "<group>"; };
 		180AA50E245EE84800932860 /* back-icon-mask.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "back-icon-mask.png"; sourceTree = "<group>"; };
 		180AA523245EE85200932860 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
-		183A3B8C24406C86002AA8C0 /* CUSTOM.ttf */ = {isa = PBXFileReference; lastKnownFileType = text; name = CUSTOM.ttf; path = ../../../Downloads/corbel/CUSTOM.ttf; sourceTree = "<group>"; };
+		180AA525245EEFBD00932860 /* CUSTOM.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = CUSTOM.ttf; sourceTree = "<group>"; };
 		189143B3245CD6AC00C13E99 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		18EF667C24421AE5002E2845 /* RemoteRider.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = RemoteRider.entitlements; path = remoterider/RemoteRider.entitlements; sourceTree = "<group>"; };
 		2434E2B8952527536C6120DB /* libPods-remoterider-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-remoterider-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -327,10 +327,10 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				180AA525245EEFBD00932860 /* CUSTOM.ttf */,
 				180AA523245EE85200932860 /* main.jsbundle */,
 				180AA4F0245EE84700932860 /* assets */,
 				189143B3245CD6AC00C13E99 /* GoogleService-Info.plist */,
-				183A3B8C24406C86002AA8C0 /* CUSTOM.ttf */,
 				13B07FAE1A68108700A75B9A /* remoterider */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* remoteriderTests */,
@@ -502,7 +502,6 @@
 				180AA51A245EE84800932860 /* menu.png in Resources */,
 				180AA512245EE84800932860 /* searchIcon.png in Resources */,
 				180AA51F245EE84800932860 /* back-icon@3x.png in Resources */,
-				183A3B8D24406C86002AA8C0 /* CUSTOM.ttf in Resources */,
 				180AA520245EE84800932860 /* back-icon@2x.png in Resources */,
 				180AA510245EE84800932860 /* TopStyle.png in Resources */,
 				180AA51E245EE84800932860 /* package.json in Resources */,
@@ -520,6 +519,7 @@
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				180AA515245EE84800932860 /* welcomeImage1.png in Resources */,
 				180AA51B245EE84800932860 /* midSectionImage.png in Resources */,
+				180AA526245EEFBD00932860 /* CUSTOM.ttf in Resources */,
 				180AA519245EE84800932860 /* horseShoe.png in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 				180AA516245EE84800932860 /* passImage.png in Resources */,
