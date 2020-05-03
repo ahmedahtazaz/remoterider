@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {ScrollView, TouchableOpacity, Text, Image, View, StyleSheet} from 'react-native';
+import {ScrollView, TouchableOpacity, Text, Image, View, StyleSheet, Platform} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import { getBoldFont, getRegularFont } from '../../../../Commons/Fonts';
@@ -52,7 +52,8 @@ export default class App extends Component {
                 <Image source={midSectionImage} style={styles.midSectionImage}/>
                 <Text 
                     style={styles.lMSectionText1}>
-                        {'To use Remote rider you need a Apple or Android phone or tablet, a bluetooth earpiece with microphone that is connected to your phone and a buddy who will act as your camera operator.'}
+                        {Platform.OS === 'android' ? 'To use Remote rider you need an Android phone or tablet, a bluetooth earpiece with microphone that is connected to your phone and a buddy who will act as your camera operator.' :
+                        'To use Remote rider you need an iPhone or iPad, a bluetooth earpiece with microphone that is connected to your phone and a buddy who will act as your camera operator.'}
                 </Text>  
                 <Text 
                     style={styles.lMSectionText2}>

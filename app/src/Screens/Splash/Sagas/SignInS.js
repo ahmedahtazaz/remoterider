@@ -10,7 +10,18 @@ function* signInUser(action) {
 
     yield auth().signInWithEmailAndPassword(
         action.email, 
-        action.password).then(() => {success = true}).catch((err) => {success = false, error = err.message});
+        action.password).then(() => {success = true}).catch((err) => {
+            success = false;
+            error = err.message;
+
+            if(error && error.toString().includes('user-not-found')) 
+                error = "That email address is not registered with Remote Rider. Please use our SignUp page to register your email"
+            else if(error && error.toString().includes('invalid-email')) 
+                error = "Please enter a valid email address"
+            else if(error && error.toString().includes('wrong-password')) 
+            error = "The email address or password that you entered are incorrect"
+
+        });
 
     if(success)
         yield put({type: SIGN_IN_SUCCESS});
