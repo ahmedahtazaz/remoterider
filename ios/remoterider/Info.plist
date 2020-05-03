@@ -46,7 +46,7 @@
 		</dict>
 	</dict>
 	<key>NSBluetoothAlwaysUsageDescription</key>
-	<string>We use Bluetooth to connect</string>
+	<string>$(PRODUCT_NAME) requires Bluetooth usage permission so that students and instructors can listen to the audio call at a distance from their phones as well.</string>
 	<key>NSCameraUsageDescription</key>
 	<string>$(PRODUCT_NAME) requires Camera Usage permission so that Students and Instructors can communicate with each other through video call.</string>
 	<key>NSFaceIDUsageDescription</key>
@@ -58,7 +58,7 @@
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>$(PRODUCT_NAME) requires photo library permission so that users can upload their profile photos to our database. This profile photo will be shown to the instructors and students when they schedule a lesson with each other.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>$(PRODUCT_NAME) needs to use phot library usage option to access the Gallery's photos based on user's acceptance</string>
+	<string>$(PRODUCT_NAME) requires photo library permission so that users can upload their profile photos to our database. This profile photo will be shown to the instructors and students when they schedule a lesson with each other.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>CUSTOM.ttf</string>
