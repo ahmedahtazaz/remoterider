@@ -117,7 +117,7 @@ export default class MakeResP extends Component {
                 <TouchableOpacity style={{alignItems: 'center', justifyContent: 'center', borderRadius: hp(1), marginRight: wp(3), backgroundColor: '#006b31', height: hp(4), width: wp(35)}} onPress={() => {this.props.onConfirm(this.props.selectedSlot)}}>
                  <Text 
                     numberOfLines={1} style={{marginTop: hp(.8), alignSelf: 'center', width: wp(35), fontSize: hp(2.5),fontWeight: '400',textAlign: 'center',color: '#ffffff',fontFamily: getRegularFont()}}>
-                        {'Confirm'}
+                        {'Request'}
                 </Text> 
                 </TouchableOpacity>
                 <TouchableOpacity style={{alignItems: 'center', justifyContent: 'center', borderRadius: hp(1), marginRight: wp(3), backgroundColor: 'red', height: hp(4), width: wp(35)}} onPress={() => {this.props.Cancel()}}>

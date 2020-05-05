@@ -57,7 +57,7 @@ class MSC extends Component {
     this.props.loadPhoto();
     this.props.loadSlidingImages();
     this.props.loadReservations();
-    this.props.loadCategories();
+    //this.props.loadCategories();
     this.props.loadCurrentUser();
     this.props.loadAdmobId();
   }

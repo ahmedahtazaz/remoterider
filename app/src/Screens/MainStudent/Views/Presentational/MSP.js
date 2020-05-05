@@ -62,15 +62,9 @@ export default class MSP extends Component {
             </TouchableOpacity>
           </View>
           <Slideshow dataSource = {this.props.images ? this.props.images : []} height = {hp(26.5)} width = {wp(100)}/>
-          <View style={{paddingLeft: wp(1), flexDirection: 'row', width: wp(100), height: hp(6)}}>
-            <TouchableOpacity style={{marginTop: hp(1), justifyContent: "center",borderRadius: hp(1), height: hp(4.5), width: wp(30.9) , backgroundColor: '#5a9c79'}} onPress={this.props.reservationPress}>
-                <Text 
-                    numberOfLines={1} style={{fontSize: hp(1.4),fontWeight: '700',textAlign: 'center',color: '#ffffff',fontFamily: getBoldFont()}}>
-                        {'Make Reservation'}
-                </Text> 
-              </TouchableOpacity>
+          <View style={{paddingLeft: wp(1), height: hp(6)}}>
             <Text 
-                  numberOfLines={1} style={{width: wp(70), marginTop: hp(1), fontSize: hp(3),fontWeight: '700',textAlign: 'center',color: '#ffffff',fontFamily: getBoldFont()}}>
+                  numberOfLines={1} style={{marginTop: hp(1), fontSize: hp(3),fontWeight: '700',textAlign: 'center',color: '#ffffff',fontFamily: getBoldFont()}}>
                       {this.props.currentUser ? this.props.currentUser.name : ''}
             </Text> 
           </View>
@@ -158,7 +152,14 @@ export default class MSP extends Component {
             </Text></TouchableOpacity> }
 
           </View>
-          <View style={styles.categoriesContainer}>
+            <View style={{marginTop: hp(12), justifyContent: 'center', alignItems: 'center'}}><TouchableOpacity style={{justifyContent: "center",borderRadius: hp(2), height: hp(6), width: wp(70) , backgroundColor: '#5a9c79'}} onPress={this.props.reservationPress}>
+                  <Text 
+                      numberOfLines={1} style={{fontSize: hp(2),fontWeight: '700',textAlign: 'center',color: '#ffffff',fontFamily: getBoldFont()}}>
+                          {'Make Reservation'}
+                  </Text> 
+            </TouchableOpacity>
+          </View>
+          {/* <View style={styles.categoriesContainer}>
             <Text 
                 numberOfLines={1} style={{marginLeft: wp(3), position: 'absolute', left: 0, fontSize: hp(3),fontWeight: '700',textAlign: 'center',color: '#ffffff',fontFamily: getBoldFont()}}>
                     {'Available Categories'}
@@ -190,7 +191,7 @@ export default class MSP extends Component {
                     {'No Available Categories For Reservation'}
             </Text></TouchableOpacity> }
 
-          </View>
+          </View> */}
           <MenuDialogue/>
           <ProfileDialogue/>
           <Dialogue/>
