@@ -62,7 +62,7 @@ export default class LDP extends Component {
                               {'Name : '}
                       </Text> 
                       <Text 
-                          numberOfLines={1} style={{marginLeft: wp(1), fontSize: hp(1.8),fontWeight: '400',textAlign: 'center',color: '#ffffff',fontFamily: getRegularFont()}}>
+                          numberOfLines={1} style={{maxWidth: wp(35), marginLeft: wp(1), fontSize: hp(1.8),fontWeight: '400',textAlign: 'center',color: '#ffffff',fontFamily: getRegularFont()}}>
                               {this.props.student.name}
                       </Text> 
                     </View>

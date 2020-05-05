@@ -68,10 +68,10 @@ export default class MSIP extends Component {
                       {'Manage Availability'}
               </Text> 
             </TouchableOpacity>
-            <TouchableOpacity style={{justifyContent: "center",borderRadius: hp(1), marginRight: wp(52), height: hp(4.5), width: wp(32) , backgroundColor: '#006b31', position: 'absolute', right: 0, alignSelf: 'center'}} onPress={this.props.updateCredit}>
+            <TouchableOpacity style={{justifyContent: "center",borderRadius: hp(1), marginRight: wp(52), height: hp(4.5), width: wp(36) , backgroundColor: '#006b31', position: 'absolute', right: 0, alignSelf: 'center'}} onPress={this.props.updateCredit}>
               <Text 
                   numberOfLines={1} style={{fontSize: hp(1.4),fontWeight: '700',textAlign: 'center',color: '#ffffff',fontFamily: getBoldFont()}}>
-                      {this.props.currentUser ?  'Credit : '+this.props.currentUser.lessonCredit : 'Update Credit'}
+                      {'Buy Lesson Credits'}
               </Text> 
             </TouchableOpacity>
           </View>
@@ -101,7 +101,7 @@ export default class MSIP extends Component {
                               {'Name : '}
                       </Text> 
                       <Text 
-                          numberOfLines={1} style={{marginLeft: wp(1), fontSize: hp(1.8),fontWeight: '400',textAlign: 'center',color: '#ffffff',fontFamily: getRegularFont()}}>
+                          numberOfLines={1} style={{maxWidth: wp(43), marginLeft: wp(1), fontSize: hp(1.8),fontWeight: '400',textAlign: 'center',color: '#ffffff',fontFamily: getRegularFont()}}>
                               {item.name}
                       </Text> 
                     </View>
@@ -169,7 +169,7 @@ export default class MSIP extends Component {
                               {'Name : '}
                       </Text> 
                       <Text 
-                          numberOfLines={1} style={{marginLeft: wp(1), fontSize: hp(1.8),fontWeight: '400',textAlign: 'center',color: '#ffffff',fontFamily: getRegularFont()}}>
+                          numberOfLines={1} style={{maxWidth: wp(43), marginLeft: wp(1), fontSize: hp(1.8),fontWeight: '400',textAlign: 'center',color: '#ffffff',fontFamily: getRegularFont()}}>
                               {item.name}
                       </Text> 
                     </View>
