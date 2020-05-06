@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import SignInP from '../Presentational/SignInP'
 import User from '../../../../Commons/User';
 import { clearforgotPasswordAction, forgotPasswordAction, signInUserAction, negativeAction, errorDialogueAction, clearSignInErrorAction, showLoaderAction, hideLoaderAction } from '../../../Splash/Actions/SignInA';
+import { CHECK_FINGERPRINT_ENROLLED, SETUP_FINGERPRINT_ENROLLMENT, LOGIN_VIA_FINGERPRINT } from '../../../../Commons/Constants';
 
 class SignInC extends Component {
 
@@ -19,6 +20,16 @@ class SignInC extends Component {
       this.forgotPasswordHandler = this.forgotPasswordHandler.bind(this);
       this.backButton = this.backButton.bind(this);
       this.confirmPasswordHandler = this.confirmPasswordHandler.bind(this);
+      this.setFingerPrintHandler = this.setFingerPrintHandler.bind(this);
+      this.checkFingerPrintEnrollment = this.checkFingerPrintEnrollment.bind(this);
+      this.loginFingerPrintHandler = this.loginFingerPrintHandler.bind(this);
+  }
+
+  componentDidMount()
+  {
+    this.focusListener = this.props.navigation.addListener('focus', () => {
+      this.checkFingerPrintEnrollment();
+    });
   }
 
   negativePressed()
@@ -66,9 +77,32 @@ class SignInC extends Component {
       }  
   }
 
+  setFingerPrintHandler()
+  {
+      if(this.user.email && this.user.password)
+      { 
+        this.props.showLoader();
+        this.props.setUpFingerPrintEnrolled(this.user.email, this.user.password);
+      }
+      else
+        this.props.showErrorDialogue(this.negativePressed, 'Please Enter Email and Password.');    
+  }
+
   backButton()
   {
     this.props.navigation.navigate('Welcome'); 
+  }
+
+  checkFingerPrintEnrollment()
+  {
+    this.props.showLoader();
+    this.props.checkFingerPrintEnrolled();
+  }
+
+  loginFingerPrintHandler()
+  {
+    this.props.showLoader();
+    this.props.loginViaFingerPrint();
   }
 
   render() {
@@ -82,7 +116,7 @@ class SignInC extends Component {
         this.props.showErrorDialogue(this.negativePressed, this.props.forGotPasswordResponse);
     }
 
-    return (<SignInP confirmPasswordHandler={this.confirmPasswordHandler} backButton={this.backButton} forgotPasswordHandler={this.forgotPasswordHandler} loader={this.props.loader} signInButtonHandler={this.signInButtonHandler} emailHandler={this.emailHandler} passwordHandler={this.passwordHandler} />);
+    return (<SignInP loginFingerPrintHandler={this.loginFingerPrintHandler} isFingerPrintEnrolled={this.props.isFingerPrintEnrolled} setFingerPrintHandler={this.setFingerPrintHandler} confirmPasswordHandler={this.confirmPasswordHandler} backButton={this.backButton} forgotPasswordHandler={this.forgotPasswordHandler} loader={this.props.loader} signInButtonHandler={this.signInButtonHandler} emailHandler={this.emailHandler} passwordHandler={this.passwordHandler} />);
   }
 }
 
@@ -97,6 +131,9 @@ const mapDispatchToProps = (dispatch) => {
     hideLoader: () => dispatch(hideLoaderAction()),
     forgotPassword: (email) => dispatch(forgotPasswordAction(email)),
     clearForgotPassword: () => dispatch(clearforgotPasswordAction()),
+    setUpFingerPrintEnrolled: (user, pass) => dispatch({'type': SETUP_FINGERPRINT_ENROLLMENT, 'username': user, 'password': pass}),
+    checkFingerPrintEnrolled: () => dispatch({'type': CHECK_FINGERPRINT_ENROLLED}),
+    loginViaFingerPrint: () => dispatch({'type': LOGIN_VIA_FINGERPRINT}),
   };
 };
 
@@ -105,6 +142,7 @@ const mapStateToProps = (state) => {
     signInError: state.signInReducer.errMessage,
     loader: state.signInReducer.loader,
     forGotPasswordResponse: state.signInReducer.forGotPasswordResponse,
+    isFingerPrintEnrolled: state.signInReducer.isFingerPrintEnrolled,
   };
 };
 

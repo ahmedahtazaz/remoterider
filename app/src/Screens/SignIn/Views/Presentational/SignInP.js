@@ -56,6 +56,21 @@ export default class SignInP extends Component {
             </Text> 
         </TouchableOpacity>
 
+        {this.props.isFingerPrintEnrolled === true ? 
+            <TouchableOpacity style={styles.forgotPasswordContainer} onPress={this.props.loginFingerPrintHandler}>
+                    <Text 
+                        numberOfLines={1} style={styles.forgotText}>
+                            {'Sign In via FingerPrint?'}
+                    </Text> 
+                </TouchableOpacity> :
+                <TouchableOpacity style={styles.forgotPasswordContainer} onPress={this.props.setFingerPrintHandler}>
+                <Text 
+                    numberOfLines={1} style={styles.forgotText}>
+                        {'Setup FingerPrint Sign In?'}
+                </Text> 
+            </TouchableOpacity>
+        }
+
         <TouchableOpacity style={styles.signInButton} onPress={this.props.signInButtonHandler}>
             <Text 
                 numberOfLines={1} style={styles.buttonText}>
@@ -160,8 +175,14 @@ const styles = StyleSheet.create({
         width: wp(55),
         borderRadius: hp(1),
         backgroundColor: 'transparent',
-        height: hp(5.5),
         marginTop: hp(1),
+        alignSelf: 'center',
+        marginBottom: hp(1),
+    },
+    setFingerPrintContainer: {
+        justifyContent: "center",
+        width: wp(55),
+        backgroundColor: 'transparent',
         alignSelf: 'center',
         marginBottom: hp(1),
     },
