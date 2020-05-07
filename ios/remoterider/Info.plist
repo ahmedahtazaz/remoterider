@@ -50,7 +50,7 @@
 	<key>NSCameraUsageDescription</key>
 	<string>$(PRODUCT_NAME) requires Camera Usage permission so that Students and Instructors can communicate with each other through video call.</string>
 	<key>NSFaceIDUsageDescription</key>
-	<string>We use Face ID</string>
+	<string>Enabling Face ID allows you quick and secure access to your account.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>$(PRODUCT_NAME) needs to use location services.</string>
 	<key>NSMicrophoneUsageDescription</key>

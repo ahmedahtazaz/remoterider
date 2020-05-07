@@ -71,12 +71,6 @@ export default class App extends Component {
                 </Text> 
             </TouchableOpacity>
         </View>
-        <View style={styles.fieldMaincontainerStyle}> 
-            <Image source={nameImage} style={styles.nameImage}/>
-            <View style={styles.fieldInnercontainerStyle}> 
-                <TextInput onChangeText={this.props.profileandler} style={styles.inputStyle} autoCorrect={false} placeholder={'Profile'} placeholderTextColor = "#598a6f" />
-            </View>
-        </View>
         <View style={styles.tcStyle}>
             <CheckBox onPress={this.props.onTCPress}/>
             <TouchableOpacity style={{height: hp(6)}} onPress={this.props.tcClickHandler}>
