@@ -10,7 +10,7 @@ export const setCredentials = async (username, password) => {
            })
            .catch(err => {
                console.log("err: ", err);
-               reject(err);
+               resolve(false)
            });
    });
 }
@@ -27,7 +27,7 @@ export const getCredentials = async () => {
             })
             .catch(err => {
                 console.log("err: ", err);
-                reject(err);
+                resolve(null)
             });
     });
  }
