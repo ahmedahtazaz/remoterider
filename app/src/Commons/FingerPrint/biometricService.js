@@ -15,8 +15,7 @@ export const checkBiometricSupportednEnrolled = async () => {
                if (biometryType && biometryType != 'FaceID') {
                    resolve(true);
                } else {
-             let fingerprintLableForOS = Platform.OS == "ios" ? "Touch ID" : "Fingerprint";
-                   reject( fingerprintLableForOS + " is not available on this device");
+                resolve(false);
                }
            })
            .catch(error => {
@@ -28,7 +27,7 @@ export const checkBiometricSupportednEnrolled = async () => {
              let fingerprintLableForOS = Platform.OS == "ios" ? "Touch ID" : "Fingerprint";
                    resolve(fingerprintLableForOS + " has no enrolled fingers. Please go to settings and enable " + fingerprintLableForOS + " on this device.");
                } else {
-                   reject(Platform.OS == "ios" ? error.message : translations.t(error.code));
+                resolve(false);
                }
            });
    });

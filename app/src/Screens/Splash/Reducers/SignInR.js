@@ -1,4 +1,4 @@
-import {SIGN_IN_SUCCESS, SIGN_IN_FAILURE, CHECK_USER_SUCCESS, CHECK_USER_FAILURE, CLEAR_SIGN_IN_ERROR, SHOW_SIGN_IN_LOADER, HIDE_SIGN_IN_LOADER, FORGOT_PASSWORD_SUCCESS, FORGOT_PASSWORD_FAILURE, CLEAR_FORGOT_PASSWORD_MESSAGE, USE_APP_STATE, RESET_REDUCERS, SET_EMAIL_VERIFICATION, CHECK_FINGERPRINT_ENROLLED_SUCCESS, SETUP_FINGERPRINT_ENROLLMENT_SUCCESS, SETUP_FINGERPRINT_ENROLLMENT_FAILURE, CHECK_FINGERPRINT_ENROLLED_FAILURE } from '../../../Commons/Constants'
+import {SIGN_IN_SUCCESS, SIGN_IN_FAILURE, CHECK_USER_SUCCESS, CHECK_USER_FAILURE, CLEAR_SIGN_IN_ERROR, SHOW_SIGN_IN_LOADER, HIDE_SIGN_IN_LOADER, FORGOT_PASSWORD_SUCCESS, FORGOT_PASSWORD_FAILURE, CLEAR_FORGOT_PASSWORD_MESSAGE, USE_APP_STATE, RESET_REDUCERS, SET_EMAIL_VERIFICATION, CHECK_FINGERPRINT_ENROLLED_SUCCESS, SETUP_FINGERPRINT_ENROLLMENT_SUCCESS, SETUP_FINGERPRINT_ENROLLMENT_FAILURE, CHECK_FINGERPRINT_ENROLLED_FAILURE, DONT_SHOW_FINGERPRINT } from '../../../Commons/Constants'
 
 const INITIAL_STATE = {
     authenticated: false,
@@ -10,7 +10,7 @@ const INITIAL_STATE = {
     forGotPasswordResponse: undefined,
     useAppState: true,
     emailVerified: undefined,
-    isFingerPrintEnrolled: false
+    isFingerPrintEnrolled: undefined
   };
 
 export default function signInReducer() {
@@ -99,6 +99,7 @@ export default function signInReducer() {
             forGotPasswordResponse: undefined,
             useAppState: true,
             emailVerified: undefined,
+            isFingerPrintEnrolled: undefined
           };
 
           case SET_EMAIL_VERIFICATION:
@@ -120,6 +121,13 @@ export default function signInReducer() {
           return {
             ...state,
             isFingerPrintEnrolled: false,
+            loader: false,
+          };
+
+          case DONT_SHOW_FINGERPRINT:
+          return {
+            ...state,
+            isFingerPrintEnrolled: undefined,
             loader: false,
           };
 

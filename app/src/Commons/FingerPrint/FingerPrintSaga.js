@@ -1,5 +1,5 @@
 import {put, takeLatest} from 'redux-saga/effects';
-import { CHECK_FINGERPRINT_ENROLLED, CHECK_FINGERPRINT_ENROLLED_SUCCESS, CHECK_FINGERPRINT_ENROLLED_FAILURE, SETUP_FINGERPRINT_ENROLLMENT, SETUP_FINGERPRINT_ENROLLMENT_SUCCESS, SETUP_FINGERPRINT_ENROLLMENT_FAILURE } from '../Constants';
+import { CHECK_FINGERPRINT_ENROLLED, CHECK_FINGERPRINT_ENROLLED_SUCCESS, CHECK_FINGERPRINT_ENROLLED_FAILURE, SETUP_FINGERPRINT_ENROLLMENT, SETUP_FINGERPRINT_ENROLLMENT_SUCCESS, SETUP_FINGERPRINT_ENROLLMENT_FAILURE, DONT_SHOW_FINGERPRINT } from '../Constants';
 import {checkBiometricSupportednEnrolled} from './biometricService';
 import{Alert, Platform, Linking} from 'react-native';
 import AndroidOpenSettings  from 'react-native-android-open-settings';
@@ -27,7 +27,7 @@ function* setFingerPrintInner(username, password) {
 
         return status;
     } 
-    else 
+    else if(isFingerPrintSupported !== false)
     {
         Alert.alert(
         "Alert",
@@ -67,7 +67,12 @@ function* checkFingerPrint() {
         yield put({type: CHECK_FINGERPRINT_ENROLLED_SUCCESS});
     else
     {
-        yield put({type: CHECK_FINGERPRINT_ENROLLED_FAILURE});
+        if(isFingerPrintSupported === false)
+        {
+            yield put({type: DONT_SHOW_FINGERPRINT});
+        }
+        else
+            yield put({type: CHECK_FINGERPRINT_ENROLLED_FAILURE});
     }
 }
 

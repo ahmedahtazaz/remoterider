@@ -56,7 +56,7 @@ export default class SignInP extends Component {
             </Text> 
         </TouchableOpacity>
 
-        {this.props.isFingerPrintEnrolled === true ? 
+        {this.props.isFingerPrintEnrolled !== undefined ? this.props.isFingerPrintEnrolled === true ? 
             <TouchableOpacity style={styles.forgotPasswordContainer} onPress={this.props.loginFingerPrintHandler}>
                     <Text 
                         numberOfLines={1} style={styles.forgotText}>
@@ -69,7 +69,7 @@ export default class SignInP extends Component {
                         {'Setup FingerPrint Sign In?'}
                 </Text> 
             </TouchableOpacity>
-        }
+        : null}
 
         <TouchableOpacity style={styles.signInButton} onPress={this.props.signInButtonHandler}>
             <Text 
